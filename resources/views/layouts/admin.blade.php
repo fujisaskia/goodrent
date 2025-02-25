@@ -18,24 +18,38 @@
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    {{-- chart js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
-<body class="font-poppins bg-slate-200 text-sm">
+<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-50 text-sm">
+
+    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-emerald-600"></div>
+    </div>
+    
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm p-3">
         <div class="flex max-w-6xl justify-between items-center lg:ml-56">
-            <div class="flex items-center space-x-4">
-                <button
-                    class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300"
-                    id="menu-button">
+            <div class="items-center space-x-4">
+                <!-- Button membuka sidebar -->
+                <button id="button-open-sidebar" class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                    </svg>
+                </button>
+                <!-- Button menutup sidebar -->
+                <button id="button-close-sidebar" class="hidden lg:hidden transition-all duration-300 ease-in-out">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-8 text-emerald-600 hover:text-emerald-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -56,9 +70,9 @@
     </nav>
 
     {{-- Sidebar --}}
-    <div class="flex">
+    <div class="flex text-base md:text-sm">
         <!-- Sidebar -->
-        <aside class="fixed top-20 left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg duration-300 lg:block rounded-xl">
+        <aside id="sidebar" class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg hover:shadow-emerald-100 rounded-xl transform  -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
 
             <div class="space-y-2 py-8 items-center text-center bg-white rounded-lg">
                 <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">- GoodRent -</span>
@@ -68,38 +82,49 @@
             <ul class="">
                 <a href="/admin/dashboard">
                     <li
-                        class="flex items-center space-x-3 font-medium text-emerald-800 py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/dashboard') ? 'bg-gray-100 text-emerald-900 border-l-4 border-emerald-700 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/dashboard') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-chart-line text-base"></i> <!-- Statistik/Grafik -->
                         <p class="group-hover:translate-x-1 duration-500">Dashboard</p>
                     </li>
                 </a>
                 
-                <a href="">
+                <a href="/admin/data-barang">
                     <li
-                        class="flex items-center space-x-3 font-medium text-gray-600 py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-900 border-l-4 border-emerald-700 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-box-open text-base"></i>
                         <p class="group-hover:translate-x-1 duration-500">Data Barang</p>
                     </li>
                 </a>
-                <a href="">
+
+                <a href="/admin/kelola-user">
                     <li
-                        class="flex items-center space-x-3 font-medium text-gray-600 py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-900 border-l-4 border-emerald-700 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-user') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <x-iconsax-bol-profile-2user class="w-5 h-auto" />
                         <p class="group-hover:translate-x-1 duration-500">Kelola User</p>
                     </li>
                 </a>
-                <a href="">
+
+                <a href="/admin/kelola-diskon">
                     <li
-                        class="flex items-center space-x-3 font-medium text-gray-600 py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-900 border-l-4 border-emerald-700 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 hover:text-gray-700 ' }} group">
-                        <i class="fa-solid fa-percent text-base"></i>
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-diskon') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        <i class="fa-solid fa-percent text-base mr-1.5"></i>
                         <p class="group-hover:translate-x-1 duration-500">Kelola Diskon</p>
                     </li>
                 </a>
+
                 <a href="">
                     <li
-                        class="flex items-center space-x-3 font-medium text-gray-600 py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-900 border-l-4 border-emerald-700 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-folder-open text-base"></i>
                         <p class="group-hover:translate-x-1 duration-500">Laporan</p>
+                    </li>
+                </a>
+
+                <a href="" class="flex justify-center items-center">
+                    <li
+                        class="flex fixed bottom-5 justify-center items-center border-2 border-red-500 space-x-3 font-medium py-2 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                        <p class="">Keluar</p>
                     </li>
                 </a>
 
@@ -108,9 +133,10 @@
         </aside>
     </div>
 
-    <div class="min-h-screen py-24 mx-4">
+    {{-- content here --}}
+    <div class="min-h-screen py-24 mx-4 lg:mx-8 ">
         <!-- Main Content -->
-        <main class="flex-1 lg:ml-52 mb-8">
+        <main class="flex-1 lg:ml-60 mb-8">
             @yield('content')
         </main>
     </div>
@@ -120,3 +146,25 @@
 </body>
 
 </html>
+
+<script>
+    window.addEventListener("load", function () {
+        document.getElementById("loading").style.display = "none";
+    });
+    
+    const menuButton = document.getElementById("button-open-sidebar");
+    const closeButton = document.getElementById("button-close-sidebar");
+    const sidebar = document.getElementById("sidebar");
+
+    menuButton.addEventListener("click", () => {
+        sidebar.classList.remove("-translate-x-full");
+        menuButton.classList.add("hidden");
+        closeButton.classList.remove("hidden");
+    });
+
+    closeButton.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        menuButton.classList.remove("hidden");
+        closeButton.classList.add("hidden");
+    });
+</script>

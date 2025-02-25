@@ -22,6 +22,11 @@
 </head>
 
 <body class="text-xs md:text-sm">
+    
+    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-emerald-600"></div>
+    </div>
+
     {{-- Navbar --}}
     <nav id="navbar" class="fixed top-0 left-0 w-full bg-transparent shadow-sm py-3 z-20">
         <div class="max-w-6xl mx-4 lg:mx-auto flex justify-between items-center py-2">
@@ -324,6 +329,11 @@
 
 
 <script>
+    //menambahkan loading halaman
+    window.addEventListener("load", function () {
+        document.getElementById("loading").style.display = "none";
+    });
+
     // Toggle navbar membuka menu navbar mobile
     document.addEventListener('DOMContentLoaded', function() {
         const menuButton = document.getElementById('menu-button');

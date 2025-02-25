@@ -63,7 +63,7 @@
             <div class="mt-6">
                 <button type="submit"
                     class="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 p-3 text-white font-bold rounded-lg">
-                    Sign in
+                    Masuk
                 </button>
             </div>
         </form>

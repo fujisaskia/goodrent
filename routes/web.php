@@ -17,3 +17,15 @@ Route::get('/register', function () {
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 });
+
+Route::get('/admin/data-barang', function () {
+    return view('admin.data-barang.index');
+});
+
+Route::get('/admin/kelola-user', function () {
+    return view('admin.kelola-user.index');
+});
+
+Route::get('/admin/kelola-diskon', function () {
+    return view('admin.diskon.index');
+});

@@ -72,7 +72,7 @@
 
             <div class="mt-6">
                 <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 p-3 text-white font-bold rounded-lg">
-                    Sign in
+                    Daftar
                 </button>
             </div>
         </form>
