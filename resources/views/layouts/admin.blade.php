@@ -31,14 +31,15 @@
     <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-emerald-600"></div>
     </div>
-    
+
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm p-3">
         <div class="flex max-w-6xl justify-between items-center lg:ml-56">
             <div class="items-center space-x-4">
                 <!-- Button membuka sidebar -->
-                <button id="button-open-sidebar" class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300">
+                <button id="button-open-sidebar"
+                    class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -72,10 +73,12 @@
     {{-- Sidebar --}}
     <div class="flex text-base md:text-sm">
         <!-- Sidebar -->
-        <aside id="sidebar" class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg hover:shadow-emerald-100 rounded-xl transform  -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+        <aside id="sidebar"
+            class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg hover:shadow-emerald-100 rounded-xl transform  -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
 
             <div class="space-y-2 py-8 items-center text-center bg-white rounded-lg">
-                <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">- GoodRent -</span>
+                <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
+                        GoodRent -</span>
             </div>
 
 
@@ -87,7 +90,7 @@
                         <p class="group-hover:translate-x-1 duration-500">Dashboard</p>
                     </li>
                 </a>
-                
+
                 <a href="/admin/data-barang">
                     <li
                         class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
@@ -120,13 +123,15 @@
                     </li>
                 </a>
 
-                <a href="" class="flex justify-center items-center">
-                    <li
-                        class="flex fixed bottom-5 justify-center items-center border-2 border-red-500 space-x-3 font-medium py-2 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
-                        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
-                        <p class="">Keluar</p>
-                    </li>
-                </a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="flex justify-center items-center w-full">
+                        <li class="flex fixed bottom-5 justify-center items-center border-2 border-red-500 space-x-3 font-medium py-2 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                            <p>Keluar</p>
+                        </li>
+                    </button>
+                </form>                
 
             </ul>
 
@@ -148,10 +153,10 @@
 </html>
 
 <script>
-    window.addEventListener("load", function () {
+    window.addEventListener("load", function() {
         document.getElementById("loading").style.display = "none";
     });
-    
+
     const menuButton = document.getElementById("button-open-sidebar");
     const closeButton = document.getElementById("button-close-sidebar");
     const sidebar = document.getElementById("sidebar");

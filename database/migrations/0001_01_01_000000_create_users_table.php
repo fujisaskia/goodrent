@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('no_telp')->unique();
+            $table->string('image')->nullable();
+            $table->enum('status', ['Offline', 'Online'])->default('Offline');
+            $table->enum('status_pelanggan', ['Aktif', 'Suspended', 'Banned'])->default('Aktif');
+            $table->dateTime('last_online_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
