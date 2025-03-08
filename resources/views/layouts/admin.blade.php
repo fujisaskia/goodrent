@@ -21,24 +21,29 @@
     {{-- chart js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- Calendar Format --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
-<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-50 text-sm">
-
-    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-emerald-600"></div>
-    </div>
-    
+<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-sm">
 
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm p-3">
+    <nav
+        class="fixed top-0 left-0 right-0 bg-white shadow-md p-3 rounded-lg m-2 border border-gray-300 md:border-none z-20">
         <div class="flex max-w-6xl justify-between items-center lg:ml-56">
             <div class="items-center space-x-4">
                 <!-- Button membuka sidebar -->
-                <button id="button-open-sidebar" class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300">
+                <button id="button-open-sidebar"
+                    class="flex lg:hidden rounded-lg p-1 text-slate-900 ml-3 lg:ml-0 active:bg-white focus:outline-none focus:ring focus:ring-emerald-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -55,9 +60,20 @@
             </div>
 
             <!-- Profile Icon with Dropdown using Alpine.js -->
-            <div class="relative">
+            <div class="flex relative items-center space-x-3">
+                <div class="items-center">
+                    <button type="button"
+                        class="relative inline-flex items-center  text-sm font-medium text-center text-emerald-600 hover:scale-105 rounded-full duration-300 group">
+                        <i class="fa-solid fa-bell text-3xl group-hover:rotate-6 duration-200"></i>
+                        <!-- Statistik/Grafik -->
+                        <span class="sr-only">Notifications</span>
+                        <div
+                            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">
+                            10</div>
+                    </button>
+                </div>
                 <a class="flex items-center ml-auto space-x-2">
-                    <p class="text-base">Admin</p>
+                    <p class="text-base hidden md:flex">Admin</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="w-10 h-10 rounded-full text-gray-400 border-gray-300">
                         <path fill-rule="evenodd"
@@ -70,12 +86,18 @@
     </nav>
 
     {{-- Sidebar --}}
-    <div class="flex text-base md:text-sm">
+    <div class="flex text-lg md:text-sm">
+        <!-- Overlay -->
+        <div id="sidebar-overlay"
+            class="fixed inset-0 bg-black bg-opacity-50 hidden lg:hidden transition-opacity duration-300 z-10">
+        </div>
         <!-- Sidebar -->
-        <aside id="sidebar" class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg hover:shadow-emerald-100 rounded-xl transform  -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+        <aside id="sidebar"
+            class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-5/6 bg-white py-4 px-3 lg:shadow-lg lg:shadow-emerald-100 shadow-none rounded-xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 z-10">
 
             <div class="space-y-2 py-8 items-center text-center bg-white rounded-lg">
-                <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">- GoodRent -</span>
+                <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
+                        GoodRent -</span>
             </div>
 
 
@@ -87,12 +109,20 @@
                         <p class="group-hover:translate-x-1 duration-500">Dashboard</p>
                     </li>
                 </a>
-                
+
                 <a href="/admin/data-barang">
                     <li
                         class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-box-open text-base"></i>
                         <p class="group-hover:translate-x-1 duration-500">Data Barang</p>
+                    </li>
+                </a>
+
+                <a href="/admin/data-sewa">
+                    <li
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-sewa') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        <i class="fa-solid fa-bag-shopping text-base mr-1.5"></i>
+                        <p class="group-hover:translate-x-1 duration-500">Data Sewa</p>
                     </li>
                 </a>
 
@@ -112,17 +142,17 @@
                     </li>
                 </a>
 
-                <a href="">
+                <a href="/admin/laporan-goodrent">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/laporan-goodrent') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-folder-open text-base"></i>
                         <p class="group-hover:translate-x-1 duration-500">Laporan</p>
                     </li>
                 </a>
 
-                <a href="" class="flex justify-center items-center">
+                <a href="" class="flex justify-center items-center text-xs">
                     <li
-                        class="flex fixed bottom-5 justify-center items-center border-2 border-red-500 space-x-3 font-medium py-2 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
+                        class="flex fixed bottom-5 justify-center items-center border-2 border-gray-300 space-x-3 font-medium py-1 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
                         <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
                         <p class="">Keluar</p>
                     </li>
@@ -141,6 +171,12 @@
         </main>
     </div>
 
+    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player src="https://lottie.host/a9373d02-c947-48ca-8476-b2452dd2b17b/4nxgGAFhrG.lottie"
+            background="transparent" speed="1" style="width: 100px; height: 100px" loop
+            autoplay></dotlottie-player>
+    </div>
 
 
 </body>
@@ -148,23 +184,43 @@
 </html>
 
 <script>
-    window.addEventListener("load", function () {
-        document.getElementById("loading").style.display = "none";
+    window.addEventListener("load", function() {
+        setTimeout(function() {
+            document.getElementById("loading-spinner").classList.add("hidden");
+        }, 1000); // Spinner akan tetap terlihat selama 3 detik
     });
-    
+
+
     const menuButton = document.getElementById("button-open-sidebar");
     const closeButton = document.getElementById("button-close-sidebar");
     const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
 
     menuButton.addEventListener("click", () => {
         sidebar.classList.remove("-translate-x-full");
         menuButton.classList.add("hidden");
         closeButton.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+        overlay.classList.add("opacity-100");
+        document.body.classList.add("overflow-hidden"); // Cegah scrolling
     });
 
     closeButton.addEventListener("click", () => {
         sidebar.classList.add("-translate-x-full");
         menuButton.classList.remove("hidden");
         closeButton.classList.add("hidden");
+        overlay.classList.add("hidden");
+        overlay.classList.remove("opacity-100");
+        document.body.classList.remove("overflow-hidden"); // Cegah scrolling
+    });
+
+    // Klik overlay untuk menutup sidebar
+    overlay.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        menuButton.classList.remove("hidden");
+        closeButton.classList.add("hidden");
+        overlay.classList.add("hidden");
+        overlay.classList.remove("opacity-100");
+        document.body.classList.remove("overflow-hidden"); // Cegah scrolling
     });
 </script>

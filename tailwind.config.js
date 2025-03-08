@@ -11,6 +11,15 @@ export default {
     ],
     theme: {
         extend: {
+            keyframes: {
+                smallbounce: {
+                  '0%, 100%': { transform: 'translateY(-10px)' }, // Membatasi tinggi bounce
+                  '50%': { transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                smallbounce: 'smallbounce 4s infinite', // Mengatur durasi animasi
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
