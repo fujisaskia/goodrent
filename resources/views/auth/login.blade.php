@@ -37,34 +37,35 @@
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
                 <input type="email" name="email"
-                    class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                    class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+            @error('email') border-red-500 ring-1 ring-red-500 @enderror"
                     placeholder="Masukkan Email Anda">
-                    @error('email')
-                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
-                    @enderror
+                @error('email')
+                    <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mb-4 relative">
                 <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
-                <input id="password" type="password" name="password"
-                    class="mt-2 w-full p-3 pr-10 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    placeholder="Masukkan Password Anda">
-                    @error('password')
-                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
-                    @enderror
-            
-                <!-- Icon Mata -->
-                <button type="button" id="togglePassword"
-                    class="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
-                    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                    </svg>
-                </button>
+                <div class="relative flex items-center">
+                    <input id="password" type="password" name="password"
+                        class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+                @error('password') border-red-500 ring-1 ring-red-500 @enderror"
+                        placeholder="Masukkan Password Anda">
+                    <button type="button" id="togglePassword"
+                        class="absolute inset-y-0 right-3 pt-2 flex items-center text-gray-500">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </button>
+                </div>
+                @error('password')
+                    <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                @enderror
             </div>
-            
 
             <div class="mt-6">
                 <button type="submit"
@@ -76,7 +77,8 @@
 
         <h4 class="text-sm text-center mt-6">Belum memiliki akun? <a href="/register"
                 class="text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">Daftar di
-                sini!</a></h4>
+                sini!</a>
+        </h4>
     </div>
 
     <!-- Include AOS JS -->
