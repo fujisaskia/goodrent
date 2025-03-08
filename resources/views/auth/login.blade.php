@@ -32,13 +32,16 @@
         </div>
 
         <!-- Form Input -->
-        <form action="" method="POST">
+        <form action="login" method="POST">
             @csrf
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-600">Email / Username</label>
+                <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
                 <input type="email" name="email"
                     class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                     placeholder="Masukkan Email Anda">
+                    @error('email')
+                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                    @enderror
             </div>
 
             <div class="mb-4 relative">
@@ -46,6 +49,9 @@
                 <input id="password" type="password" name="password"
                     class="mt-2 w-full p-3 pr-10 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                     placeholder="Masukkan Password Anda">
+                    @error('password')
+                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                    @enderror
             
                 <!-- Icon Mata -->
                 <button type="button" id="togglePassword"
