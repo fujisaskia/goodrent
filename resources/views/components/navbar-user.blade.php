@@ -53,9 +53,10 @@
                                     <span>Verifikasi</span>
                                 </a>
                             </li>
-                            <form action="{{ route('logout') }}" method="POST" class="">
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="flex space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
+                                    <button type="submit" class="flex w-full space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="size-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -63,7 +64,8 @@
                                         </svg>
                                         <span>Keluar</span>
                                     </button>
-                            </form>
+                                </form>
+                            </li>                            
                         </ul>
                     </div>
                 </div>
@@ -72,19 +74,19 @@
     </nav>
 
 
-{{-- membuka menu fitur user di ikon --}}
-<script>
-    const userBtn = document.getElementById('userBtn');
-    const userMenu = document.getElementById('userMenu');
+    {{-- membuka menu fitur user di ikon --}}
+    <script>
+        const userBtn = document.getElementById('userBtn');
+        const userMenu = document.getElementById('userMenu');
 
-    userBtn.addEventListener('click', () => {
-        userMenu.classList.toggle('hidden');
-    });
+        userBtn.addEventListener('click', () => {
+            userMenu.classList.toggle('hidden');
+        });
 
-    // Klik di luar menu untuk menutup dropdown
-    document.addEventListener('click', (event) => {
-        if (!userBtn.contains(event.target) && !userMenu.contains(event.target)) {
-            userMenu.classList.add('hidden');
-        }
-    });
-</script>
+        // Klik di luar menu untuk menutup dropdown
+        document.addEventListener('click', (event) => {
+            if (!userBtn.contains(event.target) && !userMenu.contains(event.target)) {
+                userMenu.classList.add('hidden');
+            }
+        });
+    </script>

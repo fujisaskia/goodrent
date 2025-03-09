@@ -60,7 +60,7 @@ class AuthController extends Controller
         $user->last_online_at = now();
         $user->save();
 
-        return redirect()->route('user.index')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil!');
     }
 
     // LOGIN PAGE
@@ -85,9 +85,9 @@ class AuthController extends Controller
         }
     
         $credentials = $request->only('email', 'password');
-    
-        if (!Auth::attempt($credentials, true)) { // true agar session tetap ada
-            return back()->withErrors('Email atau password salah!');
+
+        if (!Auth::attempt($credentials)) {
+            return redirect()->route('login')->withErrors('Email atau password salah!');
         }
     
         $user = Auth::user();
@@ -101,16 +101,24 @@ class AuthController extends Controller
             Auth::logout();
             return redirect()->route('login')->withErrors('Akun Anda telah ditangguhkan oleh admin.');
         }
-    
+
+        // Update status user menjadi 'Online'
         $user->update([
             'status' => 'Online',
             'last_online_at' => now(),
         ]);
-    
-        return redirect()->intended(route($user->role === 'pelanggan' ? 'user.index' : 'dashboard'))
-            ->with('success', 'Login berhasil!');
+
+        // Cek role dengan Spatie
+        if ($user->hasRole('superadmin') || $user->hasRole('admin')) {
+            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+        } elseif ($user->hasRole('pelanggan')) {
+            return redirect()->route('user.dashboard')->with('success', 'Login berhasil!');
+        }
+
+        // Jika role tidak valid, logout user
+        Auth::logout();
+        return redirect()->route('login')->withErrors('Anda tidak memiliki akses!');
     }
-    
 
     // LOGOUT
     public function logout()
