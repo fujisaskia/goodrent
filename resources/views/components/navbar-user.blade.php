@@ -12,7 +12,7 @@
                 </div>
                 <div class="relative">
                     <div class="flex items-center space-x-2">
-                        <p class="text-sm hidden md:block">User</p>
+                        <p class="text-sm hidden md:block">{{ Auth::user()->name }}</p>
                         <button id="userBtn" class="border border-gray-400 rounded-full p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="size-5">
@@ -53,15 +53,17 @@
                                     <span>Verifikasi</span>
                                 </a>
                             </li>
-                            <li><a href="#" class="flex space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="size-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                                    </svg>
-                                    <span>Keluar</span>
-                                </a>
-                            </li>
+                            <form action="{{ route('logout') }}" method="POST" class="">
+                                    @csrf
+                                    <button type="submit" class="flex space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                                        </svg>
+                                        <span>Keluar</span>
+                                    </button>
+                            </form>
                         </ul>
                     </div>
                 </div>

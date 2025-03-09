@@ -33,7 +33,7 @@
         </div>
 
         <!-- Form Input -->
-        <form action="register" method="POST">
+        <form action="{{ route('register') }}" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block font-medium text-gray-600">Nama</label>

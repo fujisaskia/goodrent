@@ -32,7 +32,7 @@
         </div>
 
         <!-- Form Input -->
-        <form action="login" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-600">Email</label>

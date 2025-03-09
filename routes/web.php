@@ -76,7 +76,7 @@ Route::get('/admin/laporan-goodrent', function () {
 // ======================= U S E R ========================= //
 Route::get('/goodrent/produk', function () {
     return view('user.index');
-});
+})->name('user.index');
 
 Route::get('/goodrent/lihat-produk/', function () {
     return view('user.detail-produk');

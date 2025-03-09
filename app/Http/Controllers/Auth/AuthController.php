@@ -39,7 +39,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator->errors());
+            return back()->withErrors($validator->errors())->withInput();
         }
 
         $user = User::create([
@@ -60,7 +60,7 @@ class AuthController extends Controller
         $user->last_online_at = now();
         $user->save();
 
-        return redirect()->route('pelanggan.dashboard')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('user.index')->with('success', 'Registrasi berhasil!');
     }
 
     // LOGIN PAGE
@@ -79,43 +79,38 @@ class AuthController extends Controller
             'email.required' => 'Email wajib diisi',
             'password.required' => 'Password wajib diisi',
         ]);
-
+    
         if ($validator->fails()) {
             return back()->withErrors($validator->errors());
         }
-
+    
         $credentials = $request->only('email', 'password');
-
-        // Jika email atau password salah
-        if (!Auth::attempt($credentials)) {
-            return redirect()->route('login')->withErrors('Email atau password salah!');
+    
+        if (!Auth::attempt($credentials, true)) { // true agar session tetap ada
+            return back()->withErrors('Email atau password salah!');
         }
-
+    
         $user = Auth::user();
-
-        // Cek apakah user diblokir atau ditangguhkan
+    
         if ($user->status_pelanggan === 'Banned') {
             Auth::logout();
             return redirect()->route('login')->withErrors('Akun Anda telah diblokir secara permanen.');
         }
-
+    
         if ($user->status_pelanggan === 'Suspended') {
             Auth::logout();
             return redirect()->route('login')->withErrors('Akun Anda telah ditangguhkan oleh admin.');
         }
-
-        // Update status user menjadi 'Online'
-        $user->status = 'Online';
-        $user->last_online_at = now();
-        $user->save();
-
-        // Cek role user
-        if (in_array($user->role, ['superadmin', 'admin'])) {
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
-        } elseif ($user->role === 'pelanggan') {
-            return redirect()->route('pelanggan.dashboard')->with('success', 'Login berhasil!');
-        }
+    
+        $user->update([
+            'status' => 'Online',
+            'last_online_at' => now(),
+        ]);
+    
+        return redirect()->intended(route($user->role === 'pelanggan' ? 'user.index' : 'dashboard'))
+            ->with('success', 'Login berhasil!');
     }
+    
 
     // LOGOUT
     public function logout()
