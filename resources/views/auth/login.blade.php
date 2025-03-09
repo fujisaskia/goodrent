@@ -47,15 +47,17 @@
             <div class="mb-4 relative">
                 <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
                 <input id="password" type="password" name="password"
-                    class="mt-2 w-full p-3 pr-10 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                    class="my-2 w-full p-3 pr-10 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                     placeholder="Masukkan Password Anda">
                     @error('password')
                         <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
                     @enderror
+
+                    <a href="/forgot-password" class="text-sm mt-2 text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">Lupa password ?</a>
             
                 <!-- Icon Mata -->
                 <button type="button" id="togglePassword"
-                    class="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+                    class="absolute top-2/4 right-3 -translate-y-1/2 flex items-center text-gray-500">
                     <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -66,7 +68,7 @@
             </div>
             
 
-            <div class="mt-6">
+            <div class="mt-5">
                 <button type="submit"
                     class="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 p-3 text-white font-bold rounded-lg">
                     Masuk

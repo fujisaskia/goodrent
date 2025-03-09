@@ -34,12 +34,7 @@
 
 </head>
 
-<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-50 text-sm">
-
-    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-emerald-600"></div>
-    </div>
-
+<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-sm">
 
     <!-- Navbar -->
     <nav
@@ -78,7 +73,7 @@
                     </button>
                 </div>
                 <a class="flex items-center ml-auto space-x-2">
-                    <p class="text-base hidden md:flex">Admin</p>
+                    <p class="text-base hidden md:flex">{{ Auth::user()->name }}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                         class="w-10 h-10 rounded-full text-gray-400 border-gray-300">
                         <path fill-rule="evenodd"
@@ -98,7 +93,7 @@
         </div>
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-4/5 bg-white py-4 px-3 shadow-lg hover:shadow-emerald-100 rounded-xl transform  -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+            class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-5/6 bg-white py-4 px-3 lg:shadow-lg lg:shadow-emerald-100 shadow-none rounded-xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 z-10">
 
             <div class="space-y-2 py-8 items-center text-center bg-white rounded-lg">
                 <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
@@ -155,15 +150,14 @@
                     </li>
                 </a>
 
-                <form action="{{ route('logout') }}" method="POST">
+                <form action="{{ route('logout') }}" method="POST" class="flex justify-center items-center text-xs">
                     @csrf
-                    <button type="submit" class="flex justify-center items-center w-full">
-                        <li class="flex fixed bottom-5 justify-center items-center border-2 border-red-500 space-x-3 font-medium py-2 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
-                            <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
-                            <p>Keluar</p>
-                        </li>
+                    <button type="submit"
+                        class="flex fixed bottom-5 justify-center items-center border-2 border-gray-300 space-x-3 font-medium py-1 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                        <p class="">Keluar</p>
                     </button>
-                </form>                
+                </form>
 
             </ul>
 
@@ -192,8 +186,11 @@
 
 <script>
     window.addEventListener("load", function() {
-        document.getElementById("loading").style.display = "none";
+        setTimeout(function() {
+            document.getElementById("loading-spinner").classList.add("hidden");
+        }, 1000); // Spinner akan tetap terlihat selama 3 detik
     });
+
 
     const menuButton = document.getElementById("button-open-sidebar");
     const closeButton = document.getElementById("button-close-sidebar");

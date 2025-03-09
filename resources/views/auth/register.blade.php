@@ -22,7 +22,7 @@
 </head>
 
 <body
-    class="flex justify-center items-center min-h-screen bg-gradient-to-r from-yellow-100 to-emerald-50 px-6 md:text-sm">
+    class="flex justify-center items-center min-h-screen bg-gradient-to-r from-yellow-100 to-emerald-50 py-12 px-6 md:text-sm">
     <div data-aos="fade-up" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <!-- Title -->
         <div class="text-center text-xl font-bold mb-6 text-gray-800">
@@ -37,7 +37,7 @@
             @csrf
             <div class="mb-4">
                 <label for="name" class="block font-medium text-gray-600">Nama</label>
-                <input type="text" name="name"
+                <input type="text" name="name" value="{{ old('name') }}"
                     class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
                     @error('name') border-red-500 ring-1 ring-red-500 @enderror"
                     placeholder="Masukkan Nama Anda">
@@ -48,7 +48,7 @@
 
             <div class="mb-4">
                 <label for="email" class="block font-medium text-gray-600">Email</label>
-                <input type="email" name="email"
+                <input type="email" name="email" value="{{ old('email') }}"
                     class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
                     @error('email') border-red-500 ring-1 ring-red-500 @enderror"
                     placeholder="Masukkan Email Anda">
@@ -59,7 +59,7 @@
 
             <div class="mb-4">
                 <label for="no_telp" class="block font-medium text-gray-600">Nomor Telepon</label>
-                <input type="text" name="no_telp"
+                <input type="text" name="no_telp" value="{{ old('no_telp') }}"
                     class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
                     @error('no_telp') border-red-500 ring-1 ring-red-500 @enderror"
                     placeholder="Masukkan Nomor Telepon Anda">
