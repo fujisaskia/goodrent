@@ -10,8 +10,8 @@
             class="flex flex-col md:flex-row bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl shadow-lg p-6 items-center h-72 justify-between md:h-48 relative overflow-hidden">
 
             <div class="flex-1 relative">
-                <h1 class="text-3xl md:text-4xl text-white font-bold">Selamat Datang, Admin 👋</h1>
-                <p class="text-gray-100 max-w-md">Kelola data dengan mudah dan pastikan semuanya berjalan dengan baik.</p>
+                <h1 class="text-3xl md:text-4xl text-white font-bold">Selamat Datang, {{ Auth::user()->name }} 👋</h1>
+                <p class="text-base text-gray-100 max-w-md mt-1">Kelola data dengan mudah dan pastikan semuanya berjalan dengan baik.</p>
             </div>
 
             <div class="flex">

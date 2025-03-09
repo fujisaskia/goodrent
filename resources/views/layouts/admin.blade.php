@@ -59,28 +59,139 @@
                 </button>
             </div>
 
-            <!-- Profile Icon with Dropdown using Alpine.js -->
+            <!-- Notification & Profile Icon-->
             <div class="flex relative items-center space-x-3">
-                <div class="items-center">
-                    <button type="button"
-                        class="relative inline-flex items-center  text-sm font-medium text-center text-emerald-600 hover:scale-105 rounded-full duration-300 group">
-                        <i class="fa-solid fa-bell text-3xl group-hover:rotate-6 duration-200"></i>
-                        <!-- Statistik/Grafik -->
-                        <span class="sr-only">Notifications</span>
-                        <div
-                            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">
-                            10</div>
-                    </button>
+                {{-- Notification Icon --}}
+                <div class="relative">
+                    <div class="items-center">
+                        <button type="button" id="notificationBtn"
+                            class="relative inline-flex items-center  text-sm font-medium text-center text-emerald-600 hover:scale-105 focus:scale-95 rounded-full duration-300 group">
+                            <i class="fa-solid fa-bell text-3xl group-hover:rotate-6 duration-200"></i>
+                            <span class="sr-only">Notifications</span>
+                            <div
+                                class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">
+                                10</div>
+                        </button>
+                    </div>
+                    <!-- Modal Notification -->
+                    <div id="notificationModal"
+                        class="absolute right-0 mt-2 w-80 bg-white shadow-md border border-gray-300 rounded-lg hidden">
+                        <!-- Header -->
+                        <div class="flex justify-between items-center p-4 border-b">
+                            <h3 class="text-base font-semibold">Notifikasi</h3>
+                            {{-- <button onclick="closeNotification()" class="text-gray-500 hover:text-gray-700">&times;</button> --}}
+                        </div>
+
+                        <!-- Notification List (Scrollable) -->
+                        <div class="max-h-64 overflow-y-auto">
+                            <!-- Notification Item -->
+                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                    class="w-10 h-10 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold">Admin</p>
+                                    <p class="text-xs text-gray-600">Reservasi kamar Anda telah dikonfirmasi.</p>
+                                    <span class="text-xs text-gray-400">10 menit yang lalu</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                    class="w-10 h-10 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold">Sistem</p>
+                                    <p class="text-xs text-gray-600">Pengingat: Check-in besok pukul 14.00 WIB.</p>
+                                    <span class="text-xs text-gray-400">2 jam yang lalu</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                    class="w-10 h-10 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold">Admin</p>
+                                    <p class="text-xs text-gray-600">Tagihan kamar telah diterbitkan.</p>
+                                    <span class="text-xs text-gray-400">1 hari yang lalu</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                    class="w-10 h-10 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold">Sistem</p>
+                                    <p class="text-xs text-gray-600">Pengingat: Check-in besok pukul 14.00 WIB.</p>
+                                    <span class="text-xs text-gray-400">2 jam yang lalu</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                    class="w-10 h-10 rounded-full">
+                                <div>
+                                    <p class="text-sm font-semibold">Admin</p>
+                                    <p class="text-xs text-gray-600">Tagihan kamar telah diterbitkan.</p>
+                                    <span class="text-xs text-gray-400">1 hari yang lalu</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a class="flex items-center ml-auto space-x-2">
-                    <p class="text-base hidden md:flex">{{ Auth::user()->name }}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                        class="w-10 h-10 rounded-full text-gray-400 border-gray-300">
-                        <path fill-rule="evenodd"
-                            d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                </a>
+
+                {{-- Profile Icon --}}
+                <div class="relative">
+                    <div class="flex items-center ml-auto space-x-2">
+                        <button id="profileBtn" class="focus:scale-95">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-10 h-10 rounded-full text-gray-400 hover:text-gray-500 border-gray-300">
+                                <path fill-rule="evenodd"
+                                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- Dropdown Menu Profile -->
+                    <div id="profileMenu"
+                        class="absolute right-0 mt-2 w-56 bg-white shadow-md border border-gray-300 rounded-lg hidden">
+                        <!-- Profil User -->
+                        <div class="flex items-center space-x-2 p-4 border-b">
+                            <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                                class="w-10 h-10 rounded-full">
+                            <div>
+                                <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
+                                <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                            </div>
+                        </div>
+
+                        <a href=""
+                            class="flex w-full items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                class="w-6 h-6 rounded-full text-gray-400 border-gray-300">
+                                <path fill-rule="evenodd"
+                                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            {{-- <i class="fa-solid fa-user text-base text-gray-400 border-gray-300 px-1.5 py-0.5 group-hover:bg-gray-400 group-hover:text-white rounded-full duration-700"></i> --}}
+                            <span>Profil</span>
+                        </a>
+
+                        <a href=""
+                            class="flex w-full items-center space-x-3 px-4 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
+                            <i
+                                class="fa-solid fa-gear text-base text-gray-400 border-gray-300 group-hover:rotate-90 duration-700"></i>
+                            <span>Pengaturan</span>
+                        </a>
+
+                        <!-- Logout Form -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="flex w-full items-center space-x-3 px-4 py-2 text-red-600 hover:bg-red-100 my-3">
+                                <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                                <span>Keluar</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -150,7 +261,8 @@
                     </li>
                 </a>
 
-                <form action="{{ route('logout') }}" method="POST" class="flex justify-center items-center text-xs">
+                <form action="{{ route('logout') }}" method="POST"
+                    class="flex justify-center items-center text-xs">
                     @csrf
                     <button type="submit"
                         class="flex fixed bottom-5 justify-center items-center border-2 border-gray-300 space-x-3 font-medium py-1 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
@@ -197,6 +309,12 @@
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("sidebar-overlay");
 
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationModal = document.getElementById('notificationModal');
+
     menuButton.addEventListener("click", () => {
         sidebar.classList.remove("-translate-x-full");
         menuButton.classList.add("hidden");
@@ -224,4 +342,32 @@
         overlay.classList.remove("opacity-100");
         document.body.classList.remove("overflow-hidden"); // Cegah scrolling
     });
+
+    profileBtn.addEventListener('click', () => {
+        profileMenu.classList.toggle('hidden');
+    });
+
+    // Klik di luar menu untuk menutup dropdown
+    document.addEventListener('click', (event) => {
+        if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
+            profileMenu.classList.add('hidden');
+        }
+    });
+
+    // notification Modal
+    notificationBtn.addEventListener('click', () => {
+        notificationModal.classList.toggle('hidden');
+    });
+
+    // Klik di luar menu untuk menutup modal
+    document.addEventListener('click', (event) => {
+        if (!notificationBtn.contains(event.target) && !notificationModal.contains(event.target)) {
+            notificationModal.classList.add('hidden');
+        }
+    });
+
+    // fungsi menutup modal
+    // function closeNotification() {
+    //     document.getElementById('notificationModal').classList.add('hidden');
+    // }
 </script>
