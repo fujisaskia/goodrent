@@ -89,6 +89,7 @@
     </div>
 
     <script>
+        // menghitung angka card ketika halaman dimuat
         document.addEventListener("DOMContentLoaded", () => {
             const counters = document.querySelectorAll("h3[data-target]");
             counters.forEach(counter => {
@@ -107,6 +108,8 @@
                 updateCount();
             });
         });
+
+        // Line Chart
         document.addEventListener("DOMContentLoaded", function() {
             var ctx = document.getElementById('performanceChart').getContext('2d');
             var performanceChart = new Chart(ctx, {

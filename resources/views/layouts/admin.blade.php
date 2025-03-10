@@ -284,6 +284,7 @@
         </main>
     </div>
 
+    {{-- animate loading tap --}}
     <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">
         <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
         <dotlottie-player src="https://lottie.host/a9373d02-c947-48ca-8476-b2452dd2b17b/4nxgGAFhrG.lottie"
@@ -297,24 +298,25 @@
 </html>
 
 <script>
+    const menuButton = document.getElementById("button-open-sidebar");
+    const closeButton = document.getElementById("button-close-sidebar");
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+    
+    const notificationBtn = document.getElementById('notificationBtn');
+    const notificationModal = document.getElementById('notificationModal');
+
+    // animate loading ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
             document.getElementById("loading-spinner").classList.add("hidden");
         }, 1000); // Spinner akan tetap terlihat selama 3 detik
     });
 
-
-    const menuButton = document.getElementById("button-open-sidebar");
-    const closeButton = document.getElementById("button-close-sidebar");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
-
-    const profileBtn = document.getElementById('profileBtn');
-    const profileMenu = document.getElementById('profileMenu');
-
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationModal = document.getElementById('notificationModal');
-
+    // Membuka Menu Sidebar ketika mobile dan tab
     menuButton.addEventListener("click", () => {
         sidebar.classList.remove("-translate-x-full");
         menuButton.classList.add("hidden");
@@ -324,6 +326,7 @@
         document.body.classList.add("overflow-hidden"); // Cegah scrolling
     });
 
+    // Menutup Menu Sidebar ketika mobile dan tab
     closeButton.addEventListener("click", () => {
         sidebar.classList.add("-translate-x-full");
         menuButton.classList.remove("hidden");
@@ -333,7 +336,7 @@
         document.body.classList.remove("overflow-hidden"); // Cegah scrolling
     });
 
-    // Klik overlay untuk menutup sidebar
+    // Klik overlay bg-hitam ketika membuka sidebar
     overlay.addEventListener("click", () => {
         sidebar.classList.add("-translate-x-full");
         menuButton.classList.remove("hidden");
@@ -343,23 +346,24 @@
         document.body.classList.remove("overflow-hidden"); // Cegah scrolling
     });
 
+    // Button membuka Menu Profile
     profileBtn.addEventListener('click', () => {
         profileMenu.classList.toggle('hidden');
     });
 
-    // Klik di luar menu untuk menutup dropdown
+    // Klik di luar menu untuk menutup dropdown Menu Profile
     document.addEventListener('click', (event) => {
         if (!profileBtn.contains(event.target) && !profileMenu.contains(event.target)) {
             profileMenu.classList.add('hidden');
         }
     });
 
-    // notification Modal
+    // Button Membuka Notification Modal
     notificationBtn.addEventListener('click', () => {
         notificationModal.classList.toggle('hidden');
     });
 
-    // Klik di luar menu untuk menutup modal
+    // Klik di luar menu untuk menutup modal Notikasi
     document.addEventListener('click', (event) => {
         if (!notificationBtn.contains(event.target) && !notificationModal.contains(event.target)) {
             notificationModal.classList.add('hidden');

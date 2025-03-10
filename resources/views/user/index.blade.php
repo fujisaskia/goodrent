@@ -68,7 +68,7 @@
         <div class="flex justify-center items-center space-x-3 my-8 mx-4">
             <input type="search" placeholder="Cari Produk yang dibutuhkan..."
                 class="w-2/3 px-4 py-3 border md:border-gray-300 border-gray-400 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-200">
-            <button class="p-3 bg-emerald-600 rounded-full shadow-xl text-white focus:scale-95 duration-300">
+            <button class="py-3 px-4 bg-emerald-600 rounded-full shadow-xl text-white focus:scale-95 duration-300">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>

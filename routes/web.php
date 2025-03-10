@@ -81,3 +81,6 @@ Route::get('/goodrent/produk', function () {
 Route::get('/goodrent/lihat-produk/', function () {
     return view('user.detail-produk');
 });
+Route::get('/profile', function () {
+    return view('user.profile');
+})->name('user.index');
