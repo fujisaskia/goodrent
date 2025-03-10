@@ -36,7 +36,7 @@
             @csrf
             <div class="mb-4">
                 <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
-                <input type="email" name="email"
+                <input type="email" name="email" id="email"
                     class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
                     @error('email') border-red-500 ring-1 ring-red-500 @enderror"
                     placeholder="Masukkan Email Anda">
@@ -55,9 +55,10 @@
                     <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
                 @enderror
 
-                <a href="/forgot-password"
-                    class="text-sm mt-2 text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-1 duration-200">Lupa
-                    password ?</a>
+                <a href="{{ route('password.request') }}"
+                    class="text-sm mt-2 text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-1 duration-200">
+                    Lupa password?
+                </a>
 
                 <button type="button" id="togglePassword"
                     class="absolute top-2/4 right-3 -translate-y-1/2 flex items-center text-gray-500">
