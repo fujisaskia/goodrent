@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Halaman Register & Login
@@ -20,6 +21,13 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name
 // Reset Password
 Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordPage'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
+//user
+Route::get('/admin/manajemen-pelanggan', [UserController::class, 'index'])->name('manajemen-pelanggan')->middleware('role:superadmin|admin');
+Route::put('/edit-profil', [UserController::class, 'editProfilUser']); // Edit profil user yang sedang login
+Route::put('/update-suspend/{id}', [UserController::class, 'suspendUser'])->middleware('role:superadmin|admin');
+Route::put('/update-banned/{id}', [UserController::class, 'banUser'])->middleware('role:superadmin|admin');
+Route::put('/update-unsuspend/{id}', [UserController::class, 'unsuspendUser'])->middleware('role:superadmin|admin');
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,11 +84,8 @@ Route::get('/admin/laporan-goodrent', function () {
 // ======================= U S E R ========================= //
 Route::get('/goodrent/produk', function () {
     return view('user.index');
-})->name('user.dashboard');
+})->name('pelanggan.dashboard');
 
 Route::get('/goodrent/lihat-produk/', function () {
     return view('user.detail-produk');
 });
-Route::get('/profile', function () {
-    return view('user.profile');
-})->name('user.index');

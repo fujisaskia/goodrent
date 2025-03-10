@@ -126,8 +126,12 @@
             </div>
         </form>
 
-        <h4 class="text-sm text-center mt-6">Sudah memiliki akun? <a href="/login"
-                class="text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">Masuk di sini!</a>
+        <h4 class="text-sm text-center mt-6">
+            Sudah memiliki akun?
+            <a href="{{ route('login') }}"
+                class="text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">
+                Masuk di sini!
+            </a>
         </h4>
     </div>
 
