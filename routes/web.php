@@ -4,6 +4,11 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
+// Landing Page ===========================//
+Route::get('/', function () {
+    return view('welcome');
+});
+
 // Halaman Register & Login
 Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -22,70 +27,77 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name
 Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordPage'])->name('password.reset');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
-//user
-Route::get('/admin/manajemen-pelanggan', [UserController::class, 'index'])->name('manajemen-pelanggan')->middleware('role:superadmin|admin');
-Route::put('/edit-profil', [UserController::class, 'editProfilUser']); // Edit profil user yang sedang login
-Route::put('/update-suspend/{id}', [UserController::class, 'suspendUser'])->middleware('role:superadmin|admin');
-Route::put('/update-banned/{id}', [UserController::class, 'banUser'])->middleware('role:superadmin|admin');
-Route::put('/update-unsuspend/{id}', [UserController::class, 'unsuspendUser'])->middleware('role:superadmin|admin');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ==================== A D M I N =============================================//
+Route::middleware(['role:superadmin|admin'])->group(function () {  
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+    // Dashboard ======================================================//  
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+    
+    // Data Barang ===================================================== //
+    Route::get('/admin/data-barang', function () {
+        return view('admin.data-barang.index');
+    });
+    Route::get('/admin/tambah-data-barang', function () {
+        return view('admin.data-barang.create');
+    });
+    Route::get('/admin/edit-data-barang', function () {
+        return view('admin.data-barang.edit');
+    });
+    
+    // data sewa ===================================================== //
+    Route::get('/admin/data-sewa', function () {
+        return view('admin.data-sewa.index');
+    });
+    
+    
+    // kelola pelanggan ===================================================== //
+    Route::get('/admin/kelola-pelanggan', [UserController::class, 'index'])->name('kelola-pelanggan');
+    Route::post('/kelola-pelanggan/pelanggan/{id}/suspend', [UserController::class, 'suspendUser'])->name('pelanggan.suspend');
+    Route::post('/kelola-pelanggan/pelanggan/{id}/un-suspend', [UserController::class, 'unsuspendUser'])->name('pelanggan.un-suspend');
+    Route::post('/kelola-pelanggan/pelanggan/{id}/banned', [UserController::class, 'banUser'])->name('pelanggan.banned');
+    Route::get('/admin/tambah-user', function () {
+        return view('admin.kelola-user.create');
+    });
+    
+    
+    // kelola-diskon ===================================================== //
+    Route::get('/admin/kelola-diskon', function () {
+        return view('admin.diskon.index');
+    });
+    Route::get('/admin/tambah-diskon', function () {
+        return view('admin.diskon.create');
+    });
+    Route::get('/admin/edit-diskon', function () {
+        return view('admin.diskon.edit');
+    });
+    
+    // Laporan Admin ===================================================== //
+    Route::get('/admin/laporan-goodrent', function () {
+        return view('admin.laporan.index');
+    });
 
-// Data Barang ===================================================== //
-Route::get('/admin/data-barang', function () {
-    return view('admin.data-barang.index');
-});
-Route::get('/admin/tambah-data-barang', function () {
-    return view('admin.data-barang.create');
-});
-Route::get('/admin/edit-data-barang', function () {
-    return view('admin.data-barang.edit');
-});
-
-// data sewa ===================================================== //
-Route::get('/admin/data-sewa', function () {
-    return view('admin.data-sewa.index');
-});
-
-
-// kelola user ===================================================== //
-Route::get('/admin/kelola-user', function () {
-    return view('admin.kelola-user.index');
-});
-Route::get('/admin/tambah-user', function () {
-    return view('admin.kelola-user.create');
-});
-
-
-// kelola-diskon ===================================================== //
-Route::get('/admin/kelola-diskon', function () {
-    return view('admin.diskon.index');
-});
-Route::get('/admin/tambah-diskon', function () {
-    return view('admin.diskon.create');
-});
-Route::get('/admin/edit-diskon', function () {
-    return view('admin.diskon.edit');
-});
-
-// Laporan Admin ===================================================== //
-Route::get('/admin/laporan-goodrent', function () {
-    return view('admin.laporan.index');
 });
 
 
+// ====================== U S E R ====================================== //
+Route::middleware(['role:pelanggan'])->group(function () {
 
-// ======================= U S E R ========================= //
-Route::get('/goodrent/produk', function () {
-    return view('user.index');
-})->name('pelanggan.dashboard');
+    // produk ============================================//
+    Route::get('/goodrent/produk', function () {
+        return view('user.index');
+    })->name('pelanggan.dashboard');
 
-Route::get('/goodrent/lihat-produk/', function () {
-    return view('user.detail-produk');
+    Route::get('/goodrent/lihat-produk/', function () {
+        return view('user.detail-produk');
+    });
+
+    // profile ===========================================//
+    Route::get('/profile', function () {
+        return view('user.profile');
+    });
+    Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
+
 });

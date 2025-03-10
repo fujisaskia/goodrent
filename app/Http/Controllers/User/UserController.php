@@ -16,7 +16,7 @@ class UserController extends Controller
             $query->where('name', 'pelanggan'); // Sesuaikan dengan nama role di database
         })->get();
 
-        return view('user.index', compact('users'));
+        return view('admin.kelola-user.index', compact('users'));
     }
 
     public function editProfilUser(Request $request)
@@ -26,24 +26,28 @@ class UserController extends Controller
         $request->validate([
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|unique:users,email,' . $user->id,
-            'password' => 'nullable|min:8|confirmed',
-            'no_telp' => 'nullable|string|max:20|unique:users',
+            'password' => 'nullable|min:8',
+            'no_telp' => $request->no_telp !== $user->no_telp
+                ? 'nullable|string|max:20|unique:users,no_telp'
+                : 'nullable|string|max:20',
             'image' => 'nullable|mimes:jpeg,jpg,png|max:2048',
         ], [
             'email.unique' => 'Email sudah terdaftar',
             'password.min' => 'Password minimal 8 karakter',
-            'password.confirmed' => 'Password dan konfirmasi password harus sama',
-            'no_telp.unique' => 'No. telepon sudah terdaftar',
+            'no_telp.unique' => 'Nomor telepon sudah terdaftar',
             'image.mimes' => 'Format gambar harus jpeg, jpg, atau png',
             'image.max' => 'Ukuran gambar maksimal 2MB'
         ]);
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->no_telp = $request->input('no_telp');
 
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
+        }
+
+        if ($request->no_telp !== $user->no_telp) {
+            $user->no_telp = $request->input('no_telp');
         }
 
         $defaultImage = 'Dummy.png';
@@ -60,7 +64,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Profil user berhasil diubah.');
+        return redirect()->back()->with('success', 'Profil Anda berhasil diubah.');
     }
 
     public function suspendUser($id)

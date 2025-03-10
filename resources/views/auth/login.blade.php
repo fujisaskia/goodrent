@@ -17,6 +17,13 @@
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    
+    <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -90,10 +97,25 @@
 
     <!-- Include AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Toastr JS (Harus setelah jQuery) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Initialize AOS -->
     <script>
         AOS.init();
+
+        $(document).ready(function() {
+            @if(session('success'))
+                toastr.success("{{ session('success') }}");
+            @elseif(session('error'))
+                toastr.error("{{ session('error') }}");
+            @elseif(session('info'))
+                toastr.info("{{ session('info') }}");
+            @elseif(session('warning'))
+                toastr.warning("{{ session('warning') }}");
+            @endif
+        });
     </script>
 </body>
 

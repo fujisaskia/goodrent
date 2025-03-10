@@ -29,6 +29,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
 
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -129,18 +132,37 @@
             background="transparent" speed="1" style="width: 100px; height: 100px" loop
             autoplay></dotlottie-player>
     </div>
-
+    
+    <!-- Toastr JS (Taruh sebelum </body>) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>
 
 </html>
 
 <script>
-    // animate loading ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
             document.getElementById("loading-spinner").classList.add("hidden");
-        }, 1000); // Spinner akan tetap terlihat selama 3 detik
-    });
 
+            @if (session('success'))
+                setTimeout(function() {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right",
+                        timeOut: 3000, // Waktu tampil 3 detik
+                        extendedTimeOut: 1000,
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        showDuration: 300,
+                        hideDuration: 300
+                    };
+                    toastr.success("{{ session('success') }}");
+                }, 500);
+            @endif
+
+        }, 1000);
+    });
 </script>

@@ -60,7 +60,7 @@ class AuthController extends Controller
         $user->last_online_at = now();
         $user->save();
 
-        return redirect()->route('pelanggan.dashboard')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('login.page')->with('success', 'Registrasi berhasil! silakan masuk menggunakan Akun Anda!');
     }
 
     // LOGIN PAGE

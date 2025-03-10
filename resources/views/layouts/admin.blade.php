@@ -29,6 +29,12 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
 
+    <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -90,7 +96,7 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Reservasi kamar Anda telah dikonfirmasi.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, repudiandae.</p>
                                     <span class="text-xs text-gray-400">10 menit yang lalu</span>
                                 </div>
                             </div>
@@ -100,7 +106,7 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Sistem</p>
-                                    <p class="text-xs text-gray-600">Pengingat: Check-in besok pukul 14.00 WIB.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                                     <span class="text-xs text-gray-400">2 jam yang lalu</span>
                                 </div>
                             </div>
@@ -110,7 +116,7 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Tagihan kamar telah diterbitkan.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                                     <span class="text-xs text-gray-400">1 hari yang lalu</span>
                                 </div>
                             </div>
@@ -119,7 +125,7 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Sistem</p>
-                                    <p class="text-xs text-gray-600">Pengingat: Check-in besok pukul 14.00 WIB.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet.</p>
                                     <span class="text-xs text-gray-400">2 jam yang lalu</span>
                                 </div>
                             </div>
@@ -129,7 +135,7 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Tagihan kamar telah diterbitkan.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, reprehenderit?</p>
                                     <span class="text-xs text-gray-400">1 hari yang lalu</span>
                                 </div>
                             </div>
@@ -237,11 +243,11 @@
                     </li>
                 </a>
 
-                <a href="/admin/kelola-user">
+                <a href="/admin/kelola-pelanggan">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-user') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-pelanggan') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <x-iconsax-bol-profile-2user class="w-5 h-auto" />
-                        <p class="group-hover:translate-x-1 duration-500">Kelola User</p>
+                        <p class="group-hover:translate-x-1 duration-500">Kelola Pelanggan</p>
                     </li>
                 </a>
 
@@ -292,6 +298,9 @@
             autoplay></dotlottie-player>
     </div>
 
+    <!-- Toastr JS (Harus setelah jQuery) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 </body>
 
@@ -302,18 +311,31 @@
     const closeButton = document.getElementById("button-close-sidebar");
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("sidebar-overlay");
-    
+
     const profileBtn = document.getElementById('profileBtn');
     const profileMenu = document.getElementById('profileMenu');
-    
+
     const notificationBtn = document.getElementById('notificationBtn');
     const notificationModal = document.getElementById('notificationModal');
 
-    // animate loading ketika halaman dimuat
+    // animate loading & notification ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
             document.getElementById("loading-spinner").classList.add("hidden");
-        }, 1000); // Spinner akan tetap terlihat selama 3 detik
+
+            // Tampilkan Toastr setelah animasi loading selesai
+            setTimeout(function() {
+                @if (session('success'))
+                    toastr.success("{{ session('success') }}");
+                @elseif (session('error'))
+                    toastr.error("{{ session('error') }}");
+                @elseif (session('info'))
+                    toastr.info("{{ session('info') }}");
+                @elseif (session('warning'))
+                    toastr.warning("{{ session('warning') }}");
+                @endif
+            }, 500); // Toastr muncul 0.5 detik setelah spinner hilang
+        }, 1000); // Spinner hilang setelah 1 detik
     });
 
     // Membuka Menu Sidebar ketika mobile dan tab
