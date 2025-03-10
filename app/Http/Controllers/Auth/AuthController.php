@@ -60,7 +60,7 @@ class AuthController extends Controller
         $user->last_online_at = now();
         $user->save();
 
-        return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil!');
+        return redirect()->route('pelanggan.dashboard')->with('success', 'Registrasi berhasil!');
     }
 
     // LOGIN PAGE
@@ -112,7 +112,7 @@ class AuthController extends Controller
         if ($user->hasRole('superadmin') || $user->hasRole('admin')) {
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         } elseif ($user->hasRole('pelanggan')) {
-            return redirect()->route('user.dashboard')->with('success', 'Login berhasil!');
+            return redirect()->route('pelanggan.dashboard')->with('success', 'Login berhasil!');
         }
 
         // Jika role tidak valid, logout user
