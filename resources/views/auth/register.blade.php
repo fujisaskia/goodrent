@@ -140,6 +140,49 @@
     <!-- Include AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "{{ session('error') }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Oops! Ada kesalahan.",
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
+
     <!-- Initialize AOS -->
     <script>
         AOS.init();
