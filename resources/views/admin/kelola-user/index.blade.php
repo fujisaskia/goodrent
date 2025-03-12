@@ -68,10 +68,23 @@
                                             </form>
                                         @endif
 
-                                        {{-- Tombol Banned --}}
-                                        <form action="{{ route('pelanggan.banned', $user->id) }}" method="POST">
-                                            @include('components.crud.banned')
-                                        </form>
+                                        @if ($user->status_pelanggan === 'Banned')
+                                        <button
+                                            class="bg-gray-500 text-white p-2 rounded-full shadow-md shadow-gray-300 cursor-not-allowed opacity-50"
+                                            title="Telah diblokir"
+                                            disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                            </svg>           
+                                        </button>                                    
+                                        
+                                        @else
+                                            {{-- Tombol Banned --}}
+                                            <form action="{{ route('pelanggan.banned', $user->id) }}" method="POST">
+                                                @csrf
+                                                @include('components.crud.banned')
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
 

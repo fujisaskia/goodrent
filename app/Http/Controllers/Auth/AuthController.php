@@ -87,19 +87,22 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
-            return redirect()->route('login')->withErrors('Email atau password salah!');
+            notify()->error('Email atau password salah!');
+            return redirect()->route('login');
         }
     
         $user = Auth::user();
     
         if ($user->status_pelanggan === 'Banned') {
             Auth::logout();
-            return redirect()->route('login')->withErrors('Akun Anda telah diblokir secara permanen.');
+            notify()->error('Akun Anda telah diblokir secara permanen.');
+            return redirect()->route('login');
         }
     
         if ($user->status_pelanggan === 'Suspended') {
             Auth::logout();
-            return redirect()->route('login')->withErrors('Akun Anda telah ditangguhkan oleh admin.');
+            notify()->error('Akun Anda telah ditangguhkan oleh admin.');
+            return redirect()->route('login');
         }
 
         // Update status user menjadi 'Online'
@@ -110,13 +113,16 @@ class AuthController extends Controller
 
         // Cek role dengan Spatie
         if ($user->hasRole('superadmin') || $user->hasRole('admin')) {
-            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            notify()->success('Login berhasil!');
+            return redirect()->route('dashboard');
         } elseif ($user->hasRole('pelanggan')) {
-            return redirect()->route('pelanggan.dashboard')->with('success', 'Login berhasil!');
+            notify()->success('Login berhasil!');
+            return redirect()->route('pelanggan.dashboard');
         }
 
         // Jika role tidak valid, logout user
         Auth::logout();
+        notify()->success('Anda tidak memiliki akses!');
         return redirect()->route('login')->withErrors('Anda tidak memiliki akses!');
     }
 
