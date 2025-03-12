@@ -35,21 +35,11 @@
     <!-- Toastr CSS -->
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
 
-        <!-- Laravel Notify -->
-        @notifyCss
-
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
 
 <body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-sm">
-
-    <!-- Laravel Notify -->
-    @include('notify::components.notify')
-    @notifyJs
-    
-
     <!-- Navbar -->
     <nav
         class="fixed top-0 left-0 right-0 bg-white shadow-md p-3 rounded-lg m-2 border border-gray-300 md:border-none z-20">
@@ -104,7 +94,8 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, repudiandae.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit. Recusandae, repudiandae.</p>
                                     <span class="text-xs text-gray-400">10 menit yang lalu</span>
                                 </div>
                             </div>
@@ -114,7 +105,8 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Sistem</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing
+                                        elit.</p>
                                     <span class="text-xs text-gray-400">2 jam yang lalu</span>
                                 </div>
                             </div>
@@ -124,7 +116,8 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</p>
                                     <span class="text-xs text-gray-400">1 hari yang lalu</span>
                                 </div>
                             </div>
@@ -143,7 +136,8 @@
                                     class="w-10 h-10 rounded-full">
                                 <div>
                                     <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, reprehenderit?</p>
+                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing
+                                        elit. Velit, reprehenderit?</p>
                                     <span class="text-xs text-gray-400">1 hari yang lalu</span>
                                 </div>
                             </div>
@@ -326,24 +320,56 @@
     const notificationBtn = document.getElementById('notificationBtn');
     const notificationModal = document.getElementById('notificationModal');
 
-    // animate loading & notification ketika halaman dimuat
+    // Animate loading & notification ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
             document.getElementById("loading-spinner").classList.add("hidden");
 
-            // Tampilkan Toastr setelah animasi loading selesai
+            // Tampilkan SweetAlert Toast setelah animasi loading selesai
             setTimeout(function() {
                 @if (session('success'))
-                    toastr.success("{{ session('success') }}");
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
                 @elseif (session('error'))
-                    toastr.error("{{ session('error') }}");
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "error",
+                        title: "{{ session('error') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
                 @elseif (session('info'))
-                    toastr.info("{{ session('info') }}");
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "{{ session('info') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
                 @elseif (session('warning'))
-                    toastr.warning("{{ session('warning') }}");
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "warning",
+                        title: "{{ session('warning') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
                 @endif
-            }, 500); // Toastr muncul 0.5 detik setelah spinner hilang
-        }, 1000); // Spinner hilang setelah 1 detik
+            }, 500); // Muncul 0.5 detik setelah loading selesai
+        }, 1000); // Loading hilang setelah 1 detik
     });
 
     // Membuka Menu Sidebar ketika mobile dan tab
