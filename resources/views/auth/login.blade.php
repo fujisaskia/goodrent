@@ -24,18 +24,12 @@
     <!-- Toastr CSS -->
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
 
-    <!-- Laravel Notify -->
-    @notifyCss
-
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
 </head>
 
 <body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-emerald-100 to-yellow-50 px-6">
-    <!-- Laravel Notify -->
-    @include('notify::components.notify')
-    @notifyJs
 
     <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <!-- Title -->
