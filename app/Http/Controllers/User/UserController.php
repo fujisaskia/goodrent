@@ -123,17 +123,19 @@ class UserController extends Controller
     public function suspendUser($id)
     {
         $user = User::find($id);
-
+    
         if ($user) {
             $user->status = 'Offline';
             $user->last_online_at = now();
             $user->status_pelanggan = 'Suspended';
             $user->save();
-
-            return redirect()->back()->with('success', 'Pengguna berhasil ditangguhkan.');
+    
+            notify()->success('Pengguna berhasil ditangguhkan!', 'Sukses');
+            return redirect()->back();
         }
-
-        return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
+    
+        notify()->error('Pengguna tidak ditemukan!', 'Gagal');
+        return redirect()->back();
     }
 
     public function banUser($id)

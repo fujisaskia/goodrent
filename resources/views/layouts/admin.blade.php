@@ -33,7 +33,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+
+        <!-- Laravel Notify -->
+        @notifyCss
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -41,6 +44,11 @@
 </head>
 
 <body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-sm">
+
+    <!-- Laravel Notify -->
+    @include('notify::components.notify')
+    @notifyJs
+    
 
     <!-- Navbar -->
     <nav
@@ -299,7 +307,7 @@
     </div>
 
     <!-- Toastr JS (Harus setelah jQuery) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
 
 
 </body>

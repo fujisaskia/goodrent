@@ -22,13 +22,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+
+    <!-- Laravel Notify -->
+    @notifyCss
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
 </head>
 
 <body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-emerald-100 to-yellow-50 px-6">
+    <!-- Laravel Notify -->
+    @include('notify::components.notify')
+    @notifyJs
+
     <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <!-- Title -->
         <div class="text-center text-xl font-bold mb-6 text-gray-800">
@@ -98,24 +106,11 @@
     <!-- Include AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
-    <!-- Toastr JS (Harus setelah jQuery) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <!-- Initialize AOS -->
     <script>
         AOS.init();
 
-        $(document).ready(function() {
-            @if(session('success'))
-                toastr.success("{{ session('success') }}");
-            @elseif(session('error'))
-                toastr.error("{{ session('error') }}");
-            @elseif(session('info'))
-                toastr.info("{{ session('info') }}");
-            @elseif(session('warning'))
-                toastr.warning("{{ session('warning') }}");
-            @endif
-        });
     </script>
 </body>
 
