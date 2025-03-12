@@ -23,18 +23,21 @@ class AuthController extends Controller
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|unique:users',
+            'name' => 'required|string|max:50',
+            'email' => 'required|string|max:50|unique:users',
             'password' => 'required|string|min:8|confirmed', // password_confirmation harus dikirim dari frontend
             'no_telp' => 'required|string|max:20|unique:users', // No. telepon harus dikirim dari frontend
         ], [
             'name.required' => 'Nama wajib diisi',
+            'name.max' => 'Nama tidak boleh lebih dari 50 karakter',
             'email.required' => 'Email wajib diisi',
+            'email.max' => 'Email tidak boleh lebih dari 50 karakter',
             'email.unique' => 'Email sudah terdaftar',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
             'password.confirmed' => 'Password dan konfirmasi password harus sama',
             'no_telp.required' => 'No. telepon wajib diisi',
+            'no_telp.max' => 'No. telepon tidak boleh lebih dari 20 karakter',
             'no_telp.unique' => 'No. telepon sudah terdaftar',
         ]);
 
@@ -60,7 +63,7 @@ class AuthController extends Controller
         $user->last_online_at = now();
         $user->save();
 
-        return redirect()->route('login.page')->with('success', 'Registrasi berhasil! silakan masuk menggunakan Akun Anda!');
+        return redirect()->route('pelanggan.dashboard')->with('success', 'Registrasi berhasil! silakan masuk menggunakan Akun Anda!');
     }
 
     // LOGIN PAGE
@@ -79,34 +82,38 @@ class AuthController extends Controller
             'email.required' => 'Email wajib diisi',
             'password.required' => 'Password wajib diisi',
         ]);
-    
+
         if ($validator->fails()) {
             return back()->withErrors($validator->errors());
         }
-    
+
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
             return redirect()->route('login')->withErrors('Email atau password salah!');
         }
-    
+
         $user = Auth::user();
-    
+
         if ($user->status_pelanggan === 'Banned') {
             Auth::logout();
             return redirect()->route('login')->withErrors('Akun Anda telah diblokir secara permanen.');
         }
-    
+
         if ($user->status_pelanggan === 'Suspended') {
             Auth::logout();
             return redirect()->route('login')->withErrors('Akun Anda telah ditangguhkan oleh admin.');
         }
 
         // Update status user menjadi 'Online'
-        $user->update([
-            'status' => 'Online',
-            'last_online_at' => now(),
-        ]);
+        // $user->update([
+        //     'status' => 'Online',
+        //     'last_online_at' => now(),
+        // ]);
+
+        $user->status = 'Online';
+        $user->last_online_at = now();
+        $user->save();
 
         // Cek role dengan Spatie
         if ($user->hasRole('superadmin') || $user->hasRole('admin')) {
@@ -125,10 +132,9 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         if ($user) {
-            $user->update([
-                'status' => 'Offline',
-                'last_online_at' => now(),
-            ]);
+            $user->status = 'Offline';
+            $user->last_online_at = now();
+            $user->save();
         }
 
         Auth::logout();

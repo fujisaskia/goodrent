@@ -12,11 +12,64 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::whereHas('roles', function ($query) {
-            $query->where('name', 'pelanggan'); // Sesuaikan dengan nama role di database
+        $user = auth()->user(); // Ambil user yang sedang login
+
+        $users = User::whereHas('roles', function ($query) use ($user) {
+            if ($user->hasRole('superadmin')) {
+                // Superadmin melihat pelanggan & admin
+                $query->whereIn('name', ['pelanggan', 'admin']);
+            } else if ($user->hasRole('admin')) {
+                // Admin hanya melihat pelanggan
+                $query->where('name', 'pelanggan');
+            }
         })->get();
 
         return view('admin.kelola-user.index', compact('users'));
+    }
+
+    public function tambahAdminPage()
+    {
+        return view('admin.kelola-user.create');
+    }
+
+    public function tambahAdmin(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:8',
+            'no_telp' => 'required|unique:users,no_telp',
+            'image' => 'nullable|mimes:jpeg,jpg,png|max:2048',
+        ], [
+            'email.unique' => 'Email sudah terdaftar',
+            'password.min' => 'Password minimal 8 karakter',
+            'no_telp.unique' => 'Nomor telepon sudah terdaftar',
+            'image.mimes' => 'Format gambar harus jpeg, jpg, atau png',
+            'image.max' => 'Ukuran gambar maksimal 2MB'
+        ]);
+
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->no_telp = $request->input('no_telp');
+
+        $defaultImage = 'Dummy.png';
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image->storeAs('public/users', $image->hashName());
+            $user->image = $image->hashName();
+        } else {
+            $user->image = $defaultImage;
+        }
+
+        $user->save();
+
+        // Menambahkan role pelanggan ke user yang baru dibuat
+        $user->assignRole('admin');
+
+        return redirect()->route('admin.kelola-user.index')->with('success', 'Admin berhasil ditambahkan.');
     }
 
     public function editProfilUser(Request $request)
@@ -24,7 +77,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'nullable|string|max:255',
+            'name' => 'nullable|string|max:50',
             'email' => 'nullable|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
             'no_telp' => $request->no_telp !== $user->no_telp

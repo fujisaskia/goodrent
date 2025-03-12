@@ -11,21 +11,72 @@
             <span>Kelola Pelanggan</span>
         </h2>
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="flex flex-col md:flex-row justify-between mb-4">
-                <div class="flex space-x-4 mb-2 md:mb-0">
-                    <input type="search" placeholder="Cari Pengguna"
-                        class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
-                <div class="flex justify-end">
-                    <a href="/admin/tambah-user">
-                        <button
-                            class="bg-green-600 text-white p-3 rounded-lg flex items-center gap-2 focus:scale-95 duration-300">
-                            <span class=""><i class="fa-solid fa-plus"></i> Tambah User</span>
+            <!-- Wrapper untuk Modal dan Tombol Tambah Admin -->
+            <div x-data="{ openModal: false }">
+                <div class="flex flex-col md:flex-row justify-between mb-4">
+                    <!-- Input Pencarian -->
+                    <div class="flex space-x-4 mb-2 md:mb-0">
+                        <input type="search" placeholder="Cari Pengguna"
+                            class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                        <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                    </a>
+                    </div>
+
+                    <!-- Tombol Tambah Admin -->
+                    @if (auth()->user()->hasRole('superadmin'))
+                        <div class="flex justify-end w-full md:w-auto">
+                            <button @click="openModal = true"
+                                class="bg-green-600 text-white p-3 rounded-lg flex items-center gap-2 focus:scale-95 duration-300">
+                                <span><i class="fa-solid fa-plus"></i> Tambah Admin</span>
+                            </button>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Modal Tambah Admin -->
+                <div x-show="openModal" x-cloak
+                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div class="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-400">
+                        <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Tambah Admin Baru</h1>
+
+                        <form action="{{ route('admin.store') }}" method="POST">
+                            @csrf
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Nama</label>
+                                    <input type="text" name="name" placeholder="Silahkan isi nama"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                        required>
+                                </div>
+
+                                <div>
+                                    <label class="block text-gray-700 mb-2">E-Mail</label>
+                                    <input type="email" name="email" placeholder="Silahkan isi e-mail"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                        required>
+                                </div>
+
+                                <div>
+                                    <label class="block text-gray-700 mb-2">Password</label>
+                                    <input type="password" name="password" placeholder="Buat password"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-3 justify-end mt-6">
+                                <button type="button" @click="openModal = false"
+                                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 p-2 rounded-lg">
+                                    <p>Batalkan</p>
+                                </button>
+                                <button type="submit"
+                                    class="flex space-x-2 text-white bg-green-600 hover:bg-green-700 py-2 px-6 rounded-lg">
+                                    <p>Tambah</p>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -35,8 +86,9 @@
                         <tr class="bg-gray-500 text-white uppercase">
                             <th class="p-3">No</th>
                             <th class="p-3">Nama Pengguna</th>
-                            <th class="p-3">No. Telp</th>
+                            <th class="p-3 text-center">No. Telp</th>
                             <th class="p-3 text-center">Status</th>
+                            <th class="p-3 text-center">Terakhir Online</th>
                             <th class="p-3 text-center">Status Pelanggan</th>
                             <th class="p-3 text-center">Batasi</th>
                             <th class="p-3 text-center">Aksi</th>
@@ -47,10 +99,13 @@
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="p-3 text-center">{{ $index + 1 }}</td>
                                 <td class="p-3">{{ $user->name }}</td>
-                                <td class="p-3">{{ $user->no_telp }}</td>
+                                <td class="p-3 text-center">{{ $user->no_telp }}</td>
                                 <td class="p-3 text-center">{{ $user->status }}</td>
+                                <td class="p-3 text-center">
+                                    {{ $user->status === 'Offline' ? \Carbon\Carbon::parse($user->last_online_at)->diffForHumans() : '' }}
+                                </td>
                                 <td class="p-3 text-center">{{ $user->status_pelanggan }}</td>
-                            
+
                                 {{-- Kolom Batasi --}}
                                 <td class="p-3 text-center">
                                     <div class="inline-flex space-x-4">
@@ -88,7 +143,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr class="border-b hover:bg-gray-50">
                                 <td rowspan="7" class="p-6 text-center">Tidak Ada Data</td>
                             </tr>
@@ -119,7 +174,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         this.closest('form')
-                    .submit(); // Ambil form terdekat dari tombol yang diklik
+                            .submit(); // Ambil form terdekat dari tombol yang diklik
                     }
                 });
             });
