@@ -288,28 +288,7 @@
     </section>
 
     {{-- Copyright Footer--}}
-    <footer class="bg-emerald-700">
-        <div class="max-w-6xl flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
-            <a href="#">
-                {{-- <img class="w-auto h-7" src="https://merakiui.com/images/full-logo.svg" alt=""> --}}
-                <h3 class="text-white font-semibold text-lg">GoodRent</h3>
-            </a>
-    
-            <p class="text-white">&copy; Copyright 2025. All Rights Reserved.</p>
-    
-            <div class="flex space-x-4">
-                <a href="">
-                    <i class="fa-brands fa-whatsapp fa-xl text-white hover:-translate-y-1 hover:text-gray-200 duration-300"></i>
-                </a>
-                <a href="">
-                    <i class="fa-brands fa-facebook fa-xl text-white hover:-translate-y-1 hover:text-gray-200 duration-300"></i>
-                </a>
-                <a href="">
-                    <i class="fa-brands fa-instagram fa-xl text-white hover:-translate-y-1 hover:text-gray-200 duration-300"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
+    @include('components.footer-user')
 
     <!-- Include AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
