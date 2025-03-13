@@ -17,20 +17,13 @@
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    
-    <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Toastr CSS -->
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
 </head>
 
 <body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-emerald-100 to-yellow-50 px-6">
-
     <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <!-- Title -->
         <div class="text-center text-xl font-bold mb-6 text-gray-800">
@@ -99,12 +92,53 @@
 
     <!-- Include AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "{{ session('success') }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "{{ session('error') }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: "Oops! Ada kesalahan.",
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: false
+            });
+        </script>
+    @endif
 
     <!-- Initialize AOS -->
     <script>
         AOS.init();
-
     </script>
 </body>
 
