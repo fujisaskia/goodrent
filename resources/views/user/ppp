@@ -5,6 +5,72 @@
         }, 1000); // Spinner akan tetap terlihat selama 3 detik
     });
 
+
+    <!-- Footer -->
+    <footer class="bg-emerald-600 text-white p-6">
+        <div class="max-w-6xl mx-auto justify-between">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-6 border-b border-emerald-700">
+                {{-- Social Media --}}
+                <div class="">
+                    <div class="flex space-x-3 items-center mb-4">
+                        <img src="{{ asset('assets/profile.jpg') }}" alt="Goodrent Logo" class="w-12 h-12 rounded-full">
+                        <h3 class="text-white text-3xl lg:text-2xl font-bold">GoodRent</h3>
+                    </div>
+                    <span class="text-sm text-gray-100">Sewa PS & Barang Kapan Pun, Dimana Pun! Lorem ipsum dolor sit amet.</span>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="" class="py-1 px-2 bg-emerald-700 hover:bg-emerald-800 duration-200 hover:scale-105 text-white rounded"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="" class="py-1 px-2 bg-emerald-700 hover:bg-emerald-800 duration-200 hover:scale-105 text-white rounded"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="" class="py-1 px-2 bg-emerald-700 hover:bg-emerald-800 duration-200 hover:scale-105 text-white rounded"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="" class="py-1 px-2 bg-emerald-700 hover:bg-emerald-800 duration-200 hover:scale-105 text-white rounded"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                {{-- Kontak --}}
+                <div class="text-sm md:text-xs">
+                    {{-- kontak --}}
+                    <div class="flex space-x-2 items-center mb-5">
+                        <i class="fa-solid fa-phone p-1.5 bg-gray-300 rounded-full text-emerald-800"></i>
+                        <div class="flex flex-col ">
+                            <h5 class="text-gray-200">Telepon</h5>
+                            <h4 class="text-white font-semibold">089511223344</h4>
+                        </div>
+                    </div>
+                    {{-- alamat --}}
+                    <div class="flex space-x-2 items-center">
+                        <i class="fa-solid fa-location-dot py-1.5 px-2 bg-gray-300 rounded-full text-emerald-800"></i>
+                        <div class="flex flex-col ">
+                            <h5 class="text-gray-200">Alamat</h5>
+                            <h4 class="text-white font-semibold pr-8">SMK Negeri 1 Ciomas, Jl. Raya Laladon, Laladon, Kec. Ciomas, Kabupaten Bogor, Jawa Barat 16610</h4>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Maps Location --}}
+                @php
+                    $alamat = "SMK Negeri 1 Ciomas, Jl. Raya Laladon, Laladon, Kec. Ciomas, Kabupaten Bogor, Jawa Barat 16610";
+                    $mapUrl = "https://www.google.com/maps?q=" . urlencode($alamat) . "&output=embed";
+                @endphp
+            
+            <div class="">
+                <h5 class="text-gray-100 font-semibold mb-3">Peta Lokasi</h5>
+                <iframe 
+                    src="{{ $mapUrl }}"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
+                    class="w-full h-40 rounded">
+                </iframe>
+            </div>
+            
+
+            </div>
+
+            <div class="flex flex-col space-y-3 md:flex-row text-center justify-between mt-5 text-xs">
+                <h4>&copy; 2025 GoodRent. All rights reserved. Developed By Lorem, ipsum.</h4>
+                <a href="" class="hover:underline"><h4>Syarat & Ketentuan</h4></a>
+            </div>
+        </div>
+    </footer>
+
+
 {{-- <nav class="fixed top-2 left-0 w-[calc(100%-2rem)] mx-4 bg-white shadow-md p-4 z-50 rounded-lg">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
         <h2 class="text-green-700 font-bold text-lg">GoodRent</h2>

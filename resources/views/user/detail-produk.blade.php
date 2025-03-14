@@ -116,48 +116,6 @@
 
                             </div>
 
-                            <div class="w-full">
-                                <label class="block text-xs font-semibold text-gray-600 mb-2">Tambahan :</label>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                    <div class="flex">
-                                        <div class="flex items-center h-5">
-                                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                                        </div>
-                                        <div class="ms-2 text-sm">
-                                            <label for="helper-checkbox" class="font-medium text-gray-900">Kabel</label>
-                                            <p id="helper-checkbox-text" class="text-xs font-semibold text-red-400">Rp 10,000</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="flex items-center h-5">
-                                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                                        </div>
-                                        <div class="ms-2 text-sm">
-                                            <label for="helper-checkbox" class="font-medium text-gray-900">Lorem, ipsum.</label>
-                                            <p id="helper-checkbox-text" class="text-xs font-semibold text-red-400">Rp 10,000</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="flex items-center h-5">
-                                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                                        </div>
-                                        <div class="ms-2 text-sm">
-                                            <label for="helper-checkbox" class="font-medium text-gray-900">Lorem, ipsum dolor.</label>
-                                            <p id="helper-checkbox-text" class="text-xs font-semibold text-red-400">Rp 10,000</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="flex items-center h-5">
-                                            <input id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                                        </div>
-                                        <div class="ms-2 text-sm">
-                                            <label for="helper-checkbox" class="font-medium text-gray-900">Lorem, ipsum.</label>
-                                            <p id="helper-checkbox-text" class="text-xs font-semibold text-red-400">Rp 10,000</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <button class="w-full mt-8 bg-gray-800 hover:bg-gray-900 text-white p-4 rounded">Sewa
                                 Sekarang</button>
                         </form>
