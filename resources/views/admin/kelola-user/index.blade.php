@@ -11,73 +11,24 @@
             <span>Kelola Pelanggan</span>
         </h2>
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <!-- Wrapper untuk Modal dan Tombol Tambah Admin -->
-            <div x-data="{ openModal: false }">
-                <div class="flex flex-col md:flex-row justify-between mb-4">
-                    <!-- Input Pencarian -->
-                    <div class="flex space-x-4 mb-2 md:mb-0">
-                        <input type="search" placeholder="Cari Pengguna"
-                            class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                        <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
-
-                    <!-- Tombol Tambah Admin -->
-                    @if (auth()->user()->hasRole('superadmin'))
-                        <div class="flex justify-end w-full md:w-auto">
-                            <button @click="openModal = true"
+            <div class="flex flex-col md:flex-row justify-between mb-4">
+                <div class="flex space-x-4 mb-2 md:mb-0">
+                    <input type="search" placeholder="Cari Pengguna"
+                        class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+                @if (auth()->user()->hasRole('superadmin'))
+                    <div class="flex justify-end">
+                        <a href="{{ route('tambah-admin') }}">
+                            <button
                                 class="bg-green-600 text-white p-3 rounded-lg flex items-center gap-2 focus:scale-95 duration-300">
                                 <span><i class="fa-solid fa-plus"></i> Tambah Admin</span>
                             </button>
-                        </div>
-                    @endif
-                </div>
-
-                <!-- Modal Tambah Admin -->
-                <div x-show="openModal" x-cloak
-                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div class="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-400">
-                        <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Tambah Admin Baru</h1>
-
-                        <form action="{{ route('admin.store') }}" method="POST">
-                            @csrf
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-gray-700 mb-2">Nama</label>
-                                    <input type="text" name="name" placeholder="Silahkan isi nama"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 mb-2">E-Mail</label>
-                                    <input type="email" name="email" placeholder="Silahkan isi e-mail"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 mb-2">Password</label>
-                                    <input type="password" name="password" placeholder="Buat password"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="flex space-x-3 justify-end mt-6">
-                                <button type="button" @click="openModal = false"
-                                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 p-2 rounded-lg">
-                                    <p>Batalkan</p>
-                                </button>
-                                <button type="submit"
-                                    class="flex space-x-2 text-white bg-green-600 hover:bg-green-700 py-2 px-6 rounded-lg">
-                                    <p>Tambah</p>
-                                </button>
-                            </div>
-                        </form>
+                        </a>
                     </div>
-                </div>
+                @endif
             </div>
 
             <div class="overflow-x-auto lg:overflow-visible">
@@ -85,6 +36,7 @@
                     <thead>
                         <tr class="bg-gray-500 text-white uppercase">
                             <th class="p-3">No</th>
+                            <th class="p-3 text-center">Foto Profil</th>
                             <th class="p-3">Nama Pengguna</th>
                             <th class="p-3 text-center">No. Telp</th>
                             <th class="p-3 text-center">Status</th>
@@ -98,6 +50,10 @@
                         @forelse ($users as $index=>$user)
                             <tr class="border-b hover:bg-gray-50">
                                 <td class="p-3 text-center">{{ $index + 1 }}</td>
+                                <td class="p-3 text-center">
+                                    <img src="{{ asset('storage/users/' . $user->image) }}"
+                                        class="w-10 h-10 object-cover rounded-full text-cen">
+                                </td>
                                 <td class="p-3">{{ $user->name }}</td>
                                 <td class="p-3 text-center">{{ $user->no_telp }}</td>
                                 <td class="p-3 text-center">{{ $user->status }}</td>
@@ -123,23 +79,10 @@
                                             </form>
                                         @endif
 
-                                        @if ($user->status_pelanggan === 'Banned')
-                                        <button
-                                            class="bg-gray-500 text-white p-2 rounded-full shadow-md shadow-gray-300 cursor-not-allowed opacity-50"
-                                            title="Telah diblokir"
-                                            disabled>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-                                            </svg>           
-                                        </button>                                    
-                                        
-                                        @else
-                                            {{-- Tombol Banned --}}
-                                            <form action="{{ route('pelanggan.banned', $user->id) }}" method="POST">
-                                                @csrf
-                                                @include('components.crud.banned')
-                                            </form>
-                                        @endif
+                                        {{-- Tombol Banned --}}
+                                        <form action="{{ route('pelanggan.banned', $user->id) }}" method="POST">
+                                            @include('components.crud.banned')
+                                        </form>
                                     </div>
                                 </td>
 
@@ -150,9 +93,15 @@
                                         <a href="">
                                             @include('components.crud.read')
                                         </a>
-                                        <form action="" id="delete-form">
-                                            @include('components.crud.delete')
-                                        </form>
+                                        @if (isset($user) && $user->id)
+                                            <form id="delete-form-{{ $user->id }}" method="POST"
+                                                action="{{ route('kelola-pelanggan.destroy', $user->id) }}"
+                                                data-role="{{ $user->roles->first()->name ?? 'pelanggan' }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                @include('components.crud.delete')
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -171,9 +120,19 @@
     <script>
         document.querySelectorAll('#delete-btn').forEach(button => {
             button.addEventListener('click', function() {
+                let formId = this.getAttribute('data-form-id'); // Ambil ID form
+                let userRole = this.getAttribute('data-role') ||
+                'pelanggan'; // Default ke pelanggan jika role tidak ada
+
+                // Tentukan pesan berdasarkan role
+                let titleText = (userRole === 'admin') ? "Hapus Admin?" : "Hapus Pelanggan?";
+                let descriptionText = (userRole === 'admin') ?
+                    "Admin yang dihapus tidak bisa dikembalikan!" :
+                    "Pelanggan yang dihapus tidak bisa dikembalikan!";
+
                 Swal.fire({
-                    title: "Hapus User?",
-                    text: "User yang dihapus tidak bisa dikembalikan!",
+                    title: titleText,
+                    text: descriptionText,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#d33",
@@ -181,13 +140,25 @@
                     confirmButtonText: "Ya, hapus!",
                     cancelButtonText: "Batal",
                     customClass: {
-                        confirmButton: 'rounded-full',
-                        cancelButton: 'rounded-full'
+                        confirmButton: 'rounded-full px-4 py-2',
+                        cancelButton: 'rounded-full px-4 py-2'
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.closest('form')
-                            .submit(); // Ambil form terdekat dari tombol yang diklik
+                        Swal.fire({
+                            title: "Menghapus...",
+                            text: "Harap tunggu sebentar.",
+                            icon: "info",
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading(); // Efek loading
+                            }
+                        });
+
+                        setTimeout(() => {
+                            this.closest('form').submit(); // Submit form setelah animasi
+                        }, 1500);
                     }
                 });
             });

@@ -1,4 +1,4 @@
-<button type="button" id="delete-btn"
+<button type="button" id="delete-btn" data-form-id="delete-form-{{ $user->id }}"
     class="bg-red-500 hover:bg-red-600 shadow-md shadow-red-400 hover:shadow-none focus:scale-95 duration-300 text-white p-2 rounded-full"
     title="Hapus">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"

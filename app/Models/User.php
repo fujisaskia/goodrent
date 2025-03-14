@@ -52,11 +52,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    protected function image(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($image) => asset('/storage/users/' . $image),
-        );
-    }
 }

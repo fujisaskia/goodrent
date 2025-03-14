@@ -44,7 +44,7 @@
 
             <!-- Content -->
             <div class="flex-1 text-center md:text-left z-10">
-                <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">Selamat Datang, User 👋</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">Selamat Datang, {{ Auth::user()->name }}👋</h1>
                 <q class="text-gray-100 max-w-md text-lg italic">
                     Siap main tanpa batas? Sewa PS & barang favoritmu sekarang!
                 </q>
