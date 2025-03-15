@@ -285,12 +285,12 @@
     </div>
 
     {{-- content here --}}
-    <div class="min-h-screen py-24 mx-4 lg:mx-8 ">
+    <div class="min-h-screen py-24 mx-4 lg:mx-8">
         <!-- Main Content -->
         <main class="flex-1 lg:ml-60 mb-8">
             @yield('content')
         </main>
-    </div>
+    </div>    
 
     {{-- animate loading tap --}}
     <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">

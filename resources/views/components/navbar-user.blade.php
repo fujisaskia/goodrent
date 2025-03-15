@@ -12,12 +12,9 @@
                 </a>
                 <div class="relative">
                     <div class="flex items-center space-x-2">
-                        <button id="userBtn" class="border border-gray-400 hover:bg-gray-100 rounded-full p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                            </svg>
+                        <button id="userBtn">
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="User Profile"
+                                class="w-10 h-10 rounded-full object-cover">
                         </button>
                     </div>
 
@@ -26,15 +23,16 @@
                         class="absolute right-0 mt-2 w-56 text-base md:text-sm bg-white shadow-md border border-gray-300 rounded-lg hidden">
                         <!-- Profil User -->
                         <div class="flex items-center space-x-2 p-4 border-b">
-                            <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                class="w-10 h-10 rounded-full">
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
+                                alt="Profile Picture" class="w-10 h-10 rounded-full">
                             <div>
                                 <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                             </div>
                         </div>
                         <div class="py-2 text-sm text-gray-700">
-                            <a href="/profile" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
+                            <a href="{{ route('profile') }}"
+                                class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -51,16 +49,20 @@
                                 <span>Pemesanan</span>
                             </a>
                             <a href="#" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-                                  </svg>                                  
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                                </svg>
                                 <span>Alamat</span>
                             </a>
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="flex w-full items-center space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
+                                <button type="submit"
+                                    class="flex w-full items-center space-x-3 px-4 py-2 hover:bg-red-100 mt-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="size-4">
                                         <path stroke-linecap="round" stroke-linejoin="round"

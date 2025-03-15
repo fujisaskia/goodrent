@@ -64,12 +64,16 @@ class UserController extends Controller
             $user->image = $defaultImage;
         }
 
+        $user->status = 'Offline';
+        $user->last_online_at = now();
+        $user->status_pelanggan = 'Aktif';
+
         $user->save();
 
         // Menambahkan role pelanggan ke user yang baru dibuat
         $user->assignRole('admin');
 
-        return redirect()->route('admin.kelola-user.index')->with('success', 'Admin berhasil ditambahkan.');
+        return redirect()->route('kelola-pelanggan')->with('success', 'Admin berhasil ditambahkan.');
     }
 
     public function editProfilUser(Request $request)
@@ -83,7 +87,7 @@ class UserController extends Controller
             'no_telp' => $request->no_telp !== $user->no_telp
                 ? 'nullable|string|max:20|unique:users,no_telp'
                 : 'nullable|string|max:20',
-            'image' => 'nullable|mimes:jpeg,jpg,png|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
         ], [
             'email.unique' => 'Email sudah terdaftar',
             'password.min' => 'Password minimal 8 karakter',
@@ -105,14 +109,14 @@ class UserController extends Controller
 
         $defaultImage = 'Dummy.png';
 
+        // Update gambar jika disediakan
         if ($request->hasFile('image')) {
-            if ($user->image !== $defaultImage && Storage::exists('public/users/' . $user->image)) {
-                Storage::delete('public/users/' . $user->image);
-            }
+            // Simpan dengan nama asli file
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('users', $imageName, 'public');
 
-            $image = $request->file('image');
-            $image->storeAs('public/users', $image->hashName());
-            $user->image = $image->hashName();
+            // Simpan hanya nama file, bukan path lengkapnya
+            $user->update(['image' => $imageName]);
         }
 
         $user->save();
@@ -120,22 +124,50 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profil Anda berhasil diubah.');
     }
 
+    public function lihatPelanggan($id)
+    {
+        $pelanggan = User::findOrFail($id); // Gunakan findOrFail untuk langsung memberikan error jika tidak ditemukan
+        return view('admin.kelola-user.show', compact('pelanggan'));
+    }
+
+    public function hapusPelanggan($id)
+    {
+        // Cek apakah user yang sedang login adalah superadmin
+        if (!auth()->user()->hasRole('superadmin')) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menghapus pengguna.');
+        }
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
+        }
+
+        // Cek apakah gambar user bukan default
+        $defaultImage = 'Dummy.png'; // Nama file default yang digunakan
+        if ($user->image && $user->image !== $defaultImage) {
+            Storage::delete('public/users/' . $user->image); // Hapus dari storage
+        }
+
+        $user->delete(); // Hapus user dari database
+
+        return redirect()->route('kelola-pelanggan')->with('success', 'Pengguna berhasil dihapus.');
+    }
+
     public function suspendUser($id)
     {
         $user = User::find($id);
-    
+
         if ($user) {
             $user->status = 'Offline';
             $user->last_online_at = now();
             $user->status_pelanggan = 'Suspended';
             $user->save();
-    
-            notify()->success('Pengguna berhasil ditangguhkan!', 'Sukses');
-            return redirect()->back();
+
+            return redirect()->back()->with('success', 'Pengguna berhasil ditangguhkan.');
         }
-    
-        notify()->error('Pengguna tidak ditemukan!', 'Gagal');
-        return redirect()->back();
+
+        return redirect()->back()->with('error', 'Pengguna tidak ditemukan.');
     }
 
     public function banUser($id)
