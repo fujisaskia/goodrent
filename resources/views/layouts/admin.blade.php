@@ -158,7 +158,7 @@
                         class="absolute right-0 mt-2 w-56 bg-white shadow-md border border-gray-300 rounded-lg hidden">
                         <!-- Profil User -->
                         <div class="flex items-center space-x-2 p-4 border-b">
-                            <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="Profile Picture"
                                 class="w-10 h-10 rounded-full">
                             <div>
                                 <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
