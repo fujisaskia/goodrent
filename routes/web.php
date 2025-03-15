@@ -35,6 +35,10 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    Route::get('/admin/profile', function () {
+        return view('admin.profile');
+    });
     
     // Data Barang ===================================================== //
     Route::get('/admin/data-barang', function () {
@@ -90,6 +94,12 @@ Route::middleware(['role:pelanggan'])->group(function () {
 
     Route::get('/goodrent/lihat-produk/', function () {
         return view('user.detail-produk');
+    });
+    Route::get('/goodrent/cek-keranjang/', function () {
+        return view('user.keranjang');
+    });
+    Route::get('/goodrent/checkout/', function () {
+        return view('user.checkout');
     });
 
     // profile ===========================================//

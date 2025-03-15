@@ -26,58 +26,15 @@
                     <!-- Tombol Tambah Admin -->
                     @if (auth()->user()->hasRole('superadmin'))
                         <div class="flex justify-end w-full md:w-auto">
-                            <button @click="openModal = true"
+                            <button onclick="openModalTambahAdmin()"
                                 class="bg-green-600 text-white p-3 rounded-lg flex items-center gap-2 focus:scale-95 duration-300">
                                 <span><i class="fa-solid fa-plus"></i> Tambah Admin</span>
                             </button>
                         </div>
                     @endif
+                    @include('admin.kelola-user.create')
                 </div>
 
-                <!-- Modal Tambah Admin -->
-                <div x-show="openModal" x-cloak
-                    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div class="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-400">
-                        <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Tambah Admin Baru</h1>
-
-                        <form action="{{ route('admin.store') }}" method="POST">
-                            @csrf
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-gray-700 mb-2">Nama</label>
-                                    <input type="text" name="name" placeholder="Silahkan isi nama"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 mb-2">E-Mail</label>
-                                    <input type="email" name="email" placeholder="Silahkan isi e-mail"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 mb-2">Password</label>
-                                    <input type="password" name="password" placeholder="Buat password"
-                                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="flex space-x-3 justify-end mt-6">
-                                <button type="button" @click="openModal = false"
-                                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 p-2 rounded-lg">
-                                    <p>Batalkan</p>
-                                </button>
-                                <button type="submit"
-                                    class="flex space-x-2 text-white bg-green-600 hover:bg-green-700 py-2 px-6 rounded-lg">
-                                    <p>Tambah</p>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
             <div class="overflow-x-auto lg:overflow-visible">
@@ -124,15 +81,15 @@
                                         @endif
 
                                         @if ($user->status_pelanggan === 'Banned')
-                                        <button
-                                            class="bg-gray-500 text-white p-2 rounded-full shadow-md shadow-gray-300 cursor-not-allowed opacity-50"
-                                            title="Telah diblokir"
-                                            disabled>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
-                                            </svg>           
-                                        </button>                                    
-                                        
+                                            <button
+                                                class="bg-gray-500 text-white p-2 rounded-full shadow-md shadow-gray-300 cursor-not-allowed opacity-50"
+                                                title="Telah diblokir" disabled>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="size-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                                                </svg>
+                                            </button>
                                         @else
                                             {{-- Tombol Banned --}}
                                             <form action="{{ route('pelanggan.banned', $user->id) }}" method="POST">
@@ -192,6 +149,38 @@
                 });
             });
         });
+
+        // membuka modal tambah user
+        function openModalTambahAdmin() {
+            let overlay = document.getElementById('modal-overlay');
+            let modal = document.getElementById('modal');
+
+            // Tampilkan overlay
+            overlay.classList.remove('hidden');
+
+            // Beri jeda untuk animasi
+            setTimeout(() => {
+                modal.classList.remove('scale-95', 'opacity-0');
+                modal.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
+        }
+
+        function closeModalTambahAdmin() {
+            let modal = document.getElementById('modal');
+            let overlay = document.getElementById('modal-overlay');
+
+            // Tambahkan animasi keluar
+            modal.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('scale-100', 'opacity-100');
+
+            // Tunggu animasi selesai sebelum menyembunyikan modal
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300); // Sesuai dengan durasi transition (300ms)
+        }
     </script>
 
 @endsection

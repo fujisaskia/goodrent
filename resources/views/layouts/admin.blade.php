@@ -170,7 +170,7 @@
                             </div>
                         </div>
 
-                        <a href=""
+                        <a href="/admin/profile"
                             class="flex w-full items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 rounded-full text-gray-400 border-gray-300">
@@ -182,12 +182,12 @@
                             <span>Profil</span>
                         </a>
 
-                        <a href=""
+                        {{-- <a href=""
                             class="flex w-full items-center space-x-3 px-4 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
                             <i
                                 class="fa-solid fa-gear text-base text-gray-400 border-gray-300 group-hover:rotate-90 duration-700"></i>
                             <span>Pengaturan</span>
-                        </a>
+                        </a> --}}
 
                         <!-- Logout Form -->
                         <form method="POST" action="{{ route('logout') }}">
