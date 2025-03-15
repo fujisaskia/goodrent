@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barang extends Model
+class Diskon extends Model
 {
     protected $fillable = [
-        'kode_barang',
-        'jenis_ps',
-        'deskripsi',
-        'image',
-        'harga',
-        'stok',
-        'status_barang',
+        'nama_diskon',
+        'kode_diskon',
+        'jenis_diskon',
+        'besar_diskon',
+        'masa_berlaku',
     ];
 
     public function pesanan()
