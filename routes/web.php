@@ -35,6 +35,10 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
+
+    Route::get('/admin/profile', function () {
+        return view('admin.profile');
+    });
     
     // Data Barang ===================================================== //
     Route::get('/admin/data-barang', function () {
@@ -61,7 +65,7 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/tambah-admin', [UserController::class, 'tambahAdminPage'])->name('tambah-admin');
     Route::post('/admin/store', [UserController::class, 'tambahAdmin'])->name('admin.store')->middleware('role:superadmin'); // Hanya superadmin yang bisa tambah admin
     Route::get('/admin/kelola-pelanggan/{id}', [UserController::class, 'lihatPelanggan'])->name('kelola-pelanggan.show');
-    Route::delete('/kelola-pelanggan/pelanggan/{$id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
+    Route::delete('/kelola-pelanggan/pelanggan/{id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
     
     // kelola-diskon ===================================================== //
     Route::get('/admin/kelola-diskon', function () {
@@ -93,11 +97,17 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::get('/goodrent/lihat-produk/', function () {
         return view('user.detail-produk');
     });
+    Route::get('/goodrent/cek-keranjang/', function () {
+        return view('user.keranjang');
+    });
+    Route::get('/goodrent/checkout/', function () {
+        return view('user.checkout');
+    });
+
+    // profile ===========================================//
+    Route::get('/profile', function () {
+        return view('user.profile');
+    })->name('profile');
+
+    Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
 });
-
-// profile ===========================================//
-Route::get('/profile', function () {
-    return view('user.profile');
-})->name('profile');
-
-Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');

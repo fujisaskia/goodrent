@@ -15,19 +15,21 @@
     {{-- Data AOS Animate --}}
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Tailwind CSS -->
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css'])
 
 </head>
 {{-- bg-gradient-to-b from-emerald-100 to-slate-200 --}}
+
 <body class="bg-slate-100 pt-20">
 
-    {{--Navbar  --}}
+    {{-- Navbar  --}}
     @include('components.navbar-user')
 
     <!-- Banner -->
@@ -44,7 +46,8 @@
 
             <!-- Content -->
             <div class="flex-1 text-center md:text-left z-10">
-                <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">Selamat Datang, {{ Auth::user()->name }}👋</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-white drop-shadow-lg">Selamat Datang,
+                    {{ Auth::user()->name }}👋</h1>
                 <q class="text-gray-100 max-w-md text-lg italic">
                     Siap main tanpa batas? Sewa PS & barang favoritmu sekarang!
                 </q>
@@ -75,15 +78,17 @@
     </div>
 
     <!-- Produk -->
-    <section class="pb-24">
+    <section class="pb-8">
         <div class="max-w-5xl mx-auto">
+            <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Rekomendasi PS khusus buat kamu</h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-5">
                 <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -94,7 +99,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -105,7 +111,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -116,7 +123,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -127,7 +135,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -138,7 +147,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -149,7 +159,8 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -160,7 +171,113 @@
                         class="w-full rounded">
                     <h3 class="mt-2 font-bold">PS5</h3>
                     <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/" class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produk Tambahan -->
+    <section class="pb-24">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Tambah Barang Tambahan yang kamu inginkan!</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-5">
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                            Pilih
+                        </button>
+                    </a>
+                </div>
+                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                        class="w-full rounded">
+                    <h3 class="mt-2 font-bold">PS5</h3>
+                    <p class="text-red-500 font-bold">25,000 / jam</p>
+                    <a href="/goodrent/lihat-produk/"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
                         <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
                             Pilih
                         </button>
@@ -173,6 +290,66 @@
     <!-- Footer -->
     @include('components.footer-user')
 
+    {{-- animate loading tap --}}
+    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player src="https://lottie.host/a9373d02-c947-48ca-8476-b2452dd2b17b/4nxgGAFhrG.lottie"
+            background="transparent" speed="1" style="width: 100px; height: 100px" loop
+            autoplay></dotlottie-player>
+    </div>
 
 </html>
 
+<script>
+    // Animate loading & notification ketika halaman dimuat
+    window.addEventListener("load", function() {
+        setTimeout(function() {
+            document.getElementById("loading-spinner").classList.add("hidden");
+
+            // Tampilkan SweetAlert Toast setelah animasi loading selesai
+            setTimeout(function() {
+                @if (session('success'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('error'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "error",
+                        title: "{{ session('error') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('info'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "{{ session('info') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('warning'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "warning",
+                        title: "{{ session('warning') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @endif
+            }, 500); // Muncul 0.5 detik setelah loading selesai
+        }, 1000); // Loading hilang setelah 1 detik
+    });
+</script>

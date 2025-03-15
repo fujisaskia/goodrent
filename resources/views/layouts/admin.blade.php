@@ -149,12 +149,8 @@
                 <div class="relative">
                     <div class="flex items-center ml-auto space-x-2">
                         <button id="profileBtn" class="focus:scale-95">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-10 h-10 rounded-full text-gray-400 hover:text-gray-500 border-gray-300">
-                                <path fill-rule="evenodd"
-                                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                                    clip-rule="evenodd" />
-                            </svg>
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="User Profile"
+                                class="w-10 h-10 rounded-full object-cover">
                         </button>
                     </div>
                     <!-- Dropdown Menu Profile -->
@@ -170,7 +166,7 @@
                             </div>
                         </div>
 
-                        <a href=""
+                        <a href="/admin/profile"
                             class="flex w-full items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 rounded-full text-gray-400 border-gray-300">
@@ -182,12 +178,12 @@
                             <span>Profil</span>
                         </a>
 
-                        <a href=""
+                        {{-- <a href=""
                             class="flex w-full items-center space-x-3 px-4 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
                             <i
                                 class="fa-solid fa-gear text-base text-gray-400 border-gray-300 group-hover:rotate-90 duration-700"></i>
                             <span>Pengaturan</span>
-                        </a>
+                        </a> --}}
 
                         <!-- Logout Form -->
                         <form method="POST" action="{{ route('logout') }}">
