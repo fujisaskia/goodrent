@@ -29,9 +29,6 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
 
-    <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -132,37 +129,61 @@
             background="transparent" speed="1" style="width: 100px; height: 100px" loop
             autoplay></dotlottie-player>
     </div>
-    
-    <!-- Toastr JS (Taruh sebelum </body>) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>
 
 </html>
 
 <script>
+    // Animate loading & notification ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
             document.getElementById("loading-spinner").classList.add("hidden");
 
-            @if (session('success'))
-                setTimeout(function() {
-                    toastr.options = {
-                        closeButton: true,
-                        progressBar: true,
-                        positionClass: "toast-top-right",
-                        timeOut: 3000, // Waktu tampil 3 detik
-                        extendedTimeOut: 1000,
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        showDuration: 300,
-                        hideDuration: 300
-                    };
-                    toastr.success("{{ session('success') }}");
-                }, 500);
-            @endif
-
-        }, 1000);
+            // Tampilkan SweetAlert Toast setelah animasi loading selesai
+            setTimeout(function() {
+                @if (session('success'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('error'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "error",
+                        title: "{{ session('error') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('info'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "{{ session('info') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('warning'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "warning",
+                        title: "{{ session('warning') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @endif
+            }, 500); // Muncul 0.5 detik setelah loading selesai
+        }, 1000); // Loading hilang setelah 1 detik
     });
 </script>

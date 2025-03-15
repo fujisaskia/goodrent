@@ -65,7 +65,7 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/tambah-admin', [UserController::class, 'tambahAdminPage'])->name('tambah-admin');
     Route::post('/admin/store', [UserController::class, 'tambahAdmin'])->name('admin.store')->middleware('role:superadmin'); // Hanya superadmin yang bisa tambah admin
     Route::get('/admin/kelola-pelanggan/{id}', [UserController::class, 'lihatPelanggan'])->name('kelola-pelanggan.show');
-    Route::delete('/kelola-pelanggan/pelanggan/{$id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
+    Route::delete('/kelola-pelanggan/pelanggan/{id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
     
     // kelola-diskon ===================================================== //
     Route::get('/admin/kelola-diskon', function () {
@@ -104,9 +104,10 @@ Route::middleware(['role:pelanggan'])->group(function () {
         return view('user.checkout');
     });
 
-// profile ===========================================//
-Route::get('/profile', function () {
-    return view('user.profile');
-})->name('profile');
+    // profile ===========================================//
+    Route::get('/profile', function () {
+        return view('user.profile');
+    })->name('profile');
 
-Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
+    Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
+});
