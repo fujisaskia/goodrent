@@ -1,5 +1,5 @@
     <!-- Footer -->
-    <footer class="bg-emerald-600 text-white p-6">
+    <footer class="bg-emerald-600 text-white p-6 static bottom-0">
         <div class="max-w-6xl mx-auto justify-between">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-6 border-b border-emerald-700">
                 {{-- Social Media --}}

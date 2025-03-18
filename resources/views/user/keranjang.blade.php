@@ -34,7 +34,7 @@
 
 
     {{-- Konten di Sini --}}
-    <div class="max-w-5xl mx-auto py-8 h-screen mb-10 md:mb-24">
+    <div class="max-w-5xl mx-auto py-8 mb-10 md:mb-24">
         <div class="bg-white border p-6 rounded-lg shadow-lg mx-4">
             <div class="flex flex-col md:flex-row justify-between mb-5">
                 <h2 class="text-gray-700 text-2xl font-semibold text-center md:text-start mb-2 md:mb-0">Cek Keranjang</h2>

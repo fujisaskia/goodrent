@@ -64,7 +64,7 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::post('/kelola-pelanggan/pelanggan/{id}/banned', [UserController::class, 'banUser'])->name('pelanggan.banned');
     Route::get('/admin/tambah-admin', [UserController::class, 'tambahAdminPage'])->name('tambah-admin');
     Route::post('/admin/store', [UserController::class, 'tambahAdmin'])->name('admin.store')->middleware('role:superadmin'); // Hanya superadmin yang bisa tambah admin
-    Route::get('/admin/kelola-pelanggan/{id}', [UserController::class, 'lihatPelanggan'])->name('kelola-pelanggan.show');
+    Route::get('/admin/kelola-pelanggan/lihat-pelanggan/{id}', [UserController::class, 'lihatPelanggan'])->name('pelanggan.show');
     Route::delete('/kelola-pelanggan/pelanggan/{id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
     
     // kelola-diskon ===================================================== //
