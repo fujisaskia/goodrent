@@ -191,10 +191,6 @@
         </div>
     </div>
 
-
-    {{-- Footer --}}
-    @include('components.footer-user')
-
 </body>
 
 </html>

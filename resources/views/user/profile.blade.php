@@ -58,7 +58,7 @@
                 </div>
                 <div class="flex flex-col p-6 order-1 lg:order-2 items-center justify-center">
                     <img id="profileImage" src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
-                        alt="Foto Profile" class="w-60 h-60">
+                        alt="Foto Profile" class="w-60 h-60 rounded-full">
 
                     <!-- Input Gambar -->
                     <input type="file" name="image" id="imageInput" class="w-2/3 mt-4 text-sm border p-1"

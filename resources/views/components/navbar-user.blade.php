@@ -40,7 +40,7 @@
                                 </svg>
                                 <span>Profil</span>
                             </a>
-                            <a href="#" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
+                            <a href="/goodrent/pemesanan-saya" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -48,7 +48,7 @@
                                 </svg>
                                 <span>Pemesanan</span>
                             </a>
-                            <a href="#" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
+                            <a href="/goodrent/profile/alamat" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"

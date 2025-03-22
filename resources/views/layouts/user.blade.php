@@ -29,6 +29,9 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -56,7 +59,7 @@
 
 
             <div class="flex flex-col space-y-3">
-                <a href="/profile">
+                <a href="/goodrent/profile">
                     <li
                         class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('profile') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -68,9 +71,9 @@
                     </li>
                 </a>
 
-                <a href="/pemesanan-saya">
+                <a href="/goodrent/pemesanan-saya">
                     <li
-                        class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('goodrent/pemesanan-saya') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -80,7 +83,7 @@
                     </li>
                 </a>
 
-                <a href="/pemesanan-saya">
+                <a href="/goodrent/profile/alamat">
                     <li
                         class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

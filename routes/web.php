@@ -105,9 +105,20 @@ Route::middleware(['role:pelanggan'])->group(function () {
     });
 
     // profile ===========================================//
-    Route::get('/profile', function () {
+    Route::get('/goodrent/profile', function () {
         return view('user.profile');
     })->name('profile');
-
+    
     Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
+
+    Route::get('/goodrent/profile/alamat', function () {
+        return view('user.alamat.index');
+    });
+    Route::get('/goodrent/profile/tambah-alamat', function () {
+        return view('user.alamat.create');
+    });
+
+    Route::get('/goodrent/pemesanan-saya', function () {
+        return view('user.riwayat');
+    });
 });
