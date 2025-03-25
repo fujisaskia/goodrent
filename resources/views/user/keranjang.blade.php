@@ -34,158 +34,169 @@
 
 
     {{-- Konten di Sini --}}
-    <div class="max-w-5xl mx-auto py-8 mb-10 md:mb-24">
-        <div class="bg-white border p-4 rounded-lg shadow-lg mx-4">
+    <div class="max-w-3xl lg:max-w-6xl mx-auto py-8 mb-10 md:mb-24">
+        <!-- Judul Halaman -->
+        <h2 class="text-center md:text-start text-gray-700 text-3xl font-semibold md:ml-4 mb-4">Keranjang</h2>
+        <div class="flex flex-col lg:flex-row space-x-4">
+            <div class="flex-1 space-y-2 mx-4">   
+                <!-- ITEM 1 -->
+                <div class="flex items-start space-x-3 p-4 rounded-t-lg shadow-sm bg-white border-b border-gray-200 hover:bg-gray-50 duration-200">
+            
+                    <!-- Gambar produk -->
+                    <img
+                        src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
+                        alt="Foto Produk"
+                        class="w-20 h-20 rounded border border-gray-300"
+                    />
+            
+                    <!-- Info produk -->
+                    <div class="flex-1">
+                        <div class="flex space-x-3 justify-center items-center">
+                            <div class="flex-1">
+                                <!-- Nama Produk -->
+                                <h3 class="font-semibold">Play station 5</h3>
+                                <!-- Tanggal Sewa -->
+                                <p class="text-xs text-gray-700">
+                                    06 Maret, 2025 - 07 Maret, 2025
+                                </p>
+                                <!-- Durasi -->
+                                <p class="text-xs text-gray-700">
+                                    2 Hari
+                                </p>
+                            </div>
 
-            {{-- title page & search --}}
-            <div class="flex flex-col md:flex-row justify-between mb-5">
-                <h2 class="text-gray-700 text-2xl font-semibold text-center md:text-start mb-2 md:mb-0">Cek Keranjang</h2>
-                <div class="flex justify-center items-center space-x-2">
-                    <input type="search" placeholder="Cari"
-                        class="w-full px-4 py-3 md:py-2 border md:border-gray-200 border-gray-400 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-100">
-                    <button
-                        class=" px-4 md:px-3 py-3 md:py-2 bg-emerald-600 rounded-full shadow-xl text-white focus:scale-95 duration-300">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                            <!-- Harga & Tombol Hapus -->
+                            <div class="flex text-base">
+                                <span class="text-gray-800 font-bold">Rp41.817</span>
+                            </div>
+                            
+                        </div>
+                        <div class="flex justify-end">
+                            <button
+                                class="text-base p-2 mt-2 text-gray-600 hover:text-gray-800 hover:bg-gray-300 rounded-full"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                              </svg>                          
+                            </button>
+
+                        </div>
+                    </div>
+            
+                </div>   
+                <!-- ITEM 2 -->
+                <div class="flex items-start space-x-3 p-4 rounded-none shadow-sm bg-white border-b border-gray-200 hover:bg-gray-50 duration-200">
+            
+                    <!-- Gambar produk -->
+                    <img
+                        src="{{ asset('assets/kabel.png') }}"
+                        alt="Foto Produk"
+                        class="w-20 h-20 rounded border border-gray-300"
+                    />
+            
+                    <!-- Info produk -->
+                    <div class="flex-1">
+                        <div class="flex space-x-3 justify-center items-center">
+                            <div class="flex-1">
+                                <!-- Nama Produk -->
+                                <h3 class="font-semibold">Play station 5</h3>
+                                <!-- Tanggal Sewa -->
+                                <p class="text-xs text-gray-700">
+                                    06 Maret, 2025 - 07 Maret, 2025
+                                </p>
+                                <!-- Durasi -->
+                                <p class="text-xs text-gray-700">
+                                    2 Hari
+                                </p>
+                            </div>
+
+                            <!-- Harga & Tombol Hapus -->
+                            <div class="flex text-base">
+                                <span class="text-gray-800 font-bold">Rp41.817</span>
+                            </div>
+                            
+                        </div>
+                        <div class="flex justify-end">
+                            <button
+                                class="text-base p-2 mt-2 text-gray-600 hover:text-gray-800 hover:bg-gray-300 rounded-full"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                              </svg>                          
+                            </button>
+
+                        </div>
+                    </div>
+            
+                </div>
+                <!-- ITEM 3 -->
+                <div class="flex items-start space-x-3 p-4 rounded-b-lg shadow-sm bg-white border-b border-gray-200 hover:bg-gray-50 duration-200">
+            
+                    <!-- Gambar produk -->
+                    <img
+                        src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
+                        alt="Foto Produk"
+                        class="w-20 h-20 rounded border border-gray-300"
+                    />
+            
+                    <!-- Info produk -->
+                    <div class="flex-1">
+                        <div class="flex space-x-3 justify-center items-center">
+                            <div class="flex-1">
+                                <!-- Nama Produk -->
+                                <h3 class="font-semibold">Play station 5</h3>
+                                <!-- Tanggal Sewa -->
+                                <p class="text-xs text-gray-700">
+                                    06 Maret, 2025 - 07 Maret, 2025
+                                </p>
+                                <!-- Durasi -->
+                                <p class="text-xs text-gray-700">
+                                    2 Hari
+                                </p>
+                            </div>
+
+                            <!-- Harga & Tombol Hapus -->
+                            <div class="flex text-base">
+                                <span class="text-gray-800 font-bold">Rp41.817</span>
+                            </div>
+                            
+                        </div>
+                        <div class="flex justify-end">
+                            <button
+                                class="text-base p-2 mt-2 text-gray-600 hover:text-gray-800 hover:bg-gray-300 rounded-full"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                              </svg>                          
+                            </button>
+
+                        </div>
+                    </div>
+            
+                </div>
+
+            </div>
+            
+
+            <div class="flex">
+                {{-- ringkasan harga --}}
+                <div class="md:sticky md:top-24 fixed bottom-0 left-0 w-full md:w-80 bg-white h-52 md:h-44 shadow-sm rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-800 text-base">Ringkasan belanja</h3>
+                    
+                    <div class="flex justify-between items-center mt-3 pb-3 border-b">
+                        <span class="text-gray-700">Total</span>
+                        <span class="text-black font-bold text-lg">Rp103,632</span>
+                    </div>
+
+                    <button class="bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-lg py-4 md:py-3 w-full mt-4">
+                        Checkout
                     </button>
                 </div>
+
+                
             </div>
 
-            {{-- card --}}
-            <div class="">
-                <div
-                    class="flex space-x-3 p-2 border-b border-gray-200 hover:bg-gray-50 hover:shadow-md duration-200">
-                    <div class="flex">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="" class="w-14 h-14 md:w-16 md:h-16 rounded border border-gray-300">
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <div class="">
-                                <h3 class="font-semibold">Play Station 5</h3>
-                                <h5 class="text-gray-700 text-xs">06 Maret, 2025 - 07 Maret, 2025</h5>
-                            </div>
 
-                            <form action="" method="" class="">
-                                <button type="submit" class="text-xs py-1 px-2 md:px-3 text-white font-semibold bg-red-500 hover:bg-red-600 text-center">Hapus</button>
-                            </form>
-                        </div>
-                        <div class="flex justify-between font-semibold mt-3">
-                            <div class="">
-                                <h3 class="">2 Hari</h3>
-                            </div>
-
-                            <div class="">
-                                <h3 class="">Rp 50,000</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div
-                    class="flex space-x-3 p-2 border-b border-gray-200 hover:bg-gray-50 hover:shadow-md duration-200">
-                    <div class="flex">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="" class="w-14 h-14 md:w-16 md:h-16 rounded border border-gray-300">
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <div class="">
-                                <h3 class="font-semibold">Play Station 5</h3>
-                                <h5 class="text-gray-700 text-xs">06 Maret, 2025 - 07 Maret, 2025</h5>
-                            </div>
-
-                            <form action="" method="" class="">
-                                <button type="submit" class="text-xs py-1 px-2 md:px-3 text-white font-semibold bg-red-500 hover:bg-red-600 text-center">Hapus</button>
-                            </form>
-                        </div>
-                        <div class="flex justify-between font-semibold mt-3">
-                            <div class="">
-                                <h3 class="">2 Hari</h3>
-                            </div>
-
-                            <div class="">
-                                <h3 class="">Rp 50,000</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div
-                    class="flex space-x-3 p-2 border-b border-gray-200 hover:bg-gray-50 hover:shadow-md duration-200">
-                    <div class="flex">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="" class="w-14 h-14 md:w-16 md:h-16 rounded border border-gray-300">
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <div class="">
-                                <h3 class="font-semibold">Play Station 5</h3>
-                                <h5 class="text-gray-700 text-xs">06 Maret, 2025 - 07 Maret, 2025</h5>
-                            </div>
-
-                            <form action="" method="" class="">
-                                <button type="submit" class="text-xs py-1 px-2 md:px-3 text-white font-semibold bg-red-500 hover:bg-red-600 text-center">Hapus</button>
-                            </form>
-                        </div>
-                        <div class="flex justify-between font-semibold mt-3">
-                            <div class="">
-                                <h3 class="">2 Hari</h3>
-                            </div>
-
-                            <div class="">
-                                <h3 class="">Rp 50,000</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div
-                    class="flex space-x-3 p-2 border-b border-gray-200 hover:bg-gray-50 hover:shadow-md duration-200">
-                    <div class="flex">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="" class="w-14 h-14 md:w-16 md:h-16 rounded border border-gray-300">
-                    </div>
-                    <div class="flex-1">
-                        <div class="flex justify-between">
-                            <div class="">
-                                <h3 class="font-semibold">Play Station 5</h3>
-                                <h5 class="text-gray-700 text-xs">06 Maret, 2025 - 07 Maret, 2025</h5>
-                            </div>
-
-                            <form action="" method="" class="">
-                                <button type="submit" class="text-xs py-1 px-2 md:px-3 text-white font-semibold bg-red-500 hover:bg-red-600 text-center">Hapus</button>
-                            </form>
-                        </div>
-                        <div class="flex justify-between font-semibold mt-3">
-                            <div class="">
-                                <h3 class="">2 Hari</h3>
-                            </div>
-
-                            <div class="">
-                                <h3 class="">Rp 50,000</h3>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            {{-- ringkasan harga --}}
-            <div class="sticky bottom-0 bg-white">
-                <div class="flex flex-col md:flex-row justify-between items-center p-3 border-t-2 border-gray-200 mb-2 duration-200">
-                    <!-- Bagian Harga -->
-                    <div class="flex w-full justify-between md:justify-start space-x-2 text-xl md:text-lg">
-                        <h3 class="font-semibold capitalize text-gray-700">total :</h3>
-                        <h3 class="text-red-700 font-bold">Rp 100,000,000</h3>
-                    </div>
-                    <!-- Tombol Checkout -->
-                    <div class="flex w-full justify-end mt-3 md:mt-0">
-                        <button class="bg-gray-800 hover:bg-gray-900 shadow-xl hover:shadow-sm text-white rounded-md px-6 py-3 w-36  focus:scale-95 duration-200">
-                            <span>Checkout</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
             
         </div>
     </div>

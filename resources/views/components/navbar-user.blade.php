@@ -1,7 +1,18 @@
     <!-- Navbar -->
     <nav class="fixed top-2 left-0 w-[calc(100%-2rem)] mx-4 bg-white shadow-md p-4 z-50 rounded-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h2 class="text-green-700 font-bold text-lg">GoodRent</h2>
+            <h2 class="text-green-700 font-bold text-lg hidden md:flex">GoodRent</h2>
+            @if (request()->is('goodrent/produk'))
+                <h3 class="text-green-700 font-bold text-xl md:hidden ">GoodRent</h3>
+
+            @else
+                <div class="flex md:hidden  items-center space-x-2 text-xl">
+                    <i class="fa-solid fa-chevron-left p-2 cursor-pointer" onclick="window.history.back();"></i>
+                    <h2 class="text-green-700 font-bold text-3xl">G</h2>
+                </div>
+            @endif
+        
+            
             <div class="flex items-center space-x-3 md:space-x-4">
                 <a href="/goodrent/cek-keranjang" class="hover:bg-slate-300 rounded-full p-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -30,7 +41,7 @@
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
                             </div>
                         </div>
-                        <div class="py-2 text-sm text-gray-700">
+                        <div class="py-2 text-base md:text-sm text-gray-700">
                             <a href="{{ route('profile') }}"
                                 class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -56,7 +67,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                 </svg>
-                                <span>Alamat</span>
+                                <span>Daftar Alamat</span>
                             </a>
 
                             <form method="POST" action="{{ route('logout') }}">

@@ -5,6 +5,20 @@
         }, 1000); // Spinner akan tetap terlihat selama 3 detik
     });
 
+    //product
+    <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+            class="w-full rounded">
+        <h3 class="mt-2 font-bold">PS5</h3>
+        <p class="text-red-500 font-bold">25,000 / jam</p>
+        <a href="/goodrent/lihat-produk/"
+            class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+            <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
+                Pilih
+            </button>
+        </a>
+    </div>
+
 
     <!-- Footer -->
     <footer class="bg-emerald-600 text-white p-6">

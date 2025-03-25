@@ -27,15 +27,15 @@
 </head>
 {{-- bg-gradient-to-b from-emerald-100 to-slate-200 --}}
 
-<body class="bg-slate-100 pt-20">
+<body class="bg-white pt-20">
 
     {{-- Navbar  --}}
     @include('components.navbar-user')
 
     <!-- Banner -->
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <div
-            class="flex flex-col md:flex-row m-4 p-6 h-80 md:h-52 bg-gradient-to-r from-cyan-500 to-cyan-200 rounded-lg justify-between items-center shadow-xl relative overflow-hidden">
+            class="flex flex-col md:flex-row m-4 p-6 h-80 md:h-64 bg-gradient-to-r from-cyan-500 to-cyan-200 rounded-lg justify-between items-center shadow-xl relative overflow-hidden">
             <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-r from-emerald-700/20 to-emerald-500/10"></div>
 
@@ -56,7 +56,7 @@
             <!-- Ilustrasi Dashboard -->
             <div class="flex z-10">
                 <img src="{{ asset('assets/play.png') }}" alt="Illustration Dashboard"
-                    class="animate-smallbounce w-72 drop-shadow-lg hover:drop-shadow-xl transition-all duration-300">
+                    class="animate-smallbounce w-80 drop-shadow-lg hover:drop-shadow-xl transition-all duration-300">
             </div>
 
             <!-- Glow Effect -->
@@ -67,7 +67,7 @@
 
 
     <!-- Search Bar -->
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
         <div class="flex justify-center items-center space-x-3 my-8 mx-4">
             <input type="search" placeholder="Cari Produk yang dibutuhkan..."
                 class="w-2/3 px-4 py-3 border md:border-gray-300 border-gray-400 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-200">
@@ -79,104 +79,113 @@
 
     <!-- Produk -->
     <section class="pb-8">
-        <div class="max-w-5xl mx-auto">
+        <div class="max-w-6xl mx-auto">
             <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Rekomendasi PS khusus buat kamu</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-5">
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
                     <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
-                </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Play Station 5</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
             </div>
         </div>
@@ -184,104 +193,98 @@
 
     <!-- Produk Tambahan -->
     <section class="pb-24">
-        <div class="max-w-5xl mx-auto">
+        <div class="max-w-6xl mx-auto">
             <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Tambah Barang Tambahan yang kamu inginkan!</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-5">
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
-                </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
-                </div>
-                <div class="bg-white p-3 rounded-md shadow-md hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
-                        class="w-full rounded">
-                    <h3 class="mt-2 font-bold">PS5</h3>
-                    <p class="text-red-500 font-bold">25,000 / jam</p>
-                    <a href="/goodrent/lihat-produk/"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                        <button class="w-full mt-3 font-semibold text-sm group-focus:scale-95 duration-300">
-                            Pilih
-                        </button>
-                    </a>
+                <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
+                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk"
+                        class="w-full rounded-t">
+                        <div class="p-3">
+                            <h3 class="font-medium">Kabel 5 Km</h3>
+                            <p class="font-bold text-base">Rp25,000</p>
+                            <span class="text-xs text-gray-700">/ jam</span>
+                            <a href="/goodrent/lihat-produk/"
+                                class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
+                                <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
+                                    Pilih
+                                </button>
+                            </a>
+                        </div>
                 </div>
             </div>
         </div>

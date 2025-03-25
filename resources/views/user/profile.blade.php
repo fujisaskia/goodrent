@@ -41,7 +41,7 @@
                         <div class="relative">
                             <input type="password" id="password" name="password"
                                 class="w-full border border-gray-200 rounded-md p-3 focus:outline-none focus:ring focus:ring-yellow-50">
-                            <button type="button" id="togglePassword"
+                            {{-- <button type="button" id="togglePassword"
                                 class="absolute inset-y-0 right-3 flex items-center text-gray-500">
                                 <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -49,7 +49,7 @@
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                                     <circle cx="12" cy="12" r="3" />
                                 </svg>
-                            </button>
+                            </button> --}}
                         </div>
                         @error('password')
                             <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
