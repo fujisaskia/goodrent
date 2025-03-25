@@ -4,15 +4,14 @@
             <h2 class="text-green-700 font-bold text-lg hidden md:flex">GoodRent</h2>
             @if (request()->is('goodrent/produk'))
                 <h3 class="text-green-700 font-bold text-xl md:hidden ">GoodRent</h3>
-
             @else
                 <div class="flex md:hidden  items-center space-x-2 text-xl">
                     <i class="fa-solid fa-chevron-left p-2 cursor-pointer" onclick="window.history.back();"></i>
                     <h2 class="text-green-700 font-bold text-3xl">G</h2>
                 </div>
             @endif
-        
-            
+
+
             <div class="flex items-center space-x-3 md:space-x-4">
                 <a href="/goodrent/cek-keranjang" class="hover:bg-slate-300 rounded-full p-1.5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -24,8 +23,8 @@
                 <div class="relative">
                     <div class="flex items-center space-x-2">
                         <button id="userBtn">
-                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="User Profile"
-                                class="w-10 h-10 rounded-full object-cover">
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
+                                alt="User Profile" class="w-10 h-10 rounded-full object-cover">
                         </button>
                     </div>
 
@@ -51,7 +50,8 @@
                                 </svg>
                                 <span>Profil</span>
                             </a>
-                            <a href="/goodrent/pemesanan-saya" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
+                            <a href="/goodrent/pemesanan-saya"
+                                class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -59,7 +59,8 @@
                                 </svg>
                                 <span>Pemesanan</span>
                             </a>
-                            <a href="/goodrent/profile/alamat" class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
+                            <a href="/goodrent/profile/alamat"
+                                class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
                                     <path stroke-linecap="round" stroke-linejoin="round"
