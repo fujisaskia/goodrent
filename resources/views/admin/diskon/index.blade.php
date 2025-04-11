@@ -19,11 +19,16 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
-                <a href="/admin/tambah-diskon">
-                    <button class="bg-green-600 text-white p-3 rounded-lg flex items-center gap-2 focus:scale-95 duration-300">
-                        <span class=""><i class="fa-solid fa-plus"></i> Tambah Diskon</span>
+                <div class="flex justify-end">
+                    <button onclick="openModalTambahDiskon()"
+                        class="bg-green-700 hover:bg-green-800 flex space-x-2 text-white p-3 rounded-lg items-center focus:scale-95 duration-300">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Tambah Diskon</span>
                     </button>
-                </a>
+                </div>
+
+                {{-- Modal Tambah Data Barang  --}}
+                @include('admin.diskon.create')
             </div>
 
             <div class="overflow-x-auto lg:overflow-visible">
@@ -48,11 +53,15 @@
                             <td class="p-3  text-center">50%</td>
                             <td class="p-3  text-center">01 Mei 2025 -15 Mei 2025</td>
                             <td class="p-3 flex justify-center gap-2">
-
                                 {{-- button edit --}}
-                                <a href="/admin/edit-diskon">
-                                    @include('components.crud.edit')
-                                </a>
+                                <button
+                                    class="btn-edit-diskon bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
+                                        text-white py-2 px-2.5 rounded-full"
+                                    title="Edit Diskon" data-diskon-id="">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                {{-- Modal Tambah Data Barang  --}}
+                                @include('admin.diskon.edit')
 
                                 {{-- button hapus --}}
                                 <form action="" id="delete-form">
@@ -61,38 +70,22 @@
                             </td>
                         </tr>
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3  text-center">1</td>
+                            <td class="p-3  text-center">2</td>
                             <td class="p-3  text-center">New Member</td>
                             <td class="p-3  text-center uppercase">midnight25</td>
                             <td class="p-3  text-center">persentase</td>
                             <td class="p-3  text-center">50%</td>
                             <td class="p-3  text-center">01 Mei 2025 -15 Mei 2025</td>
                             <td class="p-3 flex justify-center gap-2">
-
                                 {{-- button edit --}}
-                                <a href="/admin/edit-diskon">
-                                    @include('components.crud.edit')
-                                </a>
-
-                                {{-- button hapus --}}
-                                <form action="" id="delete-form">
-                                    @include('components.crud.delete')
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="p-3  text-center">1</td>
-                            <td class="p-3  text-center">New Member</td>
-                            <td class="p-3  text-center uppercase">midnight25</td>
-                            <td class="p-3  text-center">persentase</td>
-                            <td class="p-3  text-center">50%</td>
-                            <td class="p-3  text-center">01 Mei 2025 -15 Mei 2025</td>
-                            <td class="p-3 flex justify-center gap-2">
-
-                                {{-- button edit --}}
-                                <a href="/admin/edit-diskon">
-                                    @include('components.crud.edit')
-                                </a>
+                                <button
+                                    class="btn-edit-diskon bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
+                                        text-white py-2 px-2.5 rounded-full"
+                                    title="Edit Diskon" data-diskon-id="">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                {{-- Modal Tambah Data Barang  --}}
+                                @include('admin.diskon.edit')
 
                                 {{-- button hapus --}}
                                 <form action="" id="delete-form">
@@ -108,7 +101,7 @@
 
     <script>
         document.querySelectorAll('#delete-btn').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 Swal.fire({
                     title: "Hapus Diskon?",
                     text: "Diskon yang dihapus tidak bisa dikembalikan!",
@@ -124,11 +117,85 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.closest('form').submit(); // Ambil form terdekat dari tombol yang diklik
+                        this.closest('form')
+                            .submit(); // Ambil form terdekat dari tombol yang diklik
                     }
                 });
             });
         });
+
+
+        // membuka modal tambah diskon
+        function openModalTambahDiskon() {
+            let overlay = document.getElementById('modal-overlay-tambah-diskon');
+            let modal = document.getElementById('modal-tambah-diskon');
+
+            // Tampilkan overlay
+            overlay.classList.remove('hidden');
+
+            // Beri jeda untuk animasi
+            setTimeout(() => {
+                modal.classList.remove('scale-95', 'opacity-0');
+                modal.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
+        }
+
+        function closeModalTambahDiskon() {
+            let modal = document.getElementById('modal-tambah-diskon');
+            let overlay = document.getElementById('modal-overlay-tambah-diskon');
+
+            // Tambahkan animasi keluar
+            modal.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('scale-100', 'opacity-100');
+
+            // Tunggu animasi selesai sebelum menyembunyikan modal
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300); // Sesuai dengan durasi transition (300ms)
+        }
+
+        // membuka modal edit diskon
+        document.querySelectorAll('.btn-edit-diskon').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-diskon-id');
+                openModalEditDiskon(itemId);
+            });
+        });
+
+        // membuka modal edit diskon
+        function openModalEditDiskon(id) {
+            let overlay = document.getElementById('modal-overlay-edit-diskon');
+            let modal = document.getElementById('modal-edit-diskon');
+
+            // Tampilkan overlay
+            overlay.classList.remove('hidden');
+
+            // Beri jeda untuk animasi
+            setTimeout(() => {
+                modal.classList.remove('scale-95', 'opacity-0');
+                modal.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
+        }
+
+        function closeModalEditDiskon() {
+            let modal = document.getElementById('modal-edit-diskon');
+            let overlay = document.getElementById('modal-overlay-edit-diskon');
+
+            // tambahkan animasi keluar
+            modal.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('scale-100', 'opacity-100');
+
+            // Tunggu animasi selesai sebelum menyembunyikan modal
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300); // Sesuai dengan durasi transition (300ms)
+        }
     </script>
 
 

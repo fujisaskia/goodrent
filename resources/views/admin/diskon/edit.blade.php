@@ -1,11 +1,9 @@
-<!-- resources/views/home.blade.php -->
-@extends('layouts/admin')
+{{-- Modal edit diskon --}}
 
-@section('title', 'Edit Diskon')
-
-@section('content')
-
-    <div class="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg border border-gray-400 md:border-none">
+<div id="modal-overlay-edit-diskon"
+    class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center px-4 z-50">
+    <div id="modal-edit-diskon"
+        class="w-full max-w-2xl md:max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg border border-gray-400 md:border-none transform scale-95 opacity-0 transition-all duration-300">
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Edit Diskon</h1>
 
         <form action="" method="POST">
@@ -55,36 +53,18 @@
             </div>
 
             <div class="flex space-x-3 justify-end mt-6">
-                <a href=""
-                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded-lg">
+                <button type="button" onclick="closeModalEditDiskon()"
+                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded">
                     <p>Batalkan</p>
-                </a>
+                </button>
                 <button type="submit"
-                    class="flex space-x-2 text-white bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-600 p-2 rounded-lg">
-                    <i class="fa-solid fa-plus"></i>
+                    class="flex space-x-2 text-white bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-600 p-2 rounded">
                     <p>Edit Diskon</p>
                 </button>
             </div>
         </form>
 
 
+
     </div>
-    
-    <script>
-        flatpickr("#masa-awal", {
-            dateFormat: "d F Y",
-            locale: "id", // Set lokal ke Bahasa Indonesia
-            minDate: "today",
-            onChange: function(selectedDates, dateStr) {
-                masaAkhir.set("minDate", dateStr); // Mencegah tanggal akhir sebelum tanggal awal
-            }
-        });
-    
-        let masaAkhir = flatpickr("#masa-akhir", {
-            dateFormat: "d F Y",
-            locale: "id", // Set lokal ke Bahasa Indonesia
-            minDate: "today",
-            minDate: new Date(),
-        });
-    </script>
-@endsection
+</div>

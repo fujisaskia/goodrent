@@ -39,7 +39,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-sm">
+<body class="font-poppins bg-gradient-to-b from-emerald-50 to-slate-100 text-base md:text-xs">
     <!-- Navbar -->
     <nav
         class="fixed top-0 left-0 right-0 bg-white shadow-md p-3 rounded-lg m-2 border border-gray-300 md:border-none z-20">
@@ -149,8 +149,8 @@
                 <div class="relative">
                     <div class="flex items-center ml-auto space-x-2">
                         <button id="profileBtn" class="focus:scale-95">
-                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="User Profile"
-                                class="w-10 h-10 rounded-full object-cover">
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
+                                alt="User Profile" class="w-10 h-10 rounded-full object-cover">
                         </button>
                     </div>
                     <!-- Dropdown Menu Profile -->
@@ -158,8 +158,8 @@
                         class="absolute right-0 mt-2 w-56 bg-white shadow-md border border-gray-300 rounded-lg hidden">
                         <!-- Profil User -->
                         <div class="flex items-center space-x-2 p-4 border-b">
-                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}" alt="Profile Picture"
-                                class="w-10 h-10 rounded-full">
+                            <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
+                                alt="Profile Picture" class="w-10 h-10 rounded-full">
                             <div>
                                 <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
@@ -201,7 +201,7 @@
     </nav>
 
     {{-- Sidebar --}}
-    <div class="flex text-lg md:text-sm">
+    <div class="flex">
         <!-- Overlay -->
         <div id="sidebar-overlay"
             class="fixed inset-0 bg-black bg-opacity-50 hidden lg:hidden transition-opacity duration-300 z-10">
@@ -210,32 +210,60 @@
         <aside id="sidebar"
             class="fixed top-20 left-0 lg:left-4 w-64 lg:w-56 h-5/6 bg-white py-4 px-3 lg:shadow-lg lg:shadow-emerald-100 shadow-none rounded-xl transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 z-10">
 
-            <div class="space-y-2 py-8 items-center text-center bg-white rounded-lg">
-                <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
-                        GoodRent -</span>
+            <div class="space-y-2 my-4 items-center justify-center text-center bg-white rounded-lg">
+                {{-- <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
+                        GoodRent -</span> --}}
+                <img src="{{ asset('assets/profile.jpg') }}" alt=""
+                    class="w-20 h-20 items-center justify-center mx-auto border border-gray-300">
             </div>
 
 
             <ul class="">
                 <a href="/admin/dashboard">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/dashboard') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 {{ Request::is('admin/dashboard') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-chart-line text-base"></i> <!-- Statistik/Grafik -->
                         <p class="group-hover:translate-x-1 duration-500">Dashboard</p>
                     </li>
                 </a>
 
-                <a href="/admin/data-barang">
-                    <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
-                        <i class="fa-solid fa-box-open text-base"></i>
-                        <p class="group-hover:translate-x-1 duration-500">Data Barang</p>
-                    </li>
-                </a>
+                @php
+                    $isBarangActive = Request::is('admin/data-barang*') || Request::is('admin/kategori-barang*');
+                @endphp
+
+                <li class="relative">
+                    <button onclick="toggleSubmenu('barang')"
+                        class="w-full text-left flex items-center justify-between font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 hover:bg-slate-100 {{ $isBarangActive ? 'text-gray-700' : 'text-gray-600 hover:text-gray-700' }}">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-box-open text-base"></i>
+                            <p class="group-hover:translate-x-1 duration-500">Kelola Barang</p>
+                        </div>
+                        <i id="arrow-icon-barang"
+                            class="fa-solid {{ $isBarangActive ? 'fa-chevron-up' : 'fa-chevron-down' }} text-sm"></i>
+                    </button>
+
+                    <ul id="sub-menu-barang"
+                        class="ml-6 mt-1 overflow-hidden transition-all duration-300 ease-in-out {{ $isBarangActive ? 'max-h-[200px]' : 'max-h-0' }}">
+                        <li
+                            class="{{ Request::is('admin/data-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
+                            <a href="/admin/data-barang" class="flex items-center space-x-2 p-2">
+                                <i class="fa-solid fa-database text-sm"></i>
+                                <span>Data Barang</span>
+                            </a>
+                        </li>
+                        <li
+                            class="mt-1 {{ Request::is('admin/kategori-barang') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
+                            <a href="/admin/kategori-barang" class="flex items-center space-x-2 p-2">
+                                <i class="fa-solid fa-tags text-sm"></i>
+                                <span>Kategori Barang</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <a href="/admin/data-sewa">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-sewa') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 {{ Request::is('admin/data-sewa') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-bag-shopping text-base mr-1.5"></i>
                         <p class="group-hover:translate-x-1 duration-500">Data Sewa</p>
                     </li>
@@ -243,37 +271,63 @@
 
                 <a href="/admin/kelola-pelanggan">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-pelanggan') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-pelanggan') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <x-iconsax-bol-profile-2user class="w-5 h-auto" />
                         <p class="group-hover:translate-x-1 duration-500">Kelola Pelanggan</p>
                     </li>
                 </a>
 
-                <a href="/admin/kelola-diskon">
-                    <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/kelola-diskon') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
-                        <i class="fa-solid fa-percent text-base mr-1.5"></i>
-                        <p class="group-hover:translate-x-1 duration-500">Kelola Diskon</p>
-                    </li>
-                </a>
+                @php
+                    $isDiskonActive = Request::is('admin/kelola-diskon') || Request::is('');
+                @endphp
+
+                <li class="relative">
+                    <button onclick="toggleSubmenu('diskon')"
+                        class="w-full text-left flex items-center justify-between font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 hover:bg-slate-100 {{ $isDiskonActive ? 'text-gray-700' : 'text-gray-600 hover:text-gray-700' }}">
+                        <div class="flex items-center space-x-3">
+                            <i class="fa-solid fa-percent text-base mr-1.5"></i>
+                            <p class="group-hover:translate-x-1 duration-500">Kelola Diskon</p>
+                        </div>
+                        <i id="arrow-icon-diskon"
+                            class="fa-solid {{ $isDiskonActive ? 'fa-chevron-up' : 'fa-chevron-down' }} text-sm"></i>
+                    </button>
+
+                    <ul id="sub-menu-diskon"
+                        class="ml-6 mt-1 overflow-hidden transition-all duration-300 ease-in-out {{ $isDiskonActive ? 'max-h-[200px]' : 'max-h-0' }}">
+                        <li
+                            class="{{ Request::is('admin/kelola-diskon*') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
+                            <a href="/admin/kelola-diskon" class="flex items-center space-x-2 p-2">
+                                <i class="fa-solid fa-database text-sm"></i>
+                                <span>Data Diskon</span>
+                            </a>
+                        </li>
+                        <li
+                            class="mt-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
+                            <a href="" class="flex items-center space-x-2 p-2">
+                                <i class="fa-solid fa-tags text-sm"></i>
+                                <span>Kategori Diskon</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <a href="/admin/laporan-goodrent">
                     <li
-                        class="flex items-center space-x-3 font-medium py-3 rounded-r-xl px-4 mb-1 {{ Request::is('admin/laporan-goodrent') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-3 md:py-2.5 rounded-r-xl px-4 mb-1 {{ Request::is('admin/laporan-goodrent') ? 'bg-gray-100 text-emerald-700 border-l-4 border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <i class="fa-solid fa-folder-open text-base"></i>
                         <p class="group-hover:translate-x-1 duration-500">Laporan</p>
                     </li>
                 </a>
 
-                <form action="{{ route('logout') }}" method="POST"
-                    class="flex justify-center items-center text-xs">
+                {{-- <form action="{{ route('logout') }}" method="POST"
+                    class="flex justify-center items-center">
                     @csrf
                     <button type="submit"
-                        class="flex fixed bottom-5 justify-center items-center border-2 border-gray-300 space-x-3 font-medium py-1 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
-                        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                        class="flex text-gray-600 hover:text-gray-800 fixed bottom-5 justify-center items-center border border-gray-300 space-x-3 font-medium py-1 rounded-full px-6 mb-1 hover:bg-red-100 duration-300">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <p class="">Keluar</p>
                     </button>
-                </form>
+                </form> --}}
 
             </ul>
 
@@ -286,7 +340,7 @@
         <main class="flex-1 lg:ml-60 mb-8">
             @yield('content')
         </main>
-    </div>    
+    </div>
 
     {{-- animate loading tap --}}
     <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">
@@ -397,6 +451,58 @@
         overlay.classList.remove("opacity-100");
         document.body.classList.remove("overflow-hidden"); // Cegah scrolling
     });
+
+
+    //Toggle Menu Kelola : Barang dan Diskon
+    function toggleSubmenu(type) {
+        const allMenus = ['barang', 'diskon']; // tambahkan id dropdown lain di sini
+        allMenus.forEach(menu => {
+            const submenu = document.getElementById(`sub-menu-${menu}`);
+            const arrow = document.getElementById(`arrow-icon-${menu}`);
+
+            if (menu === type) {
+                const isOpen = submenu.classList.contains('max-h-[200px]');
+                if (isOpen) {
+                    submenu.classList.remove('max-h-[200px]');
+                    submenu.classList.add('max-h-0');
+                    arrow.classList.remove('fa-chevron-up');
+                    arrow.classList.add('fa-chevron-down');
+                } else {
+                    submenu.classList.remove('max-h-0');
+                    submenu.classList.add('max-h-[200px]');
+                    arrow.classList.remove('fa-chevron-down');
+                    arrow.classList.add('fa-chevron-up');
+                }
+            } else {
+                // Tutup semua selain yang diklik
+                submenu.classList.remove('max-h-[200px]');
+                submenu.classList.add('max-h-0');
+                arrow.classList.remove('fa-chevron-up');
+                arrow.classList.add('fa-chevron-down');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        @if ($isBarangActive)
+            const submenuBarang = document.getElementById('sub-menu-barang');
+            const arrowBarang = document.getElementById('arrow-icon-barang');
+            submenuBarang.classList.remove('max-h-0');
+            submenuBarang.classList.add('max-h-[200px]');
+            arrowBarang.classList.remove('fa-chevron-down');
+            arrowBarang.classList.add('fa-chevron-up');
+        @endif
+
+        @if ($isDiskonActive)
+            const submenuDiskon = document.getElementById('sub-menu-diskon');
+            const arrowDiskon = document.getElementById('arrow-icon-diskon');
+            submenuDiskon.classList.remove('max-h-0');
+            submenuDiskon.classList.add('max-h-[200px]');
+            arrowDiskon.classList.remove('fa-chevron-down');
+            arrowDiskon.classList.add('fa-chevron-up');
+        @endif
+    });
+
 
     // Button membuka Menu Profile
     profileBtn.addEventListener('click', () => {

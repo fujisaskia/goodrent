@@ -38,23 +38,24 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
     Route::get('/admin/profile', function () {
         return view('admin.profile');
-    });
+    })->name('admin.profile');
     
     // Data Barang ===================================================== //
     Route::get('/admin/data-barang', function () {
         return view('admin.data-barang.index');
-    });
-    Route::get('/admin/tambah-data-barang', function () {
-        return view('admin.data-barang.create');
-    });
-    Route::get('/admin/edit-data-barang', function () {
-        return view('admin.data-barang.edit');
-    });
+    })->name('admin.data-barang.index');
     
-    // data sewa ===================================================== //
+    
+    // Kategori Barang ================================================== //
+    Route::get('/admin/kategori-barang', function () {
+        return view('admin.kategori-barang.index');
+    })->name('admin.kategori-barang.index');
+
+
+    // Data Sewa ===================================================== //
     Route::get('/admin/data-sewa', function () {
         return view('admin.data-sewa.index');
-    });
+    })->name('admin.data-sewa.index');
     
     
     // kelola pelanggan ===================================================== //
@@ -70,18 +71,20 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     // kelola-diskon ===================================================== //
     Route::get('/admin/kelola-diskon', function () {
         return view('admin.diskon.index');
-    });
+    })->name('admin.diskon.index');
+    
     Route::get('/admin/tambah-diskon', function () {
         return view('admin.diskon.create');
-    });
+    })->name('admin.diskon.create');
+    
     Route::get('/admin/edit-diskon', function () {
         return view('admin.diskon.edit');
-    });
+    })->name('admin.diskon.edit');
     
     // Laporan Admin ===================================================== //
     Route::get('/admin/laporan-goodrent', function () {
         return view('admin.laporan.index');
-    });
+    })->name('admin.laporan.index');
 
 });
 
@@ -96,13 +99,15 @@ Route::middleware(['role:pelanggan'])->group(function () {
 
     Route::get('/goodrent/lihat-produk/', function () {
         return view('user.detail-produk');
-    });
+    })->name('user.produk.detail');
+    
     Route::get('/goodrent/cek-keranjang/', function () {
         return view('user.keranjang');
-    });
+    })->name('user.keranjang');
+    
     Route::get('/goodrent/checkout/', function () {
         return view('user.checkout');
-    });
+    })->name('user.checkout');
 
     // profile ===========================================//
     Route::get('/goodrent/profile', function () {
@@ -113,12 +118,13 @@ Route::middleware(['role:pelanggan'])->group(function () {
 
     Route::get('/goodrent/profile/alamat', function () {
         return view('user.alamat.index');
-    });
+    })->name('user.alamat.index');
+    
     Route::get('/goodrent/profile/tambah-alamat', function () {
         return view('user.alamat.create');
-    });
-
+    })->name('user.alamat.create');
+    
     Route::get('/goodrent/pemesanan-saya', function () {
         return view('user.riwayat');
-    });
+    })->name('user.pemesanan');
 });

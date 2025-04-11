@@ -1,13 +1,13 @@
 @extends('layouts/admin')
 
-@section('title', 'Data Barang GoodRent')
+@section('title', 'Kategori Barang GoodRent')
 
 @section('content')
 
     <div class="mx-auto p-2">
         <h2 class="flex space-x-3 text-3xl font-bold mb-4 items-center justify-center md:justify-start">
             <i class="fa-solid fa-box-open text-emerald-800"></i>
-            <span>Data Barang</span>
+            <span>Kategori Barang</span>
         </h2>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
@@ -20,14 +20,14 @@
                     </button>
                 </div>
                 <div class="flex justify-end">
-                    <button onclick="openModalTambahBarang()"
+                    <button onclick="openModalTambahKategoriBarang()"
                         class="bg-green-700 hover:bg-green-800 flex space-x-2 text-white p-3 rounded-lg items-center focus:scale-95 duration-300">
                         <i class="fa-solid fa-plus"></i>
-                        <span>Tambah Barang</span>
+                        <span>Tambah Kategori</span>
                     </button>
 
                     {{-- Modal Tambah Data Barang  --}}
-                    @include('admin.data-barang.create')
+                    @include('admin.kategori-barang.create')
                 </div>
             </div>
 
@@ -37,70 +37,25 @@
                         <tr class="bg-gray-500 text-white uppercase">
                             <th class="p-3">no</th>
                             <th class="p-3">Jenis PS</th>
-                            <th class="p-3">foto barang</th>
-                            <th class="p-3">deskripsi</th>
-                            <th class="p-3">harga sewa</th>
                             <th class="p-3">aksi</th>
                         </tr>
                     </thead>
                     <tbody class="">
                         <tr class="border-b text-center hover:bg-gray-50">
                             <td class="p-3 ">1</td>
-                            <td class="p-3">Lorem ipsum dolor sit amet.</td>
-                            <td class="flex justify-center p-3">
-                                <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                                    alt="" class="w-16 h-auto">
-                            </td>
-                            <td class="p-3">-</td>
-                            <td class="p-3">RP 50,000 / jam</td>
+                            <td class="p-3 text-left">Lorem ipsum dolor sit amet.</td>
                             <td class="p-3 flex items-center justify-center gap-2">
-                                {{-- button lihat --}}
-                                <a href="">
-                                    @include('components.crud.read')
-                                </a>
 
                                 {{-- button edit --}}
                                 <button
-                                    class="btn-edit-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
+                                    class="btn-edit-kategori-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
                                        text-white py-2 px-2.5 rounded-full"
-                                    title="Edit Barang" data-id="">
+                                    title="Edit Kategori" data-kategori-id="">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
 
                                 {{-- Modal Tambah Data Barang  --}}
-                                @include('admin.data-barang.edit')
-
-                                {{-- button hapus --}}
-                                <form action="" id="delete-form">
-                                    @include('components.crud.delete')
-                                </form>
-                            </td>
-                        </tr>
-                        <tr class="border-b text-center hover:bg-gray-50">
-                            <td class="p-3 ">2</td>
-                            <td class="p-3">Lorem ipsum dolor sit amet.</td>
-                            <td class="flex justify-center p-3">
-                                <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                                    alt="" class="w-16 h-auto">
-                            </td>
-                            <td class="p-3">-</td>
-                            <td class="p-3">RP 50,000 / jam</td>
-                            <td class="p-3 flex items-center justify-center gap-2">
-                                {{-- button lihat --}}
-                                <a href="">
-                                    @include('components.crud.read')
-                                </a>
-
-                                {{-- button edit --}}
-                                <button
-                                    class="btn-edit-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
-                                       text-white py-2 px-2.5 rounded-full"
-                                    title="Edit" data-barang-id="">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-
-                                {{-- Modal Tambah Data Barang  --}}
-                                @include('admin.data-barang.edit')
+                                @include('admin.kategori-barang.edit')
 
                                 {{-- button hapus --}}
                                 <form action="" id="delete-form">
@@ -140,9 +95,9 @@
         });
 
         // membuka modal tambah barang
-        function openModalTambahBarang() {
-            let overlay = document.getElementById('modal-overlay-tambah-barang');
-            let modal = document.getElementById('modal-tambah-barang');
+        function openModalTambahKategoriBarang() {
+            let overlay = document.getElementById('modal-overlay-tambah-kategori-barang');
+            let modal = document.getElementById('modal-tambah-kategori-barang');
 
             // Tampilkan overlay
             overlay.classList.remove('hidden');
@@ -156,9 +111,9 @@
             document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
         }
         // menutup modal tambah barang
-        function closeModalTambahBarang() {
-            let modal = document.getElementById('modal-tambah-barang');
-            let overlay = document.getElementById('modal-overlay-tambah-barang');
+        function closeModalTambahKategoriBarang() {
+            let modal = document.getElementById('modal-tambah-kategori-barang');
+            let overlay = document.getElementById('modal-overlay-tambah-kategori-barang');
 
             // Tambahkan animasi keluar
             modal.classList.add('scale-95', 'opacity-0');
@@ -173,16 +128,16 @@
 
 
         // membuka modal edit barang
-        document.querySelectorAll('.btn-edit-barang').forEach(button => {
+        document.querySelectorAll('.btn-edit-kategori-barang').forEach(button => {
             button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-barang-id');
-                openModalEditBarang(itemId);
+                const itemId = this.getAttribute('data-kategori-id');
+                openModalEditKategoriBarang(itemId);
             });
         });
 
-        function openModalEditBarang(id) {
-            let overlay = document.getElementById('modal-overlay-edit-barang');
-            let modal = document.getElementById('modal-edit-barang');
+        function openModalEditKategoriBarang(id) {
+            let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
+            let modal = document.getElementById('modal-edit-kategori-barang');
 
             // Bisa juga tambahkan logika untuk menampilkan data sesuai id
 
@@ -196,9 +151,9 @@
         }
 
         // menutup modal edit barang
-        function closeModalEditBarang() {
-            let modal = document.getElementById('modal-edit-barang');
-            let overlay = document.getElementById('modal-overlay-edit-barang');
+        function closeModalEditKategoriBarang() {
+            let modal = document.getElementById('modal-edit-kategori-barang');
+            let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
 
             // Tambahkan animasi keluar
             modal.classList.add('scale-95', 'opacity-0');
