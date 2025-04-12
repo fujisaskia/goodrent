@@ -83,7 +83,7 @@
                     </li>
                 </a>
 
-                <a href="/goodrent/profile/alamat">
+                {{-- <a href="/goodrent/profile/alamat">
                     <li
                         class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -96,7 +96,7 @@
 
                         <p class="group-hover:translate-x-1 duration-500">Alamat</p>
                     </li>
-                </a>
+                </a> --}}
 
 
                 <form action="{{ route('logout') }}" method="POST" class="flex text-xs">

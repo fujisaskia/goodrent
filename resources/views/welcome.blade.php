@@ -61,12 +61,12 @@
             <div class="hidden lg:flex items-center space-x-2">
                 {{-- button masuk --}}
                 <a href="/login"
-                    class="flex space-x-1 items-center font-semibold py-2 px-8 text-white bg-emerald-600 hover:bg-emerald-700 focus:scale-95 rounded-xl duration-300">
+                    class="flex space-x-1 items-center font-semibold py-2 px-8 text-white bg-emerald-600 hover:bg-emerald-700 focus:scale-95 rounded-lg duration-300">
                     <span>Masuk</span>
                 </a>
                 {{-- button daftar --}}
                 <a href="/register"
-                    class="flex space-x-1 items-center font-semibold py-2 px-8 text-white border-2 border-white focus:scale-95 rounded-xl duration-300">
+                    class="flex space-x-1 items-center font-semibold py-2 px-8 text-white border-2 border-white focus:scale-95 rounded-lg duration-300">
                     <span>Daftar</span>
                 </a>
             </div>

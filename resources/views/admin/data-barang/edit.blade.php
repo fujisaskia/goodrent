@@ -37,12 +37,6 @@
                     <div class="grid grid-cols-3 md:grid-cols-7 gap-4">
                         <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
                             alt="nama_ps" class="w-16 rounded-sm">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="nama_ps" class="w-16 rounded-sm">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="nama_ps" class="w-16 rounded-sm">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="nama_ps" class="w-16 rounded-sm">
                     </div>
                 </div>
 
@@ -56,11 +50,11 @@
 
             <div class="flex space-x-3 justify-end mt-6">
                 <button type="button" onclick="closeModalEditBarang()"
-                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded">
+                    class="flex space-x-2 text-white bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 p-2 rounded">
                     <p>Batalkan</p>
                 </button>
                 <button type="submit"
-                    class="flex space-x-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-600 p-2 rounded">
+                    class="flex space-x-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-600 px-6 py-2 rounded">
                     <p>Simpan</p>
                 </button>
             </div>

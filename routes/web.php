@@ -29,7 +29,7 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 
 
 // ==================== A D M I N =============================================//
-Route::middleware(['role:superadmin|admin'])->group(function () {  
+Route::middleware(['role:superadmin|admin'])->group(function () {
 
     // Dashboard ======================================================//  
     Route::get('/admin/dashboard', function () {
@@ -39,13 +39,13 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/profile', function () {
         return view('admin.profile');
     })->name('admin.profile');
-    
+
     // Data Barang ===================================================== //
     Route::get('/admin/data-barang', function () {
         return view('admin.data-barang.index');
     })->name('admin.data-barang.index');
-    
-    
+
+
     // Kategori Barang ================================================== //
     Route::get('/admin/kategori-barang', function () {
         return view('admin.kategori-barang.index');
@@ -56,8 +56,8 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/data-sewa', function () {
         return view('admin.data-sewa.index');
     })->name('admin.data-sewa.index');
-    
-    
+
+
     // kelola pelanggan ===================================================== //
     Route::get('/admin/kelola-pelanggan', [UserController::class, 'index'])->name('kelola-pelanggan');
     Route::post('/kelola-pelanggan/pelanggan/{id}/suspend', [UserController::class, 'suspendUser'])->name('pelanggan.suspend');
@@ -67,25 +67,21 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::post('/admin/store', [UserController::class, 'tambahAdmin'])->name('admin.store')->middleware('role:superadmin'); // Hanya superadmin yang bisa tambah admin
     Route::get('/admin/kelola-pelanggan/lihat-pelanggan/{id}', [UserController::class, 'lihatPelanggan'])->name('pelanggan.show');
     Route::delete('/kelola-pelanggan/pelanggan/{id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
-    
+
     // kelola-diskon ===================================================== //
     Route::get('/admin/kelola-diskon', function () {
         return view('admin.diskon.index');
     })->name('admin.diskon.index');
-    
-    Route::get('/admin/tambah-diskon', function () {
-        return view('admin.diskon.create');
-    })->name('admin.diskon.create');
-    
-    Route::get('/admin/edit-diskon', function () {
-        return view('admin.diskon.edit');
-    })->name('admin.diskon.edit');
-    
+
+    // Kategori Darang ================================================== //
+    Route::get('/admin/kategori-diskon', function () {
+        return view('admin.kategori-diskon.index');
+    })->name('admin.kategori-diskon.index');
+
     // Laporan Admin ===================================================== //
     Route::get('/admin/laporan-goodrent', function () {
         return view('admin.laporan.index');
     })->name('admin.laporan.index');
-
 });
 
 
@@ -100,11 +96,11 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::get('/goodrent/lihat-produk/', function () {
         return view('user.detail-produk');
     })->name('user.produk.detail');
-    
+
     Route::get('/goodrent/cek-keranjang/', function () {
         return view('user.keranjang');
     })->name('user.keranjang');
-    
+
     Route::get('/goodrent/checkout/', function () {
         return view('user.checkout');
     })->name('user.checkout');
@@ -113,17 +109,17 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::get('/goodrent/profile', function () {
         return view('user.profile');
     })->name('profile');
-    
+
     Route::put('/edit-profil', [UserController::class, 'editProfilUser'])->name('edit.profil');
 
     Route::get('/goodrent/profile/alamat', function () {
         return view('user.alamat.index');
     })->name('user.alamat.index');
-    
+
     Route::get('/goodrent/profile/tambah-alamat', function () {
         return view('user.alamat.create');
     })->name('user.alamat.create');
-    
+
     Route::get('/goodrent/pemesanan-saya', function () {
         return view('user.riwayat');
     })->name('user.pemesanan');

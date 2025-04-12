@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="mx-auto p-2">
-        <h2 class="flex space-x-3 text-3xl font-bold mb-4 items-center justify-center md:justify-start">
+        <h2 class="flex space-x-3 text-2xl md:text-3xl font-bold mb-4 items-center justify-center md:justify-start">
             <i class="fa-solid fa-box-open text-emerald-800"></i>
             <span>Kategori Barang</span>
         </h2>
@@ -13,7 +13,7 @@
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex flex-col md:flex-row justify-between mb-4">
                 <div class="flex space-x-3 mb-2 md:mb-0">
-                    <input type="search" placeholder="Cari Barang"
+                    <input type="search" placeholder="Cari Kategori Barang"
                         class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
                     <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -43,7 +43,51 @@
                     <tbody class="">
                         <tr class="border-b text-center hover:bg-gray-50">
                             <td class="p-3 ">1</td>
-                            <td class="p-3 text-left">Lorem ipsum dolor sit amet.</td>
+                            <td class="p-3 text-left">PS 4</td>
+                            <td class="p-3 flex items-center justify-center gap-2">
+
+                                {{-- button edit --}}
+                                <button
+                                    class="btn-edit-kategori-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
+                                       text-white py-2 px-2.5 rounded-full"
+                                    title="Edit Kategori" data-kategori-id="">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                {{-- Modal Tambah Data Barang  --}}
+                                @include('admin.kategori-barang.edit')
+
+                                {{-- button hapus --}}
+                                <form action="" id="delete-form">
+                                    @include('components.crud.delete')
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="border-b text-center hover:bg-gray-50">
+                            <td class="p-3 ">2</td>
+                            <td class="p-3 text-left">PS 5</td>
+                            <td class="p-3 flex items-center justify-center gap-2">
+
+                                {{-- button edit --}}
+                                <button
+                                    class="btn-edit-kategori-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
+                                       text-white py-2 px-2.5 rounded-full"
+                                    title="Edit Kategori" data-kategori-id="">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                {{-- Modal Tambah Data Barang  --}}
+                                @include('admin.kategori-barang.edit')
+
+                                {{-- button hapus --}}
+                                <form action="" id="delete-form">
+                                    @include('components.crud.delete')
+                                </form>
+                            </td>
+                        </tr>
+                        <tr class="border-b text-center hover:bg-gray-50">
+                            <td class="p-3 ">3</td>
+                            <td class="p-3 text-left">tambahan</td>
                             <td class="p-3 flex items-center justify-center gap-2">
 
                                 {{-- button edit --}}

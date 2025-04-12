@@ -278,7 +278,7 @@
                 </a>
 
                 @php
-                    $isDiskonActive = Request::is('admin/kelola-diskon') || Request::is('');
+                    $isDiskonActive = Request::is('admin/kelola-diskon') || Request::is('admin/kategori-diskon');
                 @endphp
 
                 <li class="relative">
@@ -302,8 +302,8 @@
                             </a>
                         </li>
                         <li
-                            class="mt-1 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
-                            <a href="" class="flex items-center space-x-2 p-2">
+                            class="mt-1 {{ Request::is('admin/kategori-diskon') ? 'bg-gray-100 text-emerald-700 border-l-4 rounded-r border-emerald-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700' }}">
+                            <a href="/admin/kategori-diskon" class="flex items-center space-x-2 p-2">
                                 <i class="fa-solid fa-tags text-sm"></i>
                                 <span>Kategori Diskon</span>
                             </a>

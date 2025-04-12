@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="mx-auto p-2">
-        <h2 class="flex space-x-3 text-3xl font-bold mb-4 items-center  justify-center md:justify-start">
+        <h2 class="flex space-x-3 text-2xl md:text-3xl font-bold mb-4 items-center justify-center md:justify-start">
             <i class="fa-solid fa-bag-shopping text-4xl text-emerald-800"></i>
             <span>Data Sewa</span>
         </h2>

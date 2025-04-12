@@ -59,7 +59,7 @@
                                 </svg>
                                 <span>Pemesanan</span>
                             </a>
-                            <a href="/goodrent/profile/alamat"
+                            {{-- <a href="/goodrent/profile/alamat"
                                 class="flex space-x-3 items-center px-4 py-2 hover:bg-gray-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -69,7 +69,7 @@
                                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                                 </svg>
                                 <span>Daftar Alamat</span>
-                            </a>
+                            </a> --}}
 
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

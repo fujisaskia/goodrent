@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="mx-auto p-2">
-        <h2 class="flex space-x-3 text-3xl font-bold mb-4 items-center justify-center md:justify-start">
+        <h2 class="flex space-x-3 text-2xl md:text-3xl font-bold mb-4 items-center justify-center md:justify-start">
             <i class="fa-solid fa-box-open text-emerald-800"></i>
             <span>Data Barang</span>
         </h2>
@@ -112,6 +112,30 @@
                 </table>
             </div>
         </div>
+        {{-- Pagination --}}
+        <div class="flex justify-end space-x-1 mt-5">
+            <button
+                class="rounded-full bg-white border border-slate-300 py-2 px-3 items-center text-center transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-emerald-700 hover:border-emerald-700 focus:text-white focus:bg-emerald-700 focus:border-emerald-700 active:border-emerald-700 active:text-white active:bg-emerald-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button
+                class="min-w-9 rounded-full bg-emerald-700 py-2 px-3.5 border border-transparent text-center text-white transition-all shadow-md hover:shadow-lg focus:bg-emerald-700 focus:shadow-none active:bg-emerald-700 hover:bg-emerald-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                1
+            </button>
+            <button
+                class="min-w-9 bg-white rounded-full border border-slate-300 py-2 px-3.5 text-center transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-emerald-600 hover:border-emerald-700 focus:text-white focus:bg-emerald-700 focus:border-emerald-700 active:border-emerald-700 active:text-white active:bg-emerald-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                2
+            </button>
+            <button
+                class="min-w-9 bg-white rounded-full border border-slate-300 py-2 px-3.5 text-center transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-emerald-600 hover:border-emerald-700 focus:text-white focus:bg-emerald-700 focus:border-emerald-700 active:border-emerald-700 active:text-white active:bg-emerald-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                3
+            </button>
+            <button
+                class="min-w-9 bg-white rounded-full border border-slate-300 py-2 px-3 items-center text-center transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-emerald-600 hover:border-emerald-700 focus:text-white focus:bg-emerald-700 focus:border-emerald-700 active:border-emerald-700 active:text-white active:bg-emerald-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
     </div>
 
     <script>

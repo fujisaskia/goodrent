@@ -26,23 +26,23 @@
                         class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                         placeholder="Masukkan Nomor Telepon Anda">
                 </div>
-                <div class="flex space-x-3">
+                <div class="flex flex-col md:flex-row md:space-x-3">
                     <div class="mb-4 relative w-full">
-                        <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
+                        <label for="password" class="block font-medium text-gray-600">Password</label>
                         <div class="relative flex items-center">
                             <input id="password" type="password" name="password"
-                                class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                                class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Masukkan Password Anda">
                         </div>
                     </div>
 
                     <div class="mb-4 relative w-full">
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-600">
+                        <label for="password_confirmation" class="block font-medium text-gray-600">
                             Konfirmasi Password
                         </label>
                         <div class="relative flex items-center">
                             <input id="password_confirmation" type="password" name="password_confirmation"
-                                class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                                class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Masukkan ulang password Anda">
                         </div>
                     </div>
@@ -50,11 +50,11 @@
 
                 <div class="flex space-x-3 justify-end mt-6">
                     <button type="button" onclick="closeModalTambahAdmin()"
-                        class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded-lg">
+                        class="flex space-x-2 text-white bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 p-2 rounded">
                         <p>Batalkan</p>
                     </button>
                     <button type="submit"
-                        class="flex space-x-2 text-white bg-green-600 hover:bg-green-700 focus:bg-green-600 py-2 px-6 rounded-lg">
+                        class="flex space-x-2 text-white bg-green-600 hover:bg-green-700 focus:bg-green-600 py-2 px-6 rounded">
                         <p>Tambah</p>
                     </button>
                 </div>

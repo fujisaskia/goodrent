@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="mx-auto p-2">
-        <h2 class="flex space-x-3 text-3xl font-bold mb-4 items-center justify-center md:justify-start">
+        <h2 class="flex space-x-3 text-2xl md:text-3xl font-bold mb-4 items-center justify-center md:justify-start">
             <x-iconsax-bol-profile-2user class="w-8 h-auto text-emerald-800" />
             <span>Kelola Pelanggan</span>
         </h2>
