@@ -6,15 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    protected $fillable = [
-        'pemesanan_id',
-        'metode_pembayaran',
-        'jumlah_bayar',
-        'status_pembayaran',
-    ];
+    protected $fillable = ['check_out_id', 'metode_pembayaran', 'jumlah_bayar', 'status_pembayaran'];
 
-    public function pesanan()
+    public function checkout()
     {
-        return $this->belongsTo(Pesanan::class, 'pemesanan_id');
+        return $this->belongsTo(CheckOut::class, 'check_out_id');
     }
 }

@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Barang\BarangController;
+use App\Http\Controllers\Barang\KategoriBarangController;
+use App\Http\Controllers\Diskon\DiskonController;
+use App\Http\Controllers\Diskon\KategoriDiskonController;
+use App\Http\Controllers\Pembayaran\PembayaranController;
+use App\Http\Controllers\Pesanan\PesananController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,15 +47,24 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     })->name('admin.profile');
 
     // Data Barang ===================================================== //
-    Route::get('/admin/data-barang', function () {
-        return view('admin.data-barang.index');
-    })->name('admin.data-barang.index');
-
+    Route::get('/admin/data-barang', [BarangController::class, 'index'])->name('data-barang.index');
+    Route::get('/admin/data-barang/create', [BarangController::class, 'create'])->name('data-barang.create');
+    Route::post('/admin/data-barang/store', [BarangController::class, 'store'])->name('data-barang.store');
+    Route::get('/admin/data-barang/edit/{id}', [BarangController::class, 'edit'])->name('data-barang.edit');
+    Route::put('/admin/data-barang/update/{id}', [BarangController::class, 'update'])->name('data-barang.update');
+    Route::delete('/admin/data-barang/delete/{id}', [BarangController::class, 'destroy'])->name('data-barang.destroy');
+    Route::get('/admin/data-barang/lihat-barang/{id}', [BarangController::class, 'show'])->name('data-barang.show');
+    Route::get('/get-kode-barang/{kategoriId}', [BarangController::class, 'getKodeBarang']);
+    Route::delete('/data-barang/destroy-selected', [BarangController::class, 'destroySelected'])->name('data-barang.destroySelected');
 
     // Kategori Barang ================================================== //
-    Route::get('/admin/kategori-barang', function () {
-        return view('admin.kategori-barang.index');
-    })->name('admin.kategori-barang.index');
+    Route::get('/admin/kategori-barang', [KategoriBarangController::class, 'index'])->name('kategori-barang.index');
+    Route::get('/admin/kategori-barang/create', [KategoriBarangController::class, 'create'])->name('kategori-barang.create');
+    Route::post('/admin/kategori-barang/store', [KategoriBarangController::class, 'store'])->name('kategori-barang.store');
+    Route::get('/admin/kategori-barang/edit/{id}', [KategoriBarangController::class, 'edit'])->name('kategori-barang.edit');
+    Route::put('/admin/kategori-barang/update/{id}', [KategoriBarangController::class, 'update'])->name('kategori-barang.update');
+    Route::delete('/admin/kategori-barang/delete/{id}', [KategoriBarangController::class, 'destroy'])->name('kategori-barang.destroy');
+    Route::delete('/kategori-barang/destroy-selected', [KategoriBarangController::class, 'destroySelected'])->name('kategori-barang.destroySelected');
 
 
     // Data Sewa ===================================================== //
@@ -69,14 +84,22 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::delete('/kelola-pelanggan/pelanggan/{id}', [UserController::class, 'hapusPelanggan'])->name('kelola-pelanggan.destroy');
 
     // kelola-diskon ===================================================== //
-    Route::get('/admin/kelola-diskon', function () {
-        return view('admin.diskon.index');
-    })->name('admin.diskon.index');
+    Route::get('/admin/kelola-diskon', [DiskonController::class, 'index'])->name('diskon.index');
+    Route::get('/admin/kelola-diskon/create', [DiskonController::class, 'create'])->name('diskon.create');
+    Route::post('/admin/kelola-diskon/store', [DiskonController::class, 'store'])->name('diskon.store');
+    Route::get('/admin/kelola-diskon/edit/{id}', [DiskonController::class, 'edit'])->name('diskon.edit');
+    Route::put('/admin/kelola-diskon/update/{id}', [DiskonController::class, 'update'])->name('diskon.update');
+    Route::delete('/admin/kelola-diskon/delete/{id}', [DiskonController::class, 'destroy'])->name('diskon.destroy');
+    Route::delete('/kelola-diskon/destroy-selected', [DiskonController::class, 'destroySelected'])->name('diskon.destroySelected');
 
-    // Kategori Darang ================================================== //
-    Route::get('/admin/kategori-diskon', function () {
-        return view('admin.kategori-diskon.index');
-    })->name('admin.kategori-diskon.index');
+    // Kategori Diskon ================================================== //
+    Route::get('/admin/kategori-diskon', [KategoriDiskonController::class, 'index'])->name('kategori-diskon.index');
+    Route::get('/admin/kategori-diskon/create', [KategoriDiskonController::class, 'create'])->name('kategori-diskon.create');
+    Route::post('/admin/kategori-diskon/store', [KategoriDiskonController::class, 'store'])->name('kategori-diskon.store');
+    Route::get('/admin/kategori-diskon/edit/{id}', [KategoriDiskonController::class, 'edit'])->name('kategori-diskon.edit');
+    Route::put('/admin/kategori-diskon/update/{id}', [KategoriDiskonController::class, 'update'])->name('kategori-diskon.update');
+    Route::delete('/admin/kategori-diskon/delete/{id}', [KategoriDiskonController::class, 'destroy'])->name('kategori-diskon.destroy');
+    Route::delete('/kategori-diskon/destroy-selected', [KategoriDiskonController::class, 'destroySelected'])->name('kategori-diskon.destroySelected');
 
     // Laporan Admin ===================================================== //
     Route::get('/admin/laporan-goodrent', function () {
@@ -89,13 +112,10 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 Route::middleware(['role:pelanggan'])->group(function () {
 
     // produk ============================================//
-    Route::get('/goodrent/produk', function () {
-        return view('user.index');
-    })->name('pelanggan.dashboard');
+    Route::get('/goodrent/produk', [BarangController::class, 'lihatBarang'])->name('lihat.produk');
 
-    Route::get('/goodrent/lihat-produk/', function () {
-        return view('user.detail-produk');
-    })->name('user.produk.detail');
+    Route::get('/goodrent/lihat-produk/{id}', [PesananController::class, 'detailProdukUser'])->name('produk.detail');
+    Route::post('/pesan', [PesananController::class, 'store'])->name('pesanan.store');
 
     Route::get('/goodrent/cek-keranjang/', function () {
         return view('user.keranjang');
@@ -123,4 +143,7 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::get('/goodrent/pemesanan-saya', function () {
         return view('user.riwayat');
     })->name('user.pemesanan');
+
+    Route::get('/checkout/{checkoutId}/payment', [PembayaranController::class, 'showPaymentForm'])->name('user.payment.index');
+    Route::post('/checkout/{checkoutId}/payment', [PembayaranController::class, 'processPayment'])->name('user.payment.process');
 });

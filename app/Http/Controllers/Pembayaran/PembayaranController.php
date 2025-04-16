@@ -1,0 +1,102 @@
+<?php
+
+namespace App\Http\Controllers\Pembayaran;
+
+use App\Http\Controllers\Controller;
+use App\Models\CheckOut;
+use App\Models\Pembayaran;
+use Illuminate\Http\Request;
+use Midtrans\Snap;
+
+class PembayaranController extends Controller
+{
+    public function __construct()
+    {
+        // Konfigurasi Midtrans
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$clientKey = config('midtrans.client_key');
+        \Midtrans\Config::$isProduction = config('midtrans.is_production');
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+    }
+
+    // Menampilkan halaman pembayaran
+    public function showPaymentForm($checkoutId)
+    {
+        $checkout = CheckOut::findOrFail($checkoutId);
+        return view('user.payment.index', compact('checkout'));
+    }
+
+    // Proses pembayaran
+    public function processPayment(Request $request, $checkoutId)
+    {
+        $checkout = CheckOut::findOrFail($checkoutId);
+
+        // Menyimpan pembayaran
+        $payment = new Pembayaran();
+        $payment->check_out_id = $checkout->id;
+        $payment->metode_pembayaran = $request->input('metode_pembayaran');
+        $payment->jumlah_bayar = $checkout->total_bayar;
+        $payment->status_pembayaran = 'Menunggu'; // Status awal
+        $payment->save();
+
+        // Jika metode pembayaran adalah Digital (menggunakan Midtrans)
+        if ($payment->metode_pembayaran == 'Digital') {
+            $snapToken = $this->generateMidtransToken($checkout);
+
+            // Update status pembayaran menjadi 'Menunggu' dan simpan token Midtrans
+            $payment->snap_token = $snapToken;
+            $payment->save();
+
+            // Redirect ke Midtrans Snap page
+            return redirect()->to($this->getMidtransRedirectUrl($snapToken));
+        }
+
+        return redirect()->route('user.payment.index', ['checkoutId' => $checkoutId])->with('success', 'Pembayaran berhasil diproses.');
+    }
+
+    // Fungsi untuk generate Snap Token Midtrans
+    private function generateMidtransToken(CheckOut $checkout)
+    {
+        $transactionDetails = [
+            'order_id' => 'ORDER-' . $checkout->id,
+            'gross_amount' => $checkout->total_bayar,
+        ];
+
+        $itemDetails = [
+            [
+                'id' => 'item1',
+                'price' => $checkout->total_bayar,
+                'quantity' => 1,
+                'name' => 'Pembayaran Order #' . $checkout->id,
+            ]
+        ];
+
+        $customerDetails = [
+            'first_name' => auth()->user()->name,
+            'email' => auth()->user()->email,
+        ];
+
+        // Prepare the Midtrans transaction
+        $transactionData = [
+            'transaction_details' => $transactionDetails,
+            'item_details' => $itemDetails,
+            'customer_details' => $customerDetails,
+        ];
+
+        try {
+            $snap = new Snap();
+            $response = $snap->createTransaction($transactionData);
+            return $response->token;
+        } catch (\Exception $e) {
+            // Jika terjadi error saat mendapatkan Snap token
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses pembayaran.');
+        }
+    }
+
+    // Mendapatkan URL untuk redirect ke Midtrans Snap
+    private function getMidtransRedirectUrl($snapToken)
+    {
+        return 'https://app.midtrans.com/snap/v2/v2-pages/credit-card?token=' . $snapToken;
+    }
+}

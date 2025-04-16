@@ -7,29 +7,37 @@
 
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Edit Kategori</h1>
 
-        <form action="" class="text-start">
+        <form action="{{ route('kategori-diskon.update', $kategori->id) }}" method="POST" class="text-start">
             @csrf
-            <div class="space-y-3">
+            @method('PUT')
+            <div class="space-y-4">
                 <div class="">
-                    <label for="" class="block text-gray-700 mb-2">Edit Nama Kategori</label>
-                    <input type="text" name="" value="PS 5"
+                    <label for="nama" class="block text-gray-700 mb-2">Jenis PS</label>
+                    <input type="text" name="nama" value="{{ $kategori->nama }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                         required>
                 </div>
-
+                <div class="">
+                    <label for="status" class="block text-gray-700 mb-2">Status</label>
+                    <select name="status"
+                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                        required>
+                        <option value="Draft" {{ $kategori->status == 'Draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="Public" {{ $kategori->status == 'Public' ? 'selected' : '' }}>Public</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex space-x-3 justify-end mt-6">
                 <button type="button" onclick="closeModalEditKategoriDiskon()"
-                    class="flex space-x-2 text-white bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 p-2 rounded">
+                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded">
                     <p>Batalkan</p>
                 </button>
                 <button type="submit"
-                    class="flex space-x-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-600 px-6 py-2 rounded">
+                    class="flex space-x-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-600 p-2 rounded">
                     <p>Simpan</p>
                 </button>
             </div>
         </form>
-
     </div>
 </div>

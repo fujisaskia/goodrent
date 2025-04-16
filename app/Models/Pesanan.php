@@ -6,18 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'barang_id',
-        'tanggal_pesan',
-        'durasi_sewa',
-        'metode_pembayaran',
-        'harga_ps',
-        'diskon_id',
-        'potongan_harga',
-        'total_bayar',
-        'status_pemesanan',
-    ];
+    protected $fillable = ['user_id', 'barang_id', 'durasi_sewa', 'tanggal_mulai', 'tanggal_selesai'];
 
     public function user()
     {
@@ -29,13 +18,13 @@ class Pesanan extends Model
         return $this->belongsTo(Barang::class);
     }
 
-    public function diskon()
+    public function keranjangItem()
     {
-        return $this->belongsTo(Diskon::class);
+        return $this->hasOne(KeranjangItem::class);
     }
 
-    public function pembayaran()
+    public function riwayatPesanan()
     {
-        return $this->hasOne(Pembayaran::class);
+        return $this->hasOne(RiwayatPesanan::class);
     }
 }
