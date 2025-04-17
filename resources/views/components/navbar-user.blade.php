@@ -1,7 +1,10 @@
     <!-- Navbar -->
     <nav class="fixed top-2 left-0 w-[calc(100%-2rem)] mx-4 bg-white shadow-md p-4 z-50 rounded-lg">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h2 class="text-green-700 font-bold text-lg hidden md:flex">GoodRent</h2>
+            <div class="flex items-center space-x-1 hidden md:flex">
+                <img src="{{ asset('assets/logo.png') }}" alt="" class="w-8 h-8 rounded-full">
+                <h2 class="text-green-700 font-bold text-lg">GoodRent</h2>
+            </div>
             @if (request()->is('goodrent/produk'))
                 <h3 class="text-green-700 font-bold text-xl md:hidden ">GoodRent</h3>
             @else

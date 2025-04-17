@@ -59,7 +59,7 @@
             </div>
 
             <div class="flex flex-col space-y-3 md:flex-row text-center justify-between mt-5 text-xs">
-                <h4>&copy; 2025 GoodRent. All rights reserved. Developed By Lorem, ipsum.</h4>
+                <h4>&copy; 2025 GoodRent. All rights reserved. Developed By Goodrent Team.</h4>
                 <!-- Tombol untuk membuka modal -->
                 <button onclick="toggleModal(true)" class="hover:underline">
                     <h4>Syarat & Ketentuan</h4>

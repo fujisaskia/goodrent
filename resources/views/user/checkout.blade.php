@@ -22,7 +22,7 @@
 </head>
 {{-- bg-gradient-to-b from-emerald-100 to-slate-200 --}}
 
-<body class=" bg-gradient-to-b from-emerald-50 to-slate-200 pt-20 text-sm">
+<body class=" bg-gradient-to-b from-emerald-50 to-slate-200 pt-20 text-sm overflow-auto">
 
     {{-- Navbar --}}
     @include('components.navbar-user')
@@ -30,11 +30,12 @@
 
     {{-- Konten di Sini --}}
     <div class="max-w-2xl lg:max-w-6xl mx-auto py-8 mb-20">
-        <div class="bg-white border p-1 md:p-4 rounded-lg shadow-lg mx-4">
+        <div class="border p-1 md:p-4 rounded-lg shadow-lg">
 
             {{-- Info USer --}}
             <div class="my-2 px-4">
-                <h2 class="text-gray-700 text-2xl font-semibold text-center md:text-start mb-2 md:mb-0">CheckOut</h2>
+                <h2 class="text-gray-700 text-2xl md:text-3xl font-semibold text-center md:text-start mb-2 md:mb-0">
+                    CheckOut</h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 rounded-md p-4 mb-6">
@@ -51,7 +52,7 @@
                             <h5 class="text-gray-700 text-xs">No Telepon :</h5>
                             <h3 class="">089211223344</h3>
                         </div>
-                        <div class="flex flex-col space-y-1">
+                        {{-- <div class="flex flex-col space-y-1">
                             <h5 class="text-gray-700 text-xs">Alamat :</h5>
                             <h3 class="pr-8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
                                 nihil alias doloribus.</h3>
@@ -59,10 +60,10 @@
 
                         <div class="">
                             <h5 class="font-semibold text-yellow-500">Ubah Alamat</h5>
-                        </div>
+                        </div> --}}
                     </div>
 
-                    <div class=" p-4 bg-white border border-gray-200 rounded shadow-md lg:sticky top-2/3">
+                    {{-- <div class=" p-4 bg-white border border-gray-200 rounded shadow-md lg:sticky top-2/3">
                         <p class="font-semibold text-gray-800 text-lg">
                             Pilih <span class="font-bold">??????</span>
                         </p>
@@ -76,10 +77,10 @@
                                 <span class="text-gray-700 font-medium">Ambil Sendiri</span>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
-                <div class="border border-gray-200 p-4 rounded shadow-md items-center">
+                <div class="bg-white border border-gray-200 p-4 rounded shadow-md items-center">
                     <h2 class="text-gray-700 text-lg font-semibold text-center md:text-start mb-5">Rincian Pemesanan
                     </h2>
 
@@ -152,28 +153,93 @@
                     </div>
 
                     <!-- Ongkir Section -->
-                    <div class="flex justify-between space-x-2 bg-gray-50 border rounded px-2 py-1.5 items-center">
+                    {{-- <div class="flex justify-between space-x-2 bg-gray-50 border rounded px-2 py-1.5 items-center">
                         <div>
                             <p class="font-bold text-gray-800">Ongkir</p>
                             <p class="text-gray-600 text-xs">Antar-Jemput</p>
                         </div>
                         <p class="font-bold">Rp 20,000</p>
+                    </div> --}}
+
+                    <!-- Pilih Diskon -->
+                    <div class="flex space-x-3 my-3">
+                        <span id="selected-discount"
+                            class="bg-emerald-50 font-bold border border-blue-300 rounded p-3 text-gray-600 w-full outline-none cursor-pointer"
+                            onclick="toggleDiscountModal()">PILIH DISKON</span>
+                        <button id="apply-discount-button"
+                            class="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded font-semibold"
+                            disabled onclick="applyDiscount()">Pakai</button>
                     </div>
 
-                    <!-- Input Kode Diskon -->
-                    <div class="flex my-3 bg-gray-100 p-2.5 rounded-lg">
-                        <input type="text" placeholder="Masukkan Kode Diskon"
-                            class="bg-transparent text-gray-600 w-full outline-none" />
-                        <button
-                            class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-1.5 rounded font-semibold">
-                            Gunakan
-                        </button>
+                    {{-- status diskon --}}
+                    <p class="p-2 mb-4 text-xs border border-emerald-700 bg-emerald-100">🎉 Diskon berhasil digunakan!
+                    </p>
+
+                    <!-- Modal Daftar Diskon -->
+                    <div id="discount-modal"
+                        class="hidden fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center p-4 font-semibold z-50">
+                        <div class="bg-white p-6 rounded-lg w-96 max-h-[80vh] relative">
+                            <!-- Tombol X -->
+                            <button onclick="closeDiscountModal()"
+                                class="absolute top-4 right-4 text-gray-500 hover:bg-gray-200 rounded-full hover:text-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <h2 class="text-xl font-bold mb-4">Pilih Diskon</h2>
+
+
+                            <!-- Scrollable Diskon List -->
+                            <div class="overflow-y-auto max-h-80 pr-2">
+                                <div onclick="selectDiscount('Diskon 10%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Hari Raya</p>
+                                    <p class="text-sm text-gray-500">Potongan 10%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 20%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Tahun Baru</p>
+                                    <p class="text-sm text-gray-500">Potongan 20%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 30%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Pengguna Baru</p>
+                                    <p class="text-sm text-gray-500">Potongan 30%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 40%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Imlek</p>
+                                    <p class="text-sm text-gray-500">Potongan 40%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 50%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Tahun Baru Cina</p>
+                                    <p class="text-sm text-gray-500">Potongan 50%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 60%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Lorem, ipsum dolor.</p>
+                                    <p class="text-sm text-gray-500">Potongan 60%</p>
+                                </div>
+                                <div onclick="selectDiscount('Diskon 70%')"
+                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                    <p class="text-base font-semibold text-emerald-700">Lorem, ipsum.</p>
+                                    <p class="text-sm text-gray-500">Potongan 70%</p>
+                                </div>
+                            </div>
+
+                            {{-- <button onclick="closeDiscountModal()"
+                                class="mt-4 w-full bg-red-600 text-white py-2 rounded">Tutup</button> --}}
+                        </div>
                     </div>
+
+
 
                     <!-- Total -->
                     <div class="flex justify-between items-center">
                         <p class="font-bold text-xl">TOTAL</p>
-                        <p class="text-red-700 font-bold text-xl">Rp 100,000</p>
+                        <p class="text-red-700 font-bold text-xl">Rp 100,000,000</p>
                     </div>
 
                     <!-- Buttons -->
@@ -194,3 +260,45 @@
 </body>
 
 </html>
+
+
+<script>
+    function toggleDiscountModal() {
+        const modal = document.getElementById('discount-modal');
+        modal.classList.toggle('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeDiscountModal() {
+        const modal = document.getElementById('discount-modal');
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    function selectDiscount(discount) {
+        const discountText = document.getElementById('selected-discount');
+        const applyButton = document.getElementById('apply-discount-button');
+
+        // Menampilkan diskon yang dipilih
+        discountText.textContent = discount;
+
+        // Mengaktifkan tombol "Pakai"
+        applyButton.disabled = false;
+
+        // Menutup modal setelah memilih
+        closeDiscountModal();
+    }
+
+    function applyDiscount() {
+        const discount = document.getElementById('selected-discount').textContent;
+        console.log(`Diskon yang dipilih: ${discount}`);
+
+        // Kirim data diskon ke database atau proses potongan harga di sini
+        // Contoh:
+        // fetch('/apply-discount', {
+        //     method: 'POST',
+        //     body: JSON.stringify({ discount }),
+        //     headers: { 'Content-Type': 'application/json' }
+        // }).then(response => response.json()).then(data => console.log(data));
+    }
+</script>
