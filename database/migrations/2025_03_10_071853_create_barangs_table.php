@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
             $table->string('kode_barang');
-            $table->string('jenis_ps');
+            $table->string('nama_barang');
+            $table->foreignId('kategori_barang_id')->constrained('kategori_barangs')->onDelete('cascade');
             $table->text('deskripsi');
             $table->string('image');
-            $table->decimal('harga');
             $table->integer('stok');
             $table->enum('status_barang', ['Tidak Tersedia', 'Tersedia'])->default('Tersedia');
             $table->timestamps();

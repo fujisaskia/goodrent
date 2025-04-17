@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembayarans', function (Blueprint $table) {
+        Schema::create('riwayat_pesanans', function (Blueprint $table) {
             $table->id();
+            // Relasi ke user dan pesanan
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('pesanan_id')->constrained('pesanans')->onDelete('cascade');
-            $table->enum('metode_pembayaran', ['Digital', 'Non-Digital']);
-            $table->decimal('jumlah_bayar');
-            $table->enum('status_pembayaran', ['Menunggu', 'Berhasil', 'Gagal'])->default('Menunggu');
+            $table->enum('status_pemesanan', ['Dalam Penyewaan', 'Selesai', 'Dibatalkan'])->default('Dalam Penyewaan');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembayarans');
+        Schema::dropIfExists('riwayat_pesanans');
     }
 };

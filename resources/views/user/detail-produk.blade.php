@@ -66,54 +66,85 @@
                 </div>
                 <div class="">
                     <div>
-                        <h3 class="hidden lg:block text-2xl font-bold">PlayStation 5 (PS5)</h3>
-                        <p class="hidden lg:block text-2xl text-green-600 font-semibold">Harga Sewa: Rp 30,000</p>
+                        <h3 class="hidden lg:block text-2xl font-bold">{{ $barang->nama_barang }}</h3>
+                        <p class="hidden lg:block text-2xl text-green-600 font-semibold">
+                            Harga Sewa: Rp {{ number_format($barang->hargaSewas->first()->harga ?? 0, 0, ',', '.') }}
+                        </p>
+
                         <div class="space-y-2 rounded-lg mt-2">
                             <h3 class="font-semibold">Durasi Sewa</h3>
-                            <div class="flex justify-between bg-gray-100 p-3 rounded-md border border-gray-300">
-                                <span>12 jam</span> <span class="font-bold text-red-700">Rp 30,000</span>
-                            </div>
-                            <div class="flex justify-between bg-gray-100 p-3 rounded-md border border-gray-300">
-                                <span>1 Hari</span> <span class="font-bold text-red-700">Rp 40,000</span>
-                            </div>
-                            <div class="flex justify-between bg-gray-100 p-3 rounded-md border border-gray-300">
-                                <span>2 Hari</span> <span class="font-bold text-red-700">Rp 40,000</span>
-                            </div>
-                            <div class="flex justify-between bg-gray-100 p-3 rounded-md border border-gray-300">
-                                <span>3 Hari</span> <span class="font-bold text-red-700">Rp 40,000</span>
-                            </div>
+                            @foreach ($barang->hargaSewas as $hargaSewa)
+                                <div class="flex justify-between bg-gray-100 p-3 rounded-md border border-gray-300">
+                                    <span>
+                                        @switch($hargaSewa->durasi_jam)
+                                            @case(12)
+                                                12 Jam
+                                            @break
+
+                                            @case(24)
+                                                1 Hari
+                                            @break
+
+                                            @case(48)
+                                                2 Hari
+                                            @break
+
+                                            @case(72)
+                                                3 Hari
+                                            @break
+
+                                            @default
+                                                {{ $hargaSewa->durasi_jam }} Jam
+                                        @endswitch
+                                    </span>
+                                    <span class="font-bold text-red-700">
+                                        Rp {{ number_format($hargaSewa->harga, 0, ',', '.') }}
+                                    </span>
+                                </div>
+                            @endforeach
                         </div>
-                        <p class="text-red-600 text-sm bg-red-100 p-2 rounded-md mt-1.5 font-semibold">*Harga sewa belum termasuk biaya pengiriman</p>
+
+                        <p class="text-red-600 text-sm bg-red-100 p-2 rounded-md mt-1.5 font-semibold">
+                            *Harga sewa belum termasuk biaya pengiriman
+                        </p>
                     </div>
 
-                    <div class="bg-white shadow-lg shadow-emerald-100 border border-gray-400 lg:border-gray-200 p-4 rounded-lg mt-8 text-sm">
+                    <div
+                        class="bg-white shadow-lg shadow-emerald-100 border border-gray-400 lg:border-gray-200 p-4 rounded-lg mt-8 text-sm">
                         <h3 class="text-xl font-bold text-center mb-6">Form Sewa</h3>
-                        <form>
+                        <form action="{{ route('pesanan.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="barang_id" value="{{ $barang->id }}">
+
                             <div class="mb-3">
                                 <label class="block text-xs font-semibold text-gray-600">Durasi Sewa :</label>
-                                <select name="" id=""
-                                    class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100">
+                                <select name="durasi_jam"
+                                    class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
+                                    required>
                                     <option value="">Pilih Durasi</option>
-                                    <option value="">Setengah Hari</option>
-                                    <option value="">1 Hari</option>
-                                    <option value="">2 Hari</option>
-                                    <option value="">3 Hari</option>
+                                    @foreach ($barang->hargaSewas as $hargaSewa)
+                                        <option value="{{ $hargaSewa->durasi_jam }}">
+                                            {{ $hargaSewa->durasi_jam == 12 ? 'Setengah Hari' : floor($hargaSewa->durasi_jam / 24) . ' Hari' }}
+                                            - Rp {{ number_format($hargaSewa->harga, 0, ',', '.') }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="flex space-x-3 mb-3">
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Mulai :</label>
-                                    <input type="date" id="mulai-sewa" placeholder="Pilih tanggal sewa"
-                                        class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100">
+                                    <input type="date" name="tanggal_mulai"
+                                        class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
+                                        required>
                                 </div>
 
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Selesai :</label>
-                                    <input type="date" id="selesai-sewa" placeholder="Tanggal akhir sewa"
-                                        class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100">
+                                    <input type="date" name="tanggal_selesai"
+                                        class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
+                                        required>
                                 </div>
-
                             </div>
 
                             <button class="w-full mt-8 bg-gray-800 hover:bg-gray-900 text-white p-4 rounded">Sewa

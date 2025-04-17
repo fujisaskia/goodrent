@@ -5,16 +5,27 @@
     <div id="modal-tambah-kategori-barang"
         class="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg border border-gray-400 md:border-none transform scale-95 opacity-0 transition-all duration-300">
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Tambah Kategori Baru</h1>
-        <form action="" method="POST">
+
+        <form action="{{ route('kategori-barang.store') }}" method="POST">
             @csrf
             <div class="space-y-4">
-                <div class="">
-                    <label for="" class="block text-gray-700 mb-2">Jenis PS</label>
-                    <input type="text" name="" placeholder="silahkan isi jenis barang"
+                <div>
+                    <label for="nama" class="block text-gray-700 mb-2">Nama Kategori</label>
+                    <input type="text" id="nama" name="nama" placeholder="Silakan isi Nama Katgegori"
                         class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                         required>
                 </div>
 
+                <div>
+                    <label for="status" class="block text-gray-700 mb-2">Status</label>
+                    <select id="status" name="status"
+                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                        required>
+                        <option value="">-- Pilih Status --</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Public">Public</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex space-x-3 justify-end mt-6">
@@ -29,7 +40,5 @@
                 </button>
             </div>
         </form>
-
-
     </div>
 </div>

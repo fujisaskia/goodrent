@@ -22,7 +22,7 @@ class UserController extends Controller
                 // Admin hanya melihat pelanggan
                 $query->where('name', 'pelanggan');
             }
-        })->get();
+        })->paginate(10); // Tambahkan pagination dengan 10 item per halaman
 
         return view('admin.kelola-user.index', compact('users'));
     }
@@ -124,11 +124,11 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profil Anda berhasil diubah.');
     }
 
-    public function lihatPelanggan($id)
-    {
-        $pelanggan = User::findOrFail($id); // Gunakan findOrFail untuk langsung memberikan error jika tidak ditemukan
-        return view('admin.kelola-user.show', compact('pelanggan'));
-    }
+    // public function lihatPelanggan($id)
+    // {
+    //     $pelanggan = User::findOrFail($id); // Gunakan findOrFail untuk langsung memberikan error jika tidak ditemukan
+    //     return view('admin.kelola-user.show', compact('pelanggan'));
+    // }
 
     public function hapusPelanggan($id)
     {

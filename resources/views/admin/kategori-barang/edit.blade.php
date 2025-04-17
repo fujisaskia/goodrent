@@ -7,16 +7,25 @@
 
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Edit Kategori Barang</h1>
 
-        <form action="" class="text-start">
+        <form action="{{ route('kategori-barang.update', $kategori->id) }}" method="POST" class="text-start">
             @csrf
-            <div class="space-y-3">
+            @method('PUT')
+            <div class="space-y-4">
                 <div class="">
-                    <label for="" class="block text-gray-700 mb-2">Jenis PS</label>
-                    <input type="text" name="" value="PS 5"
+                    <label for="nama" class="block text-gray-700 mb-2">Jenis PS</label>
+                    <input type="text" name="nama" value="{{ $kategori->nama }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                         required>
                 </div>
-
+                <div class="">
+                    <label for="status" class="block text-gray-700 mb-2">Status</label>
+                    <select name="status"
+                        class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                        required>
+                        <option value="Draft" {{ $kategori->status == 'Draft' ? 'selected' : '' }}>Draft</option>
+                        <option value="Public" {{ $kategori->status == 'Public' ? 'selected' : '' }}>Public</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex space-x-3 justify-end mt-6">
@@ -30,6 +39,5 @@
                 </button>
             </div>
         </form>
-
     </div>
 </div>

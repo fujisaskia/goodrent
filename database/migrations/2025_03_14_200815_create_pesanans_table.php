@@ -15,14 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
-            $table->date('tanggal_pesan');
-            $table->integer('durasi_sewa');
-            $table->string('metode_pembayaran');
-            $table->decimal('harga_ps');
-            $table->foreignId('diskon_id')->constrained('diskons')->onDelete('cascade');
-            $table->decimal('potongan_harga');
-            $table->decimal('total_bayar');
-            $table->enum('status_pemesanan', ['Dalam Penyewaan', 'Selesai', 'Dibatalkan'])->default('Dalam Penyewaan');
+            $table->integer('durasi_sewa'); // 12, 24, 72, 168, dst
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
             $table->timestamps();
         });
     }

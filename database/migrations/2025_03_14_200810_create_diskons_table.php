@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama_diskon');
             $table->string('kode_diskon');
-            $table->string('jenis_diskon');
-            $table->decimal('besar_diskon');
-            $table->date('masa_berlaku');
+            $table->foreignId('kategori_diskon_id')->constrained('kategori_diskons')->onDelete('cascade');
+            $table->decimal('besar_diskon', 15, 2);
+            $table->date('tanggal_mulai')->nullable();
+            $table->date('tanggal_selesai')->nullable();
             $table->timestamps();
         });
     }
