@@ -32,12 +32,13 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 // Logout (Hanya untuk user yang sudah login)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Lupa Password
-Route::get('/forgot-password', [AuthController::class, 'forgotPasswordPage'])->name('password.request');
+Route::get('/forgot-password', [AuthController::class, 'forgotPasswordPage'])->name('forgot.password');
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.email');
 
-// Reset Password
-Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordPage'])->name('password.reset');
+Route::get('/verify-otp', [AuthController::class, 'verifyOtpPage'])->name('verify.otp.page');
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('reset.password.otp');
+
+Route::get('/reset-password', [AuthController::class, 'resetPasswordPage'])->name('password.reset.page');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 

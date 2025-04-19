@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lupa Password GoodRent</title>
+    <title>Verify OTP GoodRent</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -24,35 +24,35 @@
 <body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-emerald-100 to-yellow-50 px-6">
     <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <!-- Title -->
-        <!-- Title -->
         <div class="text-center text-xl font-bold mb-4 text-gray-800">
-            <h3 class="mb-2">Lupa Password Anda?</h3>
-            <div class="text-xs bg-blue-100 border border-blue-300 p-2 text-left rounded">Masukkan email Anda yang
-                terdaftar di bawah ini, kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.</div>
+            <h3 class="mb-2">Masukan OTP Anda</h3>
+            {{-- <div class="text-xs bg-blue-100 border border-blue-300 p-2 text-left rounded">Masukkan email Anda yang terdaftar di bawah ini, kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.</div> --}}
         </div>
 
         <!-- Form Input -->
-        <form action="{{ route('password.email') }}" method="POST">
+        <form action="{{ route('reset.password.otp') }}" method="POST">
             @csrf
+
+            <input type="hidden" name="email" value="{{ $email }}">
+
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
-                <input type="email" name="email"
-                    class="mt-2 w-full p-3 border rounded-lg focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none 
-                        @error('email') border-red-500 ring-1 ring-red-500 @enderror"
-                        placeholder="Masukkan Email Anda">
-                @error('email')
+                <label for="otp" class="block text-sm font-medium text-gray-600">Kode OTP</label>
+                <input type="text" name="otp"
+                    class="mt-2 w-full p-3 border rounded-lg focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 focus:outline-none 
+                        @error('otp') border-red-500 ring-1 ring-red-500 @enderror"
+                        placeholder="Masukkan Kode OTP Anda">
+                @error('otp')
                     <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
                 @enderror
             </div>
 
-            <div class="mt-6">
+            <div class="mt-5">
                 <button type="submit"
-                    class="w-full bg-blue-800 hover:bg-blue-900 transition-all duration-300 p-3 text-white font-bold rounded-lg">
-                    Kirim Pesan Email
+                    class="w-full bg-yellow-800 hover:bg-yellow-900 transition-all duration-300 p-3 text-white font-bold rounded-lg">
+                    Verifikasi
                 </button>
             </div>
         </form>
-
     </div>
 
     <!-- Include AOS JS -->

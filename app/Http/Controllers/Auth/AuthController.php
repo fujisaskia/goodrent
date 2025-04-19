@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
@@ -141,65 +144,107 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Berhasil keluar.');
     }
 
-    // lupa password page
     public function forgotPasswordPage()
     {
         return view('auth.forgot-password');
     }
 
-    // LUPA PASSWORD
     public function forgotPassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'email' => 'required|email|exists:users,email',
         ], [
             'email.required' => 'Email wajib diisi',
-            'email.exists' => 'Email tidak ditemukan',
+            'email.email' => 'Format email tidak valid',
+            'email.exists' => 'Email tidak terdaftar',
         ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator->errors());
-        }
+        $otp = rand(100000, 999999);
+        $email = $request->email;
 
-        $status = Password::sendResetLink($request->only('email'));
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $email],
+            [
+                'token' => $otp,
+                'created_at' => Carbon::now(),
+            ]
+        );
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', 'Link reset password telah dikirim ke email Anda.')
-            : back()->withErrors('Gagal mengirim link reset password.');
+        Mail::raw("Kode OTP reset password Anda adalah: $otp", function ($message) use ($email) {
+            $message->to($email)->subject('Kode OTP Reset Password');
+        });
+
+        return redirect()->route('verify.otp.page')->with('email', $email);
     }
 
-    public function resetPasswordPage($token)
+    public function verifyOtpPage(Request $request)
     {
-        return view('auth.reset-password', ['token' => $token]);
+        $email = session('email');
+        return view('auth.verify-otp', compact('email'));
+    }
+
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|numeric',
+            'email' => 'required|email',
+        ], [
+            'otp.required' => 'Kode OTP wajib diisi',
+            'otp.numeric' => 'Kode OTP harus berupa angka',
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Format email tidak valid',
+        ]);
+
+        $record = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+
+        if (!$record) {
+            return back()->withErrors(['otp' => 'Data reset tidak ditemukan']);
+        }
+
+        $isExpired = Carbon::parse($record->created_at)->addMinutes(10)->isPast(); // OTP 10 menit
+
+        if ($isExpired) {
+            return back()->withErrors(['otp' => 'Kode OTP telah kedaluwarsa']);
+        }
+
+        if ($record->token != $request->otp) {
+            return back()->withErrors(['otp' => 'Kode OTP salah']);
+        }
+
+        // Simpan email di session untuk halaman reset password
+        session(['reset_email' => $request->email]);
+
+        return redirect()->route('password.reset.page');
+    }
+
+    public function resetPasswordPage()
+    {
+        $email = session('reset_email');
+        return view('auth.reset-password', compact('email'));
     }
 
     public function resetPassword(Request $request)
     {
-        // Validasi input
         $request->validate([
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'token' => 'required'
+            'password' => 'required|min:6|confirmed',
         ], [
             'email.required' => 'Email wajib diisi',
-            'email.exists' => 'Email tidak ditemukan',
+            'email.email' => 'Format email tidak valid',
+            'email.exists' => 'Email tidak terdaftar',
             'password.required' => 'Password wajib diisi',
-            'password.min' => 'Password minimal 8 karakter',
-            'password.confirmed' => 'Password dan konfirmasi password harus sama',
+            'password.min' => 'Password minimal 6 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
         ]);
 
-        // Reset password
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->save();
-            }
-        );
+        DB::table('users')->where('email', $request->email)->update([
+            'password' => Hash::make($request->password),
+        ]);
 
-        return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('success', 'Password berhasil direset! Silakan login.')
-            : back()->withErrors(['email' => 'Token tidak valid atau sudah kadaluarsa.']);
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        session()->forget('reset_email');
+
+        return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan login.');
     }
 }
