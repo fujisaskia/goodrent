@@ -37,7 +37,7 @@
         <!-- Form Input -->
         <form action="{{ route('register') }}" method="POST">
             @csrf
-            <div class="mb-4">
+            <div class="mb-4 w-full">
                 <label for="name" class="block font-medium text-gray-600">Nama</label>
                 <input type="text" name="name" value="{{ old('name') }}"
                     class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
@@ -48,77 +48,82 @@
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="email" class="block font-medium text-gray-600">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}"
-                    class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
-                    @error('email') border-red-500 ring-1 ring-red-500 @enderror"
-                    placeholder="Masukkan Email Anda">
-                @error('email')
-                    <span class="text-sm text-red-700">*{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="no_telp" class="block font-medium text-gray-600">Nomor Telepon</label>
-                <input type="text" name="no_telp" value="{{ old('no_telp') }}"
-                    class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
-                    @error('no_telp') border-red-500 ring-1 ring-red-500 @enderror"
-                    placeholder="Masukkan Nomor Telepon Anda">
-                @error('no_telp')
-                    <span class="text-sm text-red-700">*{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-4 relative">
-                <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
-
-                <div class="relative flex items-center">
-                    <input id="password" type="password" name="password"
-                        class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
-                        @error('password') border-red-500 ring-1 ring-red-500 @enderror"
-                        placeholder="Masukkan Password Anda">
-                    <button type="button" id="togglePassword"
-                        class="absolute inset-y-0 right-3 pt-2 flex items-center justify-center text-gray-500">
-                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
-                    </button>
+            <div class="flex space-x-3">
+                <div class="mb-4 w-full">
+                    <label for="email" class="block font-medium text-gray-600">Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}"
+                        class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+                        @error('email') border-red-500 ring-1 ring-red-500 @enderror"
+                        placeholder="Masukkan Email Anda">
+                    @error('email')
+                        <span class="text-sm text-red-700">*{{ $message }}</span>
+                    @enderror
                 </div>
 
-                @error('password')
-                    <span class="text-sm text-red-700">*{{ $message }}</span>
-                @enderror
+                <div class="mb-4 w-full">
+                    <label for="no_telp" class="block font-medium text-gray-600">Nomor Telepon</label>
+                    <input type="text" name="no_telp" value="{{ old('no_telp') }}"
+                        class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+                        @error('no_telp') border-red-500 ring-1 ring-red-500 @enderror"
+                        placeholder="Masukkan Nomor Telepon Anda">
+                    @error('no_telp')
+                        <span class="text-sm text-red-700">*{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
+            <div class="flex space-x-3">
 
-            <div class="mb-4 relative">
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-600">
-                    Konfirmasi Password
-                </label>
+                <div class="mb-4 w-full relative">
+                    <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
 
-                <div class="relative flex items-center">
-                    <input id="password_confirmation" type="password" name="password_confirmation"
-                        class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
-                        @error('password_confirmation') border-red-500 ring-1 ring-red-500 @enderror"
-                        placeholder="Masukkan ulang password Anda">
-                    <button type="button" id="toggleConfirmPassword"
-                        class="absolute inset-y-0 right-3 pt-2 flex items-center text-gray-500">
-                        <svg id="eyeIconConfirm" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                            <circle cx="12" cy="12" r="3" />
-                        </svg>
-                    </button>
+                    <div class="relative flex items-center">
+                        <input id="password" type="password" name="password"
+                            class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+                @error('password') border-red-500 ring-1 ring-red-500 @enderror"
+                            placeholder="Masukkan Password Anda">
+                        <button type="button" id="togglePassword"
+                            class="absolute inset-y-0 right-3 pt-2 flex items-center justify-center text-gray-500">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    @error('password')
+                        <span class="text-sm text-red-700">*{{ $message }}</span>
+                    @enderror
                 </div>
 
-                @error('password_confirmation')
-                    <span class="text-sm text-red-700">*{{ $message }}</span>
-                @enderror
+                <div class="mb-4 w-full relative">
+                    <label for="password_confirmation" class="block text-sm font-medium text-gray-600">
+                        Konfirmasi Password
+                    </label>
+
+                    <div class="relative flex items-center">
+                        <input id="password_confirmation" type="password" name="password_confirmation"
+                            class="mt-2 w-full p-3 pr-10 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
+                @error('password_confirmation') border-red-500 ring-1 ring-red-500 @enderror"
+                            placeholder="Masukkan ulang password Anda">
+                        <button type="button" id="toggleConfirmPassword"
+                            class="absolute inset-y-0 right-3 pt-2 flex items-center text-gray-500">
+                            <svg id="eyeIconConfirm" xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5 pointer-events-none" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    @error('password_confirmation')
+                        <span class="text-sm text-red-700">*{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
+
 
             <div class="mt-6">
                 <button type="submit"
@@ -131,7 +136,7 @@
         <h4 class="text-sm text-center mt-6">
             Sudah memiliki akun?
             <a href="{{ route('login') }}"
-                class="text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">
+                class="text-blue-600 hover:text-blue-700 font-semibold hover:translate-x-2">
                 Masuk di sini!
             </a>
         </h4>

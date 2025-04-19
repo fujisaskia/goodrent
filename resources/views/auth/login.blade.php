@@ -57,8 +57,8 @@
                     <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
                 @enderror
 
-                <a href="{{ route('password.request') }}"
-                    class="text-sm mt-2 text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-1 duration-200">
+                <a href="{{ route('forgot.password') }}"
+                    class="text-sm mt-2 text-blue-600 hover:text-blue-700 font-semibold hover:translate-x-1 duration-200">
                     Lupa password?
                 </a>
 
@@ -84,7 +84,7 @@
         <h4 class="text-sm text-center mt-6">
             Belum memiliki akun?
             <a href="{{ route('register') }}"
-                class="text-blue-600 hover:text-blue-700 font-semibold underline hover:translate-x-2">
+                class="text-blue-600 hover:text-blue-700 font-semibold hover:translate-x-2">
                 Daftar di sini!
             </a>
         </h4>

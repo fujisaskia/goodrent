@@ -21,8 +21,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="flex justify-center items-center min-h-screen bg-gradient-to-b from-yellow-100 to-slate-200 px-6">
-    <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white border border-gray-300 rounded-2xl shadow-xl p-8">
+<body class="flex justify-center items-center min-h-screen bg-gradient-to-r from-emerald-100 to-yellow-50 px-6">
+    <div data-aos="zoom-in" data-aos-duration="800" class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <!-- Title -->
         <!-- Title -->
         <div class="text-center text-xl font-bold mb-4 text-gray-800">
             <h3 class="mb-2">Buat Password Baru</h3>
@@ -32,26 +33,15 @@
         <!-- Form Input -->
         <form action="{{ route('password.update') }}" method="POST">
             @csrf
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
-                <input type="email" name="email"
-                    class="mt-2 w-full p-3 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    placeholder="Masukkan Email Anda">
-                    @error('email')
-                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
-                    @enderror
-            </div>
+            <input type="hidden" name="email" value="{{ $email }}">
 
             <div class="mb-4 relative">
                 <label for="password" class="block text-sm font-medium text-gray-600">Password Baru</label>
                 <input id="password" type="password" name="password"
-                    class="my-2 w-full p-3 pr-10 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
-                    placeholder="Masukkan Password Baru Anda">
-                    @error('password')
-                        <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
-                    @enderror
+                    class="mt-2 w-full p-3 border rounded-lg focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 focus:outline-none 
+                        @error('password') border-red-500 ring-1 ring-red-500 @enderror"
+                    placeholder="Masukkan password baru anda">
 
-            
                 <!-- Icon Mata -->
                 <button type="button" id="togglePassword"
                     class="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
@@ -62,8 +52,33 @@
                         <circle cx="12" cy="12" r="3" />
                     </svg>
                 </button>
+                @error('password')
+                    <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                @enderror
             </div>
-            
+
+            <div class="mb-4 relative">
+                <label for="password_confirmation" class="block text-sm font-medium text-gray-600">Konfirmasi Password
+                    Baru</label>
+                <input id="password_confirmation" type="password" name="password_confirmation"
+                    class="mt-2 w-full p-3 border rounded-lg focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600 focus:outline-none 
+                        @error('password_confirmation') border-red-500 ring-1 ring-red-500 @enderror"
+                    placeholder="Masukkan ulang password baru anda">
+
+                <!-- Icon Mata -->
+                <button type="button" id="toggleConfirmPassword"
+                    class="absolute top-2/3 right-3 -translate-y-1/2 flex items-center text-gray-500">
+                    <svg id="eyeIconConfirm" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                </button>
+                @error('password_confirmation')
+                    <span class="text-sm p-1 text-red-700">*{{ $message }}</span>
+                @enderror
+            </div>
 
             <div class="mt-5">
                 <button type="submit"
