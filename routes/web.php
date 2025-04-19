@@ -151,6 +151,7 @@ Route::middleware(['role:pelanggan'])->group(function () {
 
     Route::get('/goodrent/proses-pembayaran/{pesanan_id}', [PembayaranController::class, 'process'])->name('midtrans.process');
     Route::post('/goodrent/pembayaran/success', [PembayaranController::class, 'paymentSuccess'])->name('pembayaran.success');
+    Route::post('/goodrent/proses-pembayaran-tunai/{pesanan_id}', [PembayaranController::class, 'processCash']);
 
     // Route::get('/checkout/{checkoutId}/payment', [PembayaranController::class, 'showPaymentForm'])->name('user.payment.index');
     // Route::post('/checkout/{checkoutId}/payment', [PembayaranController::class, 'processPayment'])->name('user.payment.process');
