@@ -18,16 +18,6 @@ class PesananController extends Controller
         return view('user.detail-produk', compact('barang'));
     }
 
-    public function index()
-    {
-        $pesanans = Pesanan::with(['items', 'barang', 'pembayaran'])
-            ->whereHas('pembayaran', function ($query) {
-                $query->where('status_pembayaran', 'Berhasil');
-            })
-            ->get();
-    
-        return view('admin.data-sewa.index', compact('pesanans'));
-    }
     
 
     // public function store(Request $request)

@@ -208,71 +208,33 @@
     {{-- Product Section --}}
     <section id="produk" class="relative bg-gradient-to-t from-emerald-100 to-slate-50 py-16 px-6 text-center">
         <div class="max-w-5xl mx-auto">
-            <h3 data-aos="fade-up" data-aos-duration="1000"  class="text-3xl font-bold text-gray-800 mb-8 capitalize">cari barang <span class="text-emerald-600">kebutuhanmu</span></h3>
-            <div data-aos="fade-up" data-aos-duration="1200"  class="flex space-x-2 w-2/3 md:w-1/3 mx-auto mb-6">
+            <h3 data-aos="fade-up" data-aos-duration="1000"  class="text-3xl font-bold text-gray-800 mb-8 capitalize">cari barang <span class="text-emerald-600">kebutuhanmu Yuk!</span></h3>
+            {{-- <div data-aos="fade-up" data-aos-duration="1200"  class="flex space-x-2 w-2/3 md:w-1/3 mx-auto mb-6">
                 <input type="search" placeholder="Cari produk..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 <button class="p-3 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-sm md:text-xs">
-                {{-- Card Product --}}
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
+            </div> --}}
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 text-sm md:text-xs">
+                @foreach ($barangs as $barang)
+                    @php
+                        $isTersedia = $barang->status_barang !== 'Tidak Tersedia';
+                    @endphp
+                    {{-- Card Product --}}
+                    <div  data-aos="fade-up" data-aos-duration="1500" class="">
+                        <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
+                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
+                            <h3 class="mt-4 text-sm font-semibold">{{ $barang->nama_barang }}</h3>
+                            @php
+                                $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first();
+                            @endphp
+                            <p class="text-base text-orange-600 font-semibold">Rp{{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }} <span class="text-xs text-gray-700">/ 1 Hari</span></p>
+                            <a href="/login">
+                                <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
-                <div  data-aos="fade-up" data-aos-duration="1500" class="">
-                    <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
-                        <h3 class="mt-4 text-base md:text-lg font-semibold">PS5 Standard</h3>
-                        <p class="text-orange-600 font-semibold">Sewa Rp50.000/jam</p>
-                        <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

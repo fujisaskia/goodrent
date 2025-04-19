@@ -11,12 +11,22 @@ use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::with('hargaSewas')->orderBy('created_at', 'desc')->paginate(10);        // Sesuaikan jumlah per halaman
+        $search = $request->input('search');
+    
+        $barangs = Barang::with('hargaSewas')
+            ->when($search, function ($query, $search) {
+                $query->where('nama_barang', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    
         $kategoriBarangs = KategoriBarang::all();
+    
         return view('admin.data-barang.index', compact('barangs', 'kategoriBarangs'));
     }
+    
 
     public function create()
     {
@@ -186,6 +196,12 @@ class BarangController extends Controller
     {
         $barangs = Barang::latest()->take(10)->get(); // ambil max 12 barang
         return view('user.index', compact('barangs'));
+    }
+
+    public function barangLandingPage()
+    {
+        $barangs = Barang::latest()->take(10)->get(); // ambil max 12 barang
+        return view('welcome', compact('barangs'));
     }
 
     public function getKodeBarang($kategoriId)

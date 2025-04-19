@@ -94,7 +94,7 @@ class KeranjangController extends Controller
             'tanggal_selesai' => $request->tanggal_selesai,
         ]);
 
-        return redirect()->back()->with('success', 'Barang berhasil dimasukkan ke keranjang.');
+        return redirect()->route('keranjang.index')->with('success', 'Barang berhasil dimasukkan ke keranjang.');
     }
 
 

@@ -5,12 +5,10 @@
                 {{-- Social Media --}}
                 <div class="">
                     <div class="flex space-x-3 items-center mb-4">
-                        <img src="{{ asset('assets/profile.jpg') }}" alt="Goodrent Logo" class="w-12 h-12 rounded-full">
+                        <img src="{{ asset('assets/logo-fixed.png') }}" alt="Goodrent Logo" class="w-12 h-12 rounded-full">
                         <h3 class="text-white text-3xl lg:text-2xl font-bold">GoodRent</h3>
                     </div>
-                    <span class="text-sm text-gray-100 pr-0 md:pr-8">Sewa PS & Barang Kapan Pun, Dimana Pun! Lorem ipsum
-                        dolor sit
-                        amet.</span>
+                    <span class="text-sm text-gray-100 pr-0 md:pr-8">Sewa PS & Barang Kapan Pun, Dimana Pun!</span>
                     <div class="flex space-x-4 mt-4">
                         <a href=""
                             class="py-1 px-2 bg-emerald-700 hover:bg-emerald-800 duration-200 hover:scale-105 text-white rounded"><i
@@ -90,6 +88,7 @@
                                 <li>Jika ingin menambah waktu, wajib langsung transfer. Jika tidak, akan dihitung
                                     sebagai denda.</li>
                                 <li>Untuk booking dari jauh hari, dikenakan DP sebesar 50%.</li>
+                                <li>PEMBATALAN pesanan dapat dilakukan sebelum 1 x 24 Jam!</li>
                             </ul>
                         </div>
 

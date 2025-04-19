@@ -55,18 +55,14 @@
                         </div>
 
                         <div class="flex flex-col space-y-1">
-                            <h5 class="text-gray-700 text-xs">No Telepon :</h5>
+                            <h5 class="text-gray-700 text-xs">Email :</h5>
                             <h3 class="">{{ Auth::user()->email }}</h3>
                         </div>
-                        {{-- <div class="flex flex-col space-y-1">
-                            <h5 class="text-gray-700 text-xs">Alamat :</h5>
-                            <h3 class="pr-8">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-                                nihil alias doloribus.</h3>
-                        </div>
 
-                        <div class="">
-                            <h5 class="font-semibold text-yellow-500">Ubah Alamat</h5>
-                        </div> --}}
+                        <div class="flex flex-col space-y-1">
+                            <h5 class="text-gray-700 text-xs">No Telepon :</h5>
+                            <h3 class="">{{ Auth::user()->no_telp }}</h3>
+                        </div>
                     </div>
 
                     {{-- <div class=" p-4 bg-white border border-gray-200 rounded shadow-md lg:sticky top-2/3">
@@ -164,6 +160,12 @@
                     </div>
 
 
+                    {{-- status diskon --}}
+                    {{-- <p class="p-2 mb-4 text-xs border border-emerald-700 bg-emerald-100">🎉 Diskon berhasil digunakan! hemat sebesar Rp</p> --}}
+                    <p id="status-diskon" class="hidden p-2 mb-4 text-xs border border-emerald-700 bg-emerald-100">
+                        🎉 Diskon berhasil digunakan! Hemat sebesar <span id="nominal-diskon"></span>
+                    </p>
+
 
                     <!-- Total -->
                     <div class="flex justify-between items-center">
@@ -171,6 +173,7 @@
                         <p id="total-bayar" class="text-red-700 font-bold text-xl">
                             Rp{{ number_format($pesanan->total_bayar, 0, ',', '.') }}</p>
                     </div>
+
 
                     <!-- Buttons Pembayaran-->
                     <div class="flex gap-3 mt-4">
@@ -206,7 +209,7 @@
                 .then(data => {
                     snap.pay(data.snapToken, {
                         onSuccess: function(result) {
-                            // Contoh: kirim hasil ke backend jika perlu
+                            // Kirim data ke backend
                             fetch("{{ route('pembayaran.success') }}", {
                                     method: "POST",
                                     headers: {
@@ -219,16 +222,45 @@
                                     })
                                 }).then(res => res.json())
                                 .then(data => {
-                                    if (data.redirect) {
-                                        window.location.href = data.redirect;
-                                    }
+                                    Swal.fire({
+                                        title: 'Pembayaran Berhasil!',
+                                        imageUrl: '/assets/card-payment.png',
+                                        imageWidth: 200,
+                                        imageHeight: 200,
+                                        imageAlt: 'Pembayaran',
+                                        confirmButtonText: 'Lihat Pemesanan',
+                                        confirmButtonColor: '#047857',
+                                        background: '#f8f9fa',
+                                        customClass: {
+                                            title: 'text-xl',
+                                            confirmButton: 'px-8',
+                                        }
+                                    }).then(() => {
+                                        window.location.href =
+                                            '/goodrent/riwayat/pemesanan-saya';
+                                    });
                                 });
                         },
                         onPending: function(result) {
-                            console.log("Transaksi pending", result);
+                            Swal.fire({
+                                title: 'Pembayaran Tertunda!',
+                                imageUrl: '/assets/waiting.png',
+                                imageWidth: 200,
+                                imageHeight: 200,
+                                imageAlt: 'Pembayaran-Tertunda',
+                                confirmButtonText: 'Lanjut Bayar',
+                                confirmButtonColor: '#ea580c',
+                                background: '#f8f9fa',
+                                customClass: {
+                                    title: 'text-xl',
+                                    confirmButton: 'px-8',
+                                }
+                            }).then(() => {
+                                window.location.href = '/goodrent/riwayat/pemesanan-saya';
+                            });
                         },
                         onError: function(result) {
-                            console.error("Transaksi error", result);
+                            console.error("Maaf! Terjadi Kesalahan", result);
                         }
                     });
                 })
@@ -280,42 +312,93 @@
     }
 
 
-    // Fungsi untuk menerapkan diskon pada pesanan
     function applyDiscount() {
-        const diskonId = document.getElementById('selected-discount').getAttribute('data-diskon-id');
-        const besarDiskon = parseFloat(document.getElementById('selected-discount').getAttribute('data-besar-diskon'));
+        const selected = document.getElementById('selected-discount');
+        const diskonId = selected.getAttribute('data-diskon-id');
+        const besarDiskon = parseFloat(selected.getAttribute('data-besar-diskon'));
 
         if (!diskonId) {
             alert('Pilih diskon terlebih dahulu!');
             return;
         }
 
-        // Kirim data diskon ke server
         $.ajax({
-            url: '/goodrent/checkout/pakai-diskon', // Ganti dengan rute yang sesuai
+            url: '/goodrent/checkout/pakai-diskon',
             method: 'POST',
             data: {
                 diskon_id: diskonId,
                 potongan_harga: besarDiskon,
-                _token: '{{ csrf_token() }}' // Pastikan CSRF token ada
+                _token: '{{ csrf_token() }}'
             },
             success: function(response) {
-                // Gunakan SweetAlert untuk menampilkan pesan
                 Swal.fire({
-                    title: 'Berhasil!',
+                    toast: true,
                     text: 'Diskon berhasil diterapkan',
                     icon: 'success',
-                    confirmButtonText: 'OK'
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
-                // Perbarui total bayar di UI jika perlu
-                // Misalnya, perbarui total bayar yang ditampilkan
-                document.getElementById('total-bayar').textContent = 'Rp' + response.total_bayar;
+
+                // Tampilkan status diskon dengan format ribuan
+                const statusDiskon = document.getElementById('status-diskon');
+                const nominalDiskon = document.getElementById('nominal-diskon');
+
+                nominalDiskon.textContent = 'Rp' + besarDiskon.toLocaleString('id-ID');
+                statusDiskon.classList.remove('hidden');
+
+                // Perbarui total bayar
+                document.getElementById('total-bayar').textContent = 'Rp' + response.total_bayar
+                    .toLocaleString('id-ID');
             },
             error: function(error) {
                 alert('Gagal menerapkan diskon');
             }
         });
     }
+
+
+
+    // Fungsi untuk menerapkan diskon pada pesanan
+    // function applyDiscount() {
+    //     const diskonId = document.getElementById('selected-discount').getAttribute('data-diskon-id');
+    //     const besarDiskon = parseFloat(document.getElementById('selected-discount').getAttribute('data-besar-diskon'));
+
+    //     if (!diskonId) {
+    //         alert('Pilih diskon terlebih dahulu!');
+    //         return;
+    //     }
+
+    //     // Kirim data diskon ke server
+    //     $.ajax({
+    //         url: '/goodrent/checkout/pakai-diskon', // Ganti dengan rute yang sesuai
+    //         method: 'POST',
+    //         data: {
+    //             diskon_id: diskonId,
+    //             potongan_harga: besarDiskon,
+    //             _token: '{{ csrf_token() }}' // Pastikan CSRF token ada
+    //         },
+    //         success: function(response) {
+    //             // Gunakan SweetAlert untuk menampilkan pesan
+    //             Swal.fire({
+    //                 toast: true,
+    //                 text: 'Diskon berhasil diterapkan',
+    //                 icon: 'success',
+    //                 position: "top-end",
+    //                 showConfirmButton: false,
+    //                 timer: 3000,
+    //                 timerProgressBar: true
+    //             });
+    //             // Perbarui total bayar di UI jika perlu
+    //             // Misalnya, perbarui total bayar yang ditampilkan
+    //             document.getElementById('total-bayar').textContent = 'Rp' + response.total_bayar;
+    //         },
+    //         error: function(error) {
+    //             alert('Gagal menerapkan diskon');
+    //         }
+    //     });
+    // }
 
 
     // Tampilkan Snap Pembayaran 

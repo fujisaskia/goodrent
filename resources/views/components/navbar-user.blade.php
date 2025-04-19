@@ -3,15 +3,17 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-1 hidden md:flex">
                 <img src="{{ asset('assets/logo.png') }}" alt="" class="w-8 h-8 rounded-full">
-                <h2 class="text-green-700 font-bold text-lg">GoodRent</h2>
+                <a href="/goodrent/produk"
+                    class="text-green-700 hover:text-green-500 font-bold text-lg duration-200">GoodRent</a>
             </div>
             @if (request()->is('goodrent/produk'))
-                <h3 class="text-green-700 font-bold text-xl md:hidden ">GoodRent</h3>
+                <a href="/goodrent/produk"
+                    class="text-green-700 hover:text-green-500 font-bold text-xl md:hidden duration-200">GoodRent</a>
             @else
-                <div class="flex md:hidden  items-center space-x-2 text-xl">
+                <a href="/goodrent/produk" class="flex md:hidden  items-center space-x-2 text-xl">
                     <i class="fa-solid fa-chevron-left p-2 cursor-pointer" onclick="window.history.back();"></i>
                     <h2 class="text-green-700 font-bold text-3xl">G</h2>
-                </div>
+                </a>
             @endif
 
 

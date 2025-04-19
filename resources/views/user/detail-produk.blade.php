@@ -41,13 +41,19 @@
 
     {{-- Konten di Sini --}}
     <div class="max-w-5xl mx-auto py-8">
-        <div class="bg-white border p-6 rounded-lg shadow-lg mx-4">
+        @php
+            $hargaSewa = $barang->hargaSewas->where('durasi_jam', 24)->first() ?? $barang->hargaSewas->skip(1)->first();
+        @endphp
+        <div class="bg-white border p-6 rounded-lg shadow-lg mx-2">
             <div class="grid lg:grid-cols-2 gap-6 lg:gap-12">
                 <div>
                     <img src="{{ asset('storage/barangs/' . $barang->image) }}" alt="{{ $barang->nama_barang }}"
-                        class="w-[95%] rounded-lg mx-auto">
-                    <h3 class="block lg:hidden text-2xl font-bold">PlayStation 5 (PS5)</h3>
-                    <p class="block lg:hidden text-2xl text-green-600 font-semibold mb-5">Harga Sewa: Rp 30,000</p>
+                        class="w-full rounded-lg mx-auto mb-3">
+                    <h3 class="block lg:hidden text-xl font-bold">{{ $barang->nama_barang }}</h3>
+                    <p class="block lg:hidden space-x-3 text-lg text-green-600 font-semibold mb-5">
+                        <span>Harga Sewa: Rp {{ number_format($hargaSewa->harga ?? 0, 0, ',', '.') }}</span>
+                        <span class="text-gray-600 font-semibold text-sm">/ 1 hari</span>
+                    </p>
                     <h3 class="text-lg font-semibold py-4 border-t-2 border-gray-300">Deskripsi Produk :</h3>
                     <p class="text-gray-600 text-sm mt-2">
                         {{ $barang->deskripsi }}
@@ -56,8 +62,9 @@
                 <div class="">
                     <div>
                         <h3 class="hidden lg:block text-2xl font-bold">{{ $barang->nama_barang }}</h3>
-                        <p class="hidden lg:block text-2xl text-green-600 font-semibold">
-                            Harga Sewa: Rp {{ number_format($barang->hargaSewas->first()->harga ?? 0, 0, ',', '.') }}
+                        <p class="hidden lg:block space-x-3 text-2xl text-green-600 font-semibold">
+                            <span>Harga Sewa: Rp {{ number_format($hargaSewa->harga ?? 0, 0, ',', '.') }}</span>
+                            <span class="text-gray-600 font-semibold text-sm">/ 1 hari</span>
                         </p>
 
                         <div class="space-y-2 rounded-lg mt-2">
@@ -124,22 +131,23 @@
                             <div class="flex space-x-3 mb-3">
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Mulai :</label>
-                                    <input type="date" name="tanggal_mulai" id="tanggal_mulai"
+                                    <input type="text" name="tanggal_mulai" id="tanggal_mulai"
                                         class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
                                         required>
                                 </div>
 
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Selesai :</label>
-                                    <input type="date" name="tanggal_selesai" id="tanggal_selesai"
+                                    <input type="text" name="tanggal_selesai" id="tanggal_selesai"
                                         class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
                                         readonly>
                                 </div>
                             </div>
 
+
                             <a href="">
                                 <button
-                                    class="w-full mt-8 bg-gray-800 hover:bg-gray-900 text-white p-4 rounded">Masukkan
+                                    class="w-full mt-8 bg-gray-800 hover:bg-gray-700 text-white p-4 rounded focus:scale-95 duration-300">Masukkan
                                     Keranjang</button>
                             </a>
                         </form>
@@ -165,22 +173,6 @@
 </html>
 
 <script>
-    // flatpickr("#mulai-sewa", {
-    //     dateFormat: "d F Y",
-    //     locale: "id", // Set lokal ke Bahasa Indonesia
-    //     minDate: "today",
-    //     onChange: function(selectedDates, dateStr) {
-    //         masaAkhir.set("minDate", dateStr); // Mencegah tanggal akhir sebelum tanggal awal
-    //     }
-    // });
-
-    // let masaAkhir = flatpickr("#selesai-sewa", {
-    //     dateFormat: "d F Y",
-    //     locale: "id", // Set lokal ke Bahasa Indonesia
-    //     minDate: "today",
-    //     minDate: new Date(),
-    // });
-
     // Animate loading & notification ketika halaman dimuat
     window.addEventListener("load", function() {
         setTimeout(function() {
@@ -233,27 +225,44 @@
         }, 1000); // Loading hilang setelah 1 detik
     });
 
-    const durasiSelect = document.getElementById('durasi_jam');
     const tanggalMulaiInput = document.getElementById('tanggal_mulai');
     const tanggalSelesaiInput = document.getElementById('tanggal_selesai');
+    const durasiSelect = document.getElementById('durasi_jam');
+
+    // Flatpickr untuk Tanggal Mulai
+    flatpickr(tanggalMulaiInput, {
+        dateFormat: "Y-m-d", // format untuk value yang dikirim
+        altInput: true,
+        altFormat: "d M, Y", // format yang ditampilkan ke user
+        minDate: "today", // disable tanggal sebelumnya
+        onChange: hitungTanggalSelesai
+    });
+
+    // Flatpickr untuk Tanggal Selesai (readonly, jadi tidak bisa pilih manual)
+    const fpSelesai = flatpickr(tanggalSelesaiInput, {
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "d M, Y",
+        clickOpens: false
+    });
 
     function hitungTanggalSelesai() {
         const durasiJam = parseInt(durasiSelect.value);
-        const tanggalMulai = new Date(tanggalMulaiInput.value);
+        const tanggalMulai = tanggalMulaiInput.value;
 
-        if (!isNaN(durasiJam) && tanggalMulaiInput.value) {
-            // Tambah durasi ke tanggal mulai
-            tanggalMulai.setHours(tanggalMulai.getHours() + durasiJam);
+        if (!isNaN(durasiJam) && tanggalMulai) {
+            const mulai = new Date(tanggalMulai);
+            mulai.setHours(mulai.getHours() + durasiJam);
 
-            // Format tanggal jadi yyyy-mm-dd
-            const yyyy = tanggalMulai.getFullYear();
-            const mm = String(tanggalMulai.getMonth() + 1).padStart(2, '0');
-            const dd = String(tanggalMulai.getDate()).padStart(2, '0');
+            const yyyy = mulai.getFullYear();
+            const mm = String(mulai.getMonth() + 1).padStart(2, '0');
+            const dd = String(mulai.getDate()).padStart(2, '0');
+            const hasilFormat = `${yyyy}-${mm}-${dd}`;
 
-            tanggalSelesaiInput.value = `${yyyy}-${mm}-${dd}`;
+            // Set value ke Flatpickr selesai
+            fpSelesai.setDate(hasilFormat, true); // true agar update altInput juga
         }
     }
 
     durasiSelect.addEventListener('change', hitungTanggalSelesai);
-    tanggalMulaiInput.addEventListener('change', hitungTanggalSelesai);
 </script>

@@ -8,12 +8,19 @@ use Illuminate\Http\Request;
 
 class KategoriDiskonController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua kategori diskon dari database
-        $kategoriDiskons = KategoriDiskon::orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->input('search');
+    
+        $kategoriDiskons = KategoriDiskon::when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+    
         return view('admin.kategori-diskon.index', compact('kategoriDiskons'));
     }
+    
 
     public function create()
     {

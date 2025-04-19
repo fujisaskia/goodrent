@@ -10,22 +10,25 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $user = auth()->user(); // Ambil user yang sedang login
-
+        $user = auth()->user();
+        $search = $request->input('search');
+    
         $users = User::whereHas('roles', function ($query) use ($user) {
-            if ($user->hasRole('superadmin')) {
-                // Superadmin melihat pelanggan & admin
-                $query->whereIn('name', ['pelanggan', 'admin']);
-            } else if ($user->hasRole('admin')) {
-                // Admin hanya melihat pelanggan
-                $query->where('name', 'pelanggan');
-            }
-        })->paginate(10); // Tambahkan pagination dengan 10 item per halaman
-
+                if ($user->hasRole('superadmin')) {
+                    $query->whereIn('name', ['pelanggan', 'admin']);
+                } else if ($user->hasRole('admin')) {
+                    $query->where('name', 'pelanggan');
+                }
+            })
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->paginate(10);
+    
         return view('admin.kelola-user.index', compact('users'));
-    }
+    }    
 
     public function tambahAdminPage()
     {

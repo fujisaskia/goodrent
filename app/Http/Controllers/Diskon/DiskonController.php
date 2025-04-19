@@ -9,14 +9,25 @@ use Illuminate\Http\Request;
 
 class DiskonController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua diskon dari database
-        $diskons = Diskon::orderBy('created_at', 'desc')->paginate(10);
+        $search = $request->input('search');
+    
+        $diskons = Diskon::with('kategori')
+            ->when($search, function ($query, $search) {
+                $query->where('nama_diskon', 'like', "%{$search}%")
+                      ->orWhereHas('kategori', function ($q) use ($search) {
+                          $q->where('nama', 'like', "%{$search}%");
+                      });
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+    
         $kategoriDiskons = KategoriDiskon::all();
+    
         return view('admin.diskon.index', compact('diskons', 'kategoriDiskons'));
     }
-
+    
     public function create()
     {
         $kategoriDiskons = KategoriDiskon::all(); // Ambil semua kategori diskon untuk dropdown

@@ -74,7 +74,7 @@ class PembayaranController extends Controller
             'tanggal_bayar' => now(),
         ]);
 
-        return response()->json(['redirect' => route('pemesanan.index')]); // arahkan ke halaman pemesanan
+        return response()->json(['redirect' => route('user.riwayat.index')]); // arahkan ke halaman pemesanan
     }
 
 

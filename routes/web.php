@@ -10,15 +10,17 @@ use App\Http\Controllers\Keranjang\KeranjangController;
 use App\Http\Controllers\Barang\KategoriBarangController;
 use App\Http\Controllers\Checkout\CheckOutController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\DataSewa\DataSewaController;
 use App\Http\Controllers\Diskon\KategoriDiskonController;
 use App\Http\Controllers\Pembayaran\PembayaranController;
 use App\Http\Controllers\Keranjang\KeranjangItemController;
 use App\Http\Controllers\Riwayatpesanan\RiwayatPesananController;
 
 // Landing Page ===========================//
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [BarangController::class, 'barangLandingPage']);
 
 // Halaman Register & Login
 Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
@@ -73,7 +75,7 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
 
     // Data Sewa ===================================================== //
-    Route::get('/admin/data-sewa', [PesananController::class, 'index'])->name('admin.data-sewa.index');
+    Route::get('/admin/data-sewa', [DataSewaController::class, 'index'])->name('admin.data-sewa.index');
 
 
 

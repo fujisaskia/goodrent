@@ -15,13 +15,16 @@
             <div>
                 <div class="flex flex-col md:flex-row justify-between mb-4">
                     <!-- Input Pencarian -->
-                    <div class="flex space-x-4 mb-2 md:mb-0">
-                        <input type="search" placeholder="Cari Pengguna"
-                            class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                        <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </div>
+                    <form method="GET" action="{{ route('kelola-pelanggan') }}">
+                        <div class="flex space-x-4 mb-2 md:mb-0">
+                            <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Pengguna"
+                                class="w-full border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                            <button type="submit" class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
 
                     <!-- Tombol Tambah Admin -->
                     @if (auth()->user()->hasRole('superadmin'))
@@ -138,9 +141,9 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr class="border-b hover:bg-gray-50">
-                                <td rowspan="7" class="p-6 text-center">Tidak Ada Data</td>
-                            </tr>
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-gray-500 py-6">Belum ada data pelanggan.</td>
+                        </tr>
                         @endforelse
                     </tbody>
 

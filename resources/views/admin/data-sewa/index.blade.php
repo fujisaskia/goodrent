@@ -11,15 +11,15 @@
         </h2>
 
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="flex flex-col md:flex-row justify-between mb-4">
-                <div class="flex space-x-4 mb-2 md:mb-0">
-                    <input type="search" placeholder="Cari Pelanggan"
+            <form method="GET" action="{{ route('admin.data-sewa.index') }}">
+                <div class="flex space-x-4 mb-3">
+                    <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Pelanggan"
                         class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                    <button type="submit" class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
-            </div>
+            </form>            
 
             <div class="overflow-x-auto lg:overflow-visible">
                 <table class="w-full border-collapse border rounded-lg overflow-hidden">

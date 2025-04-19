@@ -150,7 +150,7 @@
                     <div class="flex items-center ml-auto space-x-2">
                         <button id="profileBtn" class="focus:scale-95">
                             <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
-                                alt="User Profile" class="w-10 h-10 rounded-full object-cover">
+                                alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover">
                         </button>
                     </div>
                     <!-- Dropdown Menu Profile -->
@@ -159,7 +159,7 @@
                         <!-- Profil User -->
                         <div class="flex items-center space-x-2 p-4 border-b">
                             <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
-                                alt="Profile Picture" class="w-10 h-10 rounded-full">
+                                alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full">
                             <div>
                                 <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
@@ -213,8 +213,8 @@
             <div class="space-y-2 my-4 items-center justify-center text-center bg-white rounded-lg">
                 {{-- <span class="font-semibold text-2xl text-gray-800 font-playfair"><span class="text-emerald-800">-
                         GoodRent -</span> --}}
-                <img src="{{ asset('assets/profile.jpg') }}" alt=""
-                    class="w-20 h-20 items-center justify-center mx-auto border border-gray-300">
+                <img src="{{ asset('assets/logo-fixed.png') }}" alt=""
+                    class="w-20 h-20 items-center justify-center mx-auto">
             </div>
 
 
@@ -385,7 +385,7 @@
                         title: "{{ session('success') }}",
                         showConfirmButton: false,
                         timer: 3000,
-                        timerProgressBar: false
+                        timerProgressBar: true
                     });
                 @elseif (session('error'))
                     Swal.fire({
@@ -395,7 +395,7 @@
                         title: "{{ session('error') }}",
                         showConfirmButton: false,
                         timer: 3000,
-                        timerProgressBar: false
+                        timerProgressBar: true
                     });
                 @elseif (session('info'))
                     Swal.fire({
@@ -405,7 +405,7 @@
                         title: "{{ session('info') }}",
                         showConfirmButton: false,
                         timer: 3000,
-                        timerProgressBar: false
+                        timerProgressBar: true
                     });
                 @elseif (session('warning'))
                     Swal.fire({
@@ -415,7 +415,7 @@
                         title: "{{ session('warning') }}",
                         showConfirmButton: false,
                         timer: 3000,
-                        timerProgressBar: false
+                        timerProgressBar: true
                     });
                 @endif
             }, 500); // Muncul 0.5 detik setelah loading selesai

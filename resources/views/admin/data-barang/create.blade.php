@@ -79,8 +79,8 @@
 
             <div class="flex space-x-3 justify-end mt-6">
                 <button type="button" onclick="closeModalTambahBarang()"
-                    class="flex space-x-2 text-white bg-gray-400 hover:bg-gray-500 focus:bg-gray-500 p-2 rounded">
-                    <p>Batalkan</p>
+                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 px-6 py-2 rounded">
+                    <p>Batal</p>
                 </button>
                 <button type="submit"
                     class="flex space-x-2 items-center text-white bg-green-600 hover:bg-green-700 focus:bg-green-600 p-2 rounded">

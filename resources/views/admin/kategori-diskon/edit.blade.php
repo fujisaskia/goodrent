@@ -30,12 +30,13 @@
 
             <div class="flex space-x-3 justify-end mt-6">
                 <button type="button" onclick="closeModalEditKategoriDiskon()"
-                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 p-2 rounded">
-                    <p>Batalkan</p>
+                    class="flex space-x-2 text-white bg-red-500 hover:bg-red-600 focus:bg-red-600 px-6 py-2 rounded">
+                    <p>Batal</p>
                 </button>
                 <button type="submit"
-                    class="flex space-x-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:bg-yellow-600 p-2 rounded">
-                    <p>Simpan</p>
+                    class="flex space-x-2 items-center text-white bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-500 p-2 rounded">
+                    <i class="fa-solid fa-pen"></i>
+                    <p>Simpan Perubahan</p>
                 </button>
             </div>
         </form>

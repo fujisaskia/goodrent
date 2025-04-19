@@ -12,13 +12,16 @@
         </h2>
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex flex-col md:flex-row justify-between mb-4">
-                <div class="flex space-x-4 mb-2 md:mb-0">
-                    <input type="search" placeholder="Cari Diskon"
-                        class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    <button class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
+                <form method="GET" action="{{ route('diskon.index') }}">
+                    <div class="flex space-x-4 mb-2 md:mb-0">
+                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Diskon atau Kategori"
+                            class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                        <button type="submit" class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </form>
+                
                 <div class="flex justify-end gap-3">
                     {{-- Tombol Hapus Semua (default: hidden) --}}
                     <form action="{{ route('diskon.destroySelected') }}" method="POST" id="bulk-delete-form">
@@ -105,7 +108,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4 text-gray-500">Belum ada data diskon.</td>
+                                <td colspan="8" class="text-center py-6 text-gray-500">Belum ada data diskon.</td>
                             </tr>
                         @endforelse
                     </tbody>
