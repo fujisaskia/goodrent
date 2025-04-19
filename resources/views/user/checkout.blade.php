@@ -186,11 +186,33 @@
                         </form>
                         <!-- Tombol Bayar -->
                         <button id="bayar-button" type="button" data-pesanan-id="{{ $pesanan->id }}"
-                            class="bg-black hover:bg-gray-700 text-white w-full py-3 rounded-lg font-bold">
+                            class="bg-black hover:bg-gray-800 text-white w-full py-3 rounded-lg font-bold focus:scale-95 duration-300">
                             Bayar
                         </button>
-
                     </div>
+
+                    <!-- Modal Metode Pembayaran -->
+                    <div id="metodeModal"
+                        class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 px-4 flex items-center justify-center">
+                        <div class="bg-white relative rounded-lg p-6 w-96 shadow-lg text-center">
+                            <!-- Tombol X di pojok kanan atas -->
+                            <button id="closeModal"
+                                class="absolute top-4 right-4 p-1.5 text-gray-500 hover:text-gray-800 hover:bg-gray-200 text-2xl font-bold rounded-full focus:scale-95 duration-300">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+
+                            <h2 class="text-xl font-bold mt-4">Pilih Metode Pembayaran</h2>
+                            <img src="{{ asset('assets/question.jpg') }}" alt="pilih metode pembayaran"
+                                class="mx-auto my-4 w-52">
+                            <div class="flex space-x-3">
+                                <button id="tunai-button"
+                                    class="w-full bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded focus:scale-95 duration-300">Tunai</button>
+                                <button id="digital-button"
+                                    class="w-full bg-red-600 hover:bg-red-700 text-white p-3 rounded focus:scale-95 duration-300">Digital</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -198,75 +220,167 @@
     </div>
 
     <script>
-        document.getElementById('bayar-button').addEventListener('click', function() {
-            const pesananId = this.getAttribute('data-pesanan-id');
+        document.addEventListener('DOMContentLoaded', () => {
+            const bayarButton = document.getElementById('bayar-button');
+            const metodeModal = document.getElementById('metodeModal');
+            const tunaiBtn = document.getElementById('tunai-button');
+            const digitalBtn = document.getElementById('digital-button');
+            const closeModal = document.getElementById('closeModal');
 
-            fetch(`/goodrent/proses-pembayaran/${pesananId}`)
-                .then(response => {
-                    if (!response.ok) throw new Error("Gagal ambil token");
-                    return response.json();
-                })
-                .then(data => {
-                    snap.pay(data.snapToken, {
-                        onSuccess: function(result) {
-                            // Kirim data ke backend
-                            fetch("{{ route('pembayaran.success') }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({
-                                        order_id: result.order_id,
-                                        status: result.transaction_status
-                                    })
-                                }).then(res => res.json())
-                                .then(data => {
-                                    Swal.fire({
-                                        title: 'Pembayaran Berhasil!',
-                                        imageUrl: '/assets/card-payment.png',
-                                        imageWidth: 200,
-                                        imageHeight: 200,
-                                        imageAlt: 'Pembayaran',
-                                        confirmButtonText: 'Lihat Pemesanan',
-                                        confirmButtonColor: '#047857',
-                                        background: '#f8f9fa',
-                                        customClass: {
-                                            title: 'text-xl',
-                                            confirmButton: 'px-8',
-                                        }
-                                    }).then(() => {
-                                        window.location.href =
-                                            '/goodrent/riwayat/pemesanan-saya';
-                                    });
-                                });
+            let pesananId = null;
+
+            bayarButton.addEventListener('click', function() {
+                pesananId = this.getAttribute('data-pesanan-id');
+                if (!pesananId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Pesanan tidak ditemukan.',
+                    });
+                    return;
+                }
+                metodeModal.classList.remove('hidden');
+            });
+
+            closeModal.addEventListener('click', () => {
+                metodeModal.classList.add('hidden');
+            });
+
+            // TUNAI
+            tunaiBtn.addEventListener('click', () => {
+                metodeModal.classList.add('hidden');
+
+                const pesananId = document.getElementById('bayar-button').getAttribute('data-pesanan-id');
+
+                if (!pesananId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Pesanan tidak ditemukan.',
+                    });
+                    return;
+                }
+
+                // Mengirimkan data pesanan_id di body request
+                fetch(`/goodrent/proses-pembayaran-tunai/${pesananId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content'),
                         },
-                        onPending: function(result) {
+                        body: JSON.stringify({
+                            pesanan_id: pesananId, // Kirimkan pesanan_id
+                        }),
+                    })
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error('Gagal memproses pembayaran tunai');
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (data.redirect) {
                             Swal.fire({
-                                title: 'Pembayaran Tertunda!',
-                                imageUrl: '/assets/waiting.png',
-                                imageWidth: 200,
-                                imageHeight: 200,
-                                imageAlt: 'Pembayaran-Tertunda',
-                                confirmButtonText: 'Lanjut Bayar',
-                                confirmButtonColor: '#ea580c',
+                                title: 'Pembayaran Berhasil!',
+                                imageUrl: '/assets/cash.png',
+                                imageWidth: 250,
+                                imageHeight: 250,
+                                confirmButtonText: 'Lihat Pemesanan',
+                                confirmButtonColor: '#047857',
                                 background: '#f8f9fa',
                                 customClass: {
                                     title: 'text-xl',
                                     confirmButton: 'px-8',
                                 }
                             }).then(() => {
-                                window.location.href = '/goodrent/riwayat/pemesanan-saya';
+                                window.location.href = data.redirect; // redirect setelah sukses
                             });
-                        },
-                        onError: function(result) {
-                            console.error("Maaf! Terjadi Kesalahan", result);
+                        } else {
+                            throw new Error('Data tidak memiliki redirect');
                         }
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan saat pembayaran tunai:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal Memproses Pembayaran!',
+                            text: 'Silakan coba lagi atau hubungi admin.',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#dc2626',
+                            background: '#fef2f2',
+                        });
                     });
-                })
-                .catch(error => console.error("Fetch token error:", error));
+            });
+
+
+            // DIGITAL (tidak diubah)
+            digitalBtn.addEventListener('click', () => {
+                metodeModal.classList.add('hidden');
+
+                fetch(`/goodrent/proses-pembayaran/${pesananId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Gagal ambil token");
+                        return response.json();
+                    })
+                    .then(data => {
+                        snap.pay(data.snapToken, {
+                            onSuccess: function(result) {
+                                fetch("{{ route('pembayaran.success') }}", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                        },
+                                        body: JSON.stringify({
+                                            order_id: result.order_id,
+                                            status: result.transaction_status
+                                        })
+                                    }).then(res => res.json())
+                                    .then(data => {
+                                        Swal.fire({
+                                            title: 'Pembayaran Berhasil!',
+                                            imageUrl: '/assets/card-payment.png',
+                                            imageWidth: 200,
+                                            imageHeight: 200,
+                                            confirmButtonText: 'Lihat Pemesanan',
+                                            confirmButtonColor: '#047857',
+                                            background: '#f8f9fa',
+                                            customClass: {
+                                                title: 'text-xl',
+                                                confirmButton: 'px-8',
+                                            }
+                                        }).then(() => {
+                                            window.location.href =
+                                                '/goodrent/riwayat/pemesanan-saya';
+                                        });
+                                    });
+                            },
+                            onPending: function() {
+                                Swal.fire({
+                                    title: 'Pembayaran Tertunda!',
+                                    imageUrl: '/assets/waiting.png',
+                                    imageWidth: 200,
+                                    imageHeight: 200,
+                                    confirmButtonText: 'Lanjut Bayar',
+                                    confirmButtonColor: '#ea580c',
+                                    background: '#f8f9fa',
+                                }).then(() => {
+                                    window.location.href =
+                                        '/goodrent/riwayat/pemesanan-saya';
+                                });
+                            },
+                            onError: function(result) {
+                                console.error("Maaf! Terjadi Kesalahan", result);
+                            }
+                        });
+                    })
+                    .catch(error => console.error("Fetch token error:", error));
+            });
         });
     </script>
+
+
 
 </body>
 
@@ -338,7 +452,7 @@
                     position: "top-end",
                     showConfirmButton: false,
                     timer: 3000,
-                    timerProgressBar: true
+                    timerProgressBar: false
                 });
 
                 // Tampilkan status diskon dengan format ribuan

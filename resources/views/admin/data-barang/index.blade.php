@@ -93,9 +93,21 @@
                                 <td class="p-3">
                                     <div class="flex items-center justify-center gap-2 h-full">
                                         {{-- button lihat --}}
-                                        <a href="{{ route('lihat.produk', $barang->id) }}">
+                                        {{-- <a href="{{ route('lihat.produk', $barang->id) }}">
                                             @include('components.crud.read')
-                                        </a>
+                                        </a> --}}
+                                        <button 
+                                            class="lihat-barang bg-blue-400 hover:bg-blue-500 shadow-md shadow-blue-300 hover:shadow-none focus:scale-95 duration-300
+                                            text-white py-2 px-2.5 rounded-full"
+                                            data-id="{{ $barang->id }}"
+                                            title="Lihat"
+                                            onclick="openModalLihatBarang({{ $barang->id }})">
+                                            <i class="fa-regular fa-eye"></i>
+                                        </button>
+                                    
+                                        
+                                        {{-- Modal Lihat Barang --}}
+                                        @include('admin.data-barang.show')
 
                                         {{-- button edit --}}
                                         <button
@@ -231,6 +243,38 @@
         function closeModalEditBarang() {
             let modal = document.getElementById('modal-edit-barang');
             let overlay = document.getElementById('modal-overlay-edit-barang');
+
+            // Tambahkan animasi keluar
+            modal.classList.add('scale-95', 'opacity-0');
+            modal.classList.remove('scale-100', 'opacity-100');
+
+            // Tunggu animasi selesai sebelum menyembunyikan modal
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300); // Sesuai dengan durasi transition (300ms)
+        }
+
+        // Membuka Detail / Lihat Barang terkait
+        function openModalLihatBarang(id) {
+            let overlay = document.getElementById('modal-overlay-lihat-barang');
+            let modal = document.getElementById('modal-lihat-barang');
+
+            // Bisa juga tambahkan logika untuk menampilkan data sesuai id
+
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('scale-95', 'opacity-0');
+                modal.classList.add('scale-100', 'opacity-100');
+            }, 50);
+
+            document.body.classList.add('overflow-hidden');
+        }
+
+        // menutup modal lihat barang
+        function closeModalLihatBarang() {
+            let modal = document.getElementById('modal-lihat-barang');
+            let overlay = document.getElementById('modal-overlay-lihat-barang');
 
             // Tambahkan animasi keluar
             modal.classList.add('scale-95', 'opacity-0');

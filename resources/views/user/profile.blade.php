@@ -56,7 +56,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="flex flex-col p-6 order-1 lg:order-2 items-center justify-center">
+                <div class="flex flex-col order-1 lg:order-2 items-center justify-center">
                     <img id="profileImage" src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
                         alt="Foto Profile" class="w-60 h-60 rounded-full">
 

@@ -188,9 +188,14 @@ class BarangController extends Controller
 
     public function show($id)
     {
+
         $barang = Barang::findOrFail($id);
-        return view('admin.data-barang.show', compact('barang'));
-    }
+
+        // Ambil satu harga sewa dari durasi 12 jam
+        $harga24jam = $barang->hargaSewas()->where('durasi_jam', 24)->value('harga');
+        
+        return view('admin.data-barang.show', compact('barang', 'harga24jam'));
+    }    
 
     public function lihatBarang()
     {
