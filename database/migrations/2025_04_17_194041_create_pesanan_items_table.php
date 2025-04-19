@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('riwayat_pesanans', function (Blueprint $table) {
+        Schema::create('pesanan_items', function (Blueprint $table) {
             $table->id();
-            // Relasi ke user dan pesanan
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('pesanan_id')->constrained('pesanans')->onDelete('cascade');
-            $table->enum('status_pemesanan', ['Dalam Penyewaan', 'Selesai', 'Dibatalkan'])->default('Dalam Penyewaan');
+            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
+            $table->integer('durasi_sewa'); // Lama sewa dalam jam
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
+            $table->decimal('harga_barang', 10, 2); // harga awal barang
+            $table->decimal('subtotal', 10, 2); // harga * jumlah * durasi
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('riwayat_pesanans');
+        Schema::dropIfExists('pesanan_items');
     }
 };

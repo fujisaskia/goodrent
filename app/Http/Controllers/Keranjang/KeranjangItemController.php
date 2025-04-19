@@ -30,4 +30,13 @@ class KeranjangItemController extends Controller
 
         return view('user.keranjang', compact('keranjangItems', 'keranjang'));
     }
+
+    public function deleteItemFromCart($id)
+    {
+        $item = KeranjangItem::findOrFail($id);
+        $item->delete();
+
+        return redirect()->back()->with('success', 'Item berhasil dihapus dari keranjang.');
+    }
+
 }

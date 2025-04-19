@@ -15,6 +15,10 @@
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Styles / Scripts -->
     @vite(['resources/css/app.css'])
@@ -27,6 +31,8 @@
     {{-- Navbar --}}
     @include('components.navbar-user')
 
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+    </script>
 
     {{-- Konten di Sini --}}
     <div class="max-w-2xl lg:max-w-6xl mx-auto py-8 mb-20">
@@ -45,12 +51,12 @@
                         </h2>
                         <div class="flex flex-col space-y-1">
                             <h5 class="text-gray-700 text-xs">Nama :</h5>
-                            <h3 class="">Fuji Saskia</h3>
+                            <h3 class="">{{ Auth::user()->name }}</h3>
                         </div>
 
                         <div class="flex flex-col space-y-1">
                             <h5 class="text-gray-700 text-xs">No Telepon :</h5>
-                            <h3 class="">089211223344</h3>
+                            <h3 class="">{{ Auth::user()->email }}</h3>
                         </div>
                         {{-- <div class="flex flex-col space-y-1">
                             <h5 class="text-gray-700 text-xs">Alamat :</h5>
@@ -82,84 +88,36 @@
 
                 <div class="bg-white border border-gray-200 p-4 rounded shadow-md items-center">
                     <h2 class="text-gray-700 text-lg font-semibold text-center md:text-start mb-5">Rincian Pemesanan
+                        {{ $pesanan->id }}
                     </h2>
 
                     <div class="flex flex-col space-y-2 mb-2">
-                        <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
-                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                                alt="" class="w-16 h-16 rounded border border-gray-300">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-base">PS-5 XX</h4>
-                                <p class="text-gray-600 text-xs ">06 March, 2025 - 08 March, 2025</p>
-                                <div class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm  mt-3">
-                                    <h5>2 Hari</h5>
-                                    <h4>RP 50,000</h4>
+                        @foreach ($pesanan->items as $item)
+                            <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
+                                <img src="{{ asset('storage/barangs/' . $item->barang->image) }}"
+                                    alt="{{ $item->barang->nama_barang }}"
+                                    class="w-16 h-16 rounded border border-gray-300">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-base">{{ $item->barang->nama_barang }}</h4>
+                                    <p class="text-gray-600 text-xs ">
+                                        {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M, Y') }} -
+                                        {{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d M, Y') }}
+                                    </p>
+                                    <div
+                                        class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm mt-3">
+                                        <h5>
+                                            @if ($item->durasi_sewa >= 24)
+                                                {{ floor($item->durasi_sewa / 24) }} Hari
+                                            @else
+                                                {{ $item->durasi_sewa }} Jam
+                                            @endif
+                                        </h5>
+                                        <h4>Rp {{ number_format($item->harga_barang, 0, ',', '.') }}</h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
-                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                                alt="" class="w-16 h-16 rounded border border-gray-300">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-base">PS-5 XX</h4>
-                                <p class="text-gray-600 text-xs ">06 March, 2025 - 08 March, 2025</p>
-                                <div class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm  mt-3">
-                                    <h5>2 Hari</h5>
-                                    <h4>RP 50,000</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
-                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                                alt="" class="w-16 h-16 rounded border border-gray-300">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-base">PS-5 XX</h4>
-                                <p class="text-gray-600 text-xs ">06 March, 2025 - 08 March, 2025</p>
-                                <div class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm  mt-3">
-                                    <h5>2 Hari</h5>
-                                    <h4>RP 50,000</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
-                            <img src="{{ asset('assets/kabel.png') }}" alt=""
-                                class="w-16 h-16 rounded border border-gray-300">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-base">PS-5 XX</h4>
-                                <p class="text-gray-600 text-xs ">06 March, 2025 - 08 March, 2025</p>
-                                <div class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm  mt-3">
-                                    <h5>2 Hari</h5>
-                                    <h4>RP 50,000</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex space-x-2 bg-gray-50 border rounded p-1.5 items-center">
-                            <img src="{{ asset('assets/kabel.png') }}" alt=""
-                                class="w-16 h-16 rounded border border-gray-300">
-                            <div class="flex-1">
-                                <h4 class="font-bold text-base">PS-5 XX</h4>
-                                <p class="text-gray-600 text-xs ">06 March, 2025 - 08 March, 2025</p>
-                                <div class="flex space-x-2 font-semibold text-gray-800 justify-between text-sm  mt-3">
-                                    <h5>2 Hari</h5>
-                                    <h4>RP 50,000</h4>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
-
-                    <!-- Ongkir Section -->
-                    {{-- <div class="flex justify-between space-x-2 bg-gray-50 border rounded px-2 py-1.5 items-center">
-                        <div>
-                            <p class="font-bold text-gray-800">Ongkir</p>
-                            <p class="text-gray-600 text-xs">Antar-Jemput</p>
-                        </div>
-                        <p class="font-bold">Rp 20,000</p>
-                    </div> --}}
 
                     <!-- Pilih Diskon -->
                     <div class="flex space-x-3 my-3">
@@ -169,11 +127,8 @@
                         <button id="apply-discount-button"
                             class="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-3 rounded font-semibold"
                             disabled onclick="applyDiscount()">Pakai</button>
-                    </div>
 
-                    {{-- status diskon --}}
-                    <p class="p-2 mb-4 text-xs border border-emerald-700 bg-emerald-100">🎉 Diskon berhasil digunakan!
-                    </p>
+                    </div>
 
                     <!-- Modal Daftar Diskon -->
                     <div id="discount-modal"
@@ -192,41 +147,15 @@
 
                             <!-- Scrollable Diskon List -->
                             <div class="overflow-y-auto max-h-80 pr-2">
-                                <div onclick="selectDiscount('Diskon 10%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Hari Raya</p>
-                                    <p class="text-sm text-gray-500">Potongan 10%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 20%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Tahun Baru</p>
-                                    <p class="text-sm text-gray-500">Potongan 20%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 30%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Pengguna Baru</p>
-                                    <p class="text-sm text-gray-500">Potongan 30%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 40%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Imlek</p>
-                                    <p class="text-sm text-gray-500">Potongan 40%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 50%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Tahun Baru Cina</p>
-                                    <p class="text-sm text-gray-500">Potongan 50%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 60%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Lorem, ipsum dolor.</p>
-                                    <p class="text-sm text-gray-500">Potongan 60%</p>
-                                </div>
-                                <div onclick="selectDiscount('Diskon 70%')"
-                                    class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
-                                    <p class="text-base font-semibold text-emerald-700">Lorem, ipsum.</p>
-                                    <p class="text-sm text-gray-500">Potongan 70%</p>
-                                </div>
+                                @foreach ($diskons as $diskon)
+                                    <div onclick="selectDiscount('{{ $diskon->nama_diskon }}', '{{ $diskon->id }}', '{{ number_format($diskon->besar_diskon, 0, ',', '.') }}')"
+                                        class="cursor-pointer p-3 border border-gray-300 text-gray-700 hover:bg-emerald-50 mb-2 rounded">
+                                        <p class="text-base font-semibold text-emerald-700">{{ $diskon->nama_diskon }}
+                                        </p>
+                                        <p class="text-sm text-gray-500">Potongan s/d
+                                            {{ number_format($diskon->besar_diskon, 0, ',', '.') }}</p>
+                                    </div>
+                                @endforeach
                             </div>
 
                             {{-- <button onclick="closeDiscountModal()"
@@ -239,23 +168,73 @@
                     <!-- Total -->
                     <div class="flex justify-between items-center">
                         <p class="font-bold text-xl">TOTAL</p>
-                        <p class="text-red-700 font-bold text-xl">Rp 100,000,000</p>
+                        <p id="total-bayar" class="text-red-700 font-bold text-xl">
+                            Rp{{ number_format($pesanan->total_bayar, 0, ',', '.') }}</p>
                     </div>
 
-                    <!-- Buttons -->
+                    <!-- Buttons Pembayaran-->
                     <div class="flex gap-3 mt-4">
-                        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 w-full py-3 rounded-lg font-bold">
-                            Batal
-                        </button>
-                        <button class="bg-black hover:bg-gray-700 text-white w-full py-3 rounded-lg font-bold">
+                        <form action="{{ route('checkout.batal', $pesanan->id) }}" method="POST" class="w-full">
+                            @csrf
+                            <button type="submit"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 w-full py-3 rounded-lg font-bold">
+                                Batal
+                            </button>
+                        </form>
+                        <!-- Tombol Bayar -->
+                        <button id="bayar-button" type="button" data-pesanan-id="{{ $pesanan->id }}"
+                            class="bg-black hover:bg-gray-700 text-white w-full py-3 rounded-lg font-bold">
                             Bayar
                         </button>
+
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <script>
+        document.getElementById('bayar-button').addEventListener('click', function() {
+            const pesananId = this.getAttribute('data-pesanan-id');
+
+            fetch(`/goodrent/proses-pembayaran/${pesananId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Gagal ambil token");
+                    return response.json();
+                })
+                .then(data => {
+                    snap.pay(data.snapToken, {
+                        onSuccess: function(result) {
+                            // Contoh: kirim hasil ke backend jika perlu
+                            fetch("{{ route('pembayaran.success') }}", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                                    },
+                                    body: JSON.stringify({
+                                        order_id: result.order_id,
+                                        status: result.transaction_status
+                                    })
+                                }).then(res => res.json())
+                                .then(data => {
+                                    if (data.redirect) {
+                                        window.location.href = data.redirect;
+                                    }
+                                });
+                        },
+                        onPending: function(result) {
+                            console.log("Transaksi pending", result);
+                        },
+                        onError: function(result) {
+                            console.error("Transaksi error", result);
+                        }
+                    });
+                })
+                .catch(error => console.error("Fetch token error:", error));
+        });
+    </script>
 
 </body>
 
@@ -275,12 +254,17 @@
         document.body.classList.remove('overflow-hidden');
     }
 
-    function selectDiscount(discount) {
+    // Fungsi untuk memilih diskon
+    function selectDiscount(namaDiskon, diskonId, besarDiskon) {
         const discountText = document.getElementById('selected-discount');
         const applyButton = document.getElementById('apply-discount-button');
 
         // Menampilkan diskon yang dipilih
-        discountText.textContent = discount;
+        discountText.textContent = `${namaDiskon} - Potongan s/d ${number_format(besarDiskon)}`;
+
+        // Menyimpan diskon yang dipilih (diskon_id dan besar_diskon)
+        discountText.setAttribute('data-diskon-id', diskonId);
+        discountText.setAttribute('data-besar-diskon', besarDiskon);
 
         // Mengaktifkan tombol "Pakai"
         applyButton.disabled = false;
@@ -289,16 +273,80 @@
         closeDiscountModal();
     }
 
-    function applyDiscount() {
-        const discount = document.getElementById('selected-discount').textContent;
-        console.log(`Diskon yang dipilih: ${discount}`);
 
-        // Kirim data diskon ke database atau proses potongan harga di sini
-        // Contoh:
-        // fetch('/apply-discount', {
-        //     method: 'POST',
-        //     body: JSON.stringify({ discount }),
-        //     headers: { 'Content-Type': 'application/json' }
-        // }).then(response => response.json()).then(data => console.log(data));
+    // Format angka untuk tampilan diskon
+    function number_format(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+
+
+    // Fungsi untuk menerapkan diskon pada pesanan
+    function applyDiscount() {
+        const diskonId = document.getElementById('selected-discount').getAttribute('data-diskon-id');
+        const besarDiskon = parseFloat(document.getElementById('selected-discount').getAttribute('data-besar-diskon'));
+
+        if (!diskonId) {
+            alert('Pilih diskon terlebih dahulu!');
+            return;
+        }
+
+        // Kirim data diskon ke server
+        $.ajax({
+            url: '/goodrent/checkout/pakai-diskon', // Ganti dengan rute yang sesuai
+            method: 'POST',
+            data: {
+                diskon_id: diskonId,
+                potongan_harga: besarDiskon,
+                _token: '{{ csrf_token() }}' // Pastikan CSRF token ada
+            },
+            success: function(response) {
+                // Gunakan SweetAlert untuk menampilkan pesan
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Diskon berhasil diterapkan',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                // Perbarui total bayar di UI jika perlu
+                // Misalnya, perbarui total bayar yang ditampilkan
+                document.getElementById('total-bayar').textContent = 'Rp' + response.total_bayar;
+            },
+            error: function(error) {
+                alert('Gagal menerapkan diskon');
+            }
+        });
+    }
+
+
+    // Tampilkan Snap Pembayaran 
+    // document.getElementById('pay-button').onclick = function () {
+    //     const pesananId = this.getAttribute('data-pesanan-id');
+
+    //     fetch(`/goodrent/proses-pembayaran/${pesananId}`)
+    //         .then(res => {
+    //             if (!res.ok) throw new Error('Gagal ambil snap token');
+    //             return res.json();
+    //         })
+    //         .then(data => {
+    //             snap.pay(data.snap_token, {
+    //                 onSuccess: function(result) {
+    //                     fetch("{{ route('pembayaran.success') }}", {
+    //                         method: "POST",
+    //                         headers: {
+    //                             "Content-Type": "application/json",
+    //                             "X-CSRF-TOKEN": "{{ csrf_token() }}"
+    //                         },
+    //                         body: JSON.stringify({
+    //                             order_id: result.order_id
+    //                         })
+    //                     })
+    //                     .then(res => res.json())
+    //                     .then(data => {
+    //                         if (data.redirect) window.location.href = data.redirect;
+    //                     });
+    //                 }
+    //             });
+    //         })
+    //         .catch(err => console.error('Snap error:', err));
+    // };
 </script>

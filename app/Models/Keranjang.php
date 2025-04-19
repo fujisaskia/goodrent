@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keranjang extends Model
 {
-    protected $fillable = ['user_id', 'total_harga'];
+    protected $fillable = ['user_id'];
 
     public function user()
     {
@@ -18,8 +18,14 @@ class Keranjang extends Model
         return $this->hasMany(KeranjangItem::class);
     }
 
-    public function checkout()
+    public function barang()
     {
-        return $this->hasOne(CheckOut::class);
+        return $this->belongsTo(Barang::class);
     }
+    
+
+    // public function checkout()
+    // {
+    //     return $this->hasOne(CheckOut::class);
+    // }
 }

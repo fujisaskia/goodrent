@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
-            $table->integer('durasi_sewa'); // 12, 24, 72, 168, dst
-            $table->date('tanggal_mulai');
-            $table->date('tanggal_selesai');
+            $table->foreignId('diskon_id')->nullable()->constrained('diskons')->onDelete('set null');
+            $table->decimal('potongan_harga', 15, 2)->default(0);
+            $table->decimal('total_bayar', 10, 2);
+            $table->enum('status_pemesanan', ['Menunggu', 'Dalam Penyewaan', 'Selesai', 'Dibatalkan'])->default('Menunggu');
             $table->timestamps();
         });
     }

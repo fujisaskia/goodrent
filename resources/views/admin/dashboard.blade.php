@@ -11,7 +11,8 @@
 
             <div class="flex-1 relative">
                 <h1 class="text-3xl md:text-4xl text-white font-bold">Selamat Datang, {{ Auth::user()->name }} 👋</h1>
-                <p class="text-base text-gray-100 max-w-md mt-1">Kelola data dengan mudah dan pastikan semuanya berjalan dengan baik.</p>
+                <p class="text-base text-gray-100 max-w-md mt-1">Kelola data dengan mudah dan pastikan semuanya berjalan
+                    dengan baik.</p>
             </div>
 
             <div class="flex">
@@ -38,7 +39,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-4xl font-extrabold" data-target="83">0</h3>
+                    <h3 class="text-4xl font-extrabold" data-target="{{ $jumlahPemesanan }}">0</h3>
                     <p class="text-lg opacity-80">Pemesanan</p>
                 </div>
             </div>
@@ -51,7 +52,7 @@
                         class="w-14 lg:w-12 h-auto opacity-85 group-hover:scale-110 duration-200">
                 </div>
                 <div>
-                    <h3 class="text-4xl md:text-3xl font-extrabold" data-target="10000000">0</h3>
+                    <h3 class="text-4xl md:text-3xl font-extrabold" data-target="{{ $pendapatanBulanIni }}">0</h3>
                     <p class="text-lg opacity-80">Pendapatan</p>
                 </div>
             </div>
@@ -63,7 +64,7 @@
                     <x-iconsax-bol-profile-2user class="w-12 h-auto group-hover:scale-110 duration-200" />
                 </div>
                 <div>
-                    <h3 class="text-4xl font-extrabold" data-target="91">0</h3>
+                    <h3 class="text-4xl font-extrabold" data-target="{{ $jumlahPelanggan }}">0</h3>
                     <p class="text-lg opacity-80">Pelanggan</p>
                 </div>
             </div>
@@ -74,16 +75,16 @@
         <!-- Chart Section -->
         <h2 class="text-lg font-semibold text-gray-700 mt-6 mb-5">Performance Chart</h2>
 
-        <div class="flex flex-col lg:flex-row gap-6">
+        <div class="flex gap-6">
             <!-- Diagram 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-md lg:w-2/3 h-96">
+            <div class="bg-white p-6 rounded-lg shadow-md w-full h-96">
                 <canvas id="performanceChart"></canvas>
             </div>
 
             <!-- Pie Chart -->
-            <div class="bg-white p-6 rounded-lg shadow-md lg:w-1/3 h-96">
+            {{-- <div class="bg-white p-6 rounded-lg shadow-md lg:w-1/3 h-96">
                 <canvas id="pieChart"></canvas>
-            </div>
+            </div> --}}
         </div>
 
     </div>
@@ -111,36 +112,63 @@
 
         // Line Chart
         document.addEventListener("DOMContentLoaded", function() {
-            var ctx = document.getElementById('performanceChart').getContext('2d');
-            var performanceChart = new Chart(ctx, {
-                type: 'line', // Line Chart
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'Penyewa (%)',
-                        data: [70, 75, 80, 85, 90, 83],
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 2
-                    }, {
-                        label: 'Pendapatan (%)',
-                        data: [60, 65, 72, 78, 80, 77],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+            // Ambil data pendapatan per bulan dari server
+            fetch('/get-monthly-revenue-data')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.labels;
+                    const revenueData = data.data;
+
+                    // Konfigurasi Chart.js
+                    const ctx = document.getElementById('performanceChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels, // Bulan-bulan
+                            datasets: [{
+                                label: 'Pendapatan Bulanan (Ribu Rupiah)',
+                                data: revenueData, // Pendapatan per bulan dalam ribuan
+                                borderColor: '#4e73df',
+                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                                fill: true,
+                                tension: 0.3,
+                            }],
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    grid: {
+                                        display: false,
+                                    },
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 500,
+                                        callback: function(value) {
+                                            return value + 'K';
+                                        }
+                                    }
+                                },
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let value = context.parsed.y;
+                                            return 'Rp ' + value.toLocaleString() + 'K';
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
+                });
         });
+
 
         // Pie Chart
         const ctx2 = document.getElementById('pieChart').getContext('2d');

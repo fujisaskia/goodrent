@@ -15,6 +15,9 @@
     {{-- Data AOS Animate --}}
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Font Awesome CDN Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -41,27 +44,13 @@
         <div class="bg-white border p-6 rounded-lg shadow-lg mx-4">
             <div class="grid lg:grid-cols-2 gap-6 lg:gap-12">
                 <div>
-                    <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PS5"
+                    <img src="{{ asset('storage/barangs/' . $barang->image) }}" alt="{{ $barang->nama_barang }}"
                         class="w-[95%] rounded-lg mx-auto">
-                    <div class="flex gap-2 my-4">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="PS5" class="w-20 rounded-lg hover:opacity-80">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="PS5" class="w-20 rounded-lg hover:opacity-80">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="PS5" class="w-20 rounded-lg hover:opacity-80">
-                        <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
-                            alt="PS5" class="w-20 rounded-lg hover:opacity-80">
-                    </div>
                     <h3 class="block lg:hidden text-2xl font-bold">PlayStation 5 (PS5)</h3>
                     <p class="block lg:hidden text-2xl text-green-600 font-semibold mb-5">Harga Sewa: Rp 30,000</p>
                     <h3 class="text-lg font-semibold py-4 border-t-2 border-gray-300">Deskripsi Produk :</h3>
                     <p class="text-gray-600 text-sm mt-2">
-                        PlayStation 5 (PS5) adalah konsol game generasi terbaru dari Sony yang menawarkan performa luar
-                        biasa dengan teknologi canggih. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
-                        minima perspiciatis, illum ullam aliquam harum magnam labore facere ipsam quisquam totam
-                        blanditiis quo, eligendi neque, libero ad iste accusantium omnis explicabo assumenda
-                        reprehenderit! Quos itaque quisquam, totam placeat voluptatem nemo.
+                        {{ $barang->deskripsi }}
                     </p>
                 </div>
                 <div class="">
@@ -104,21 +93,22 @@
                             @endforeach
                         </div>
 
-                        <p class="text-red-600 text-sm bg-red-100 p-2 rounded-md mt-1.5 font-semibold">
+                        {{-- <p class="text-red-600 text-sm bg-red-100 p-2 rounded-md mt-1.5 font-semibold">
                             *Harga sewa belum termasuk biaya pengiriman
-                        </p>
+                        </p> --}}
                     </div>
 
                     <div
                         class="bg-white shadow-lg shadow-emerald-100 border border-gray-400 lg:border-gray-200 p-4 rounded-lg mt-8 text-sm">
                         <h3 class="text-xl font-bold text-center mb-6">Form Sewa</h3>
-                        <form action="{{ route('pesanan.store') }}" method="POST">
+                        <form action="{{ route('tambah.keranjang') }}" method="POST">
+
                             @csrf
                             <input type="hidden" name="barang_id" value="{{ $barang->id }}">
 
                             <div class="mb-3">
                                 <label class="block text-xs font-semibold text-gray-600">Durasi Sewa :</label>
-                                <select name="durasi_jam"
+                                <select name="durasi_jam" id="durasi_jam"
                                     class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
                                     required>
                                     <option value="">Pilih Durasi</option>
@@ -134,21 +124,24 @@
                             <div class="flex space-x-3 mb-3">
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Mulai :</label>
-                                    <input type="date" name="tanggal_mulai"
+                                    <input type="date" name="tanggal_mulai" id="tanggal_mulai"
                                         class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
                                         required>
                                 </div>
 
                                 <div class="w-full">
                                     <label class="block text-xs font-semibold text-gray-600">Tanggal Selesai :</label>
-                                    <input type="date" name="tanggal_selesai"
+                                    <input type="date" name="tanggal_selesai" id="tanggal_selesai"
                                         class="w-full p-3 rounded border mt-1 focus:outline-none focus:ring focus:ring-emerald-100"
-                                        required>
+                                        readonly>
                                 </div>
                             </div>
 
-                            <button class="w-full mt-8 bg-gray-800 hover:bg-gray-900 text-white p-4 rounded">Sewa
-                                Sekarang</button>
+                            <a href="">
+                                <button
+                                    class="w-full mt-8 bg-gray-800 hover:bg-gray-900 text-white p-4 rounded">Masukkan
+                                    Keranjang</button>
+                            </a>
                         </form>
                     </div>
                 </div>
@@ -160,22 +153,107 @@
     {{-- Footer --}}
     @include('components.footer-user')
 
+    {{-- animate loading tap --}}
+    <div id="loading-spinner" class="fixed inset-0 flex items-center justify-center bg-white block z-50">
+        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+        <dotlottie-player src="https://lottie.host/a9373d02-c947-48ca-8476-b2452dd2b17b/4nxgGAFhrG.lottie"
+            background="transparent" speed="1" style="width: 100px; height: 100px" loop
+            autoplay></dotlottie-player>
+    </div>
+
+
 </html>
-{{-- 
+
 <script>
-    flatpickr("#mulai-sewa", {
-        dateFormat: "d F Y",
-        locale: "id", // Set lokal ke Bahasa Indonesia
-        minDate: "today",
-        onChange: function(selectedDates, dateStr) {
-            masaAkhir.set("minDate", dateStr); // Mencegah tanggal akhir sebelum tanggal awal
-        }
+    // flatpickr("#mulai-sewa", {
+    //     dateFormat: "d F Y",
+    //     locale: "id", // Set lokal ke Bahasa Indonesia
+    //     minDate: "today",
+    //     onChange: function(selectedDates, dateStr) {
+    //         masaAkhir.set("minDate", dateStr); // Mencegah tanggal akhir sebelum tanggal awal
+    //     }
+    // });
+
+    // let masaAkhir = flatpickr("#selesai-sewa", {
+    //     dateFormat: "d F Y",
+    //     locale: "id", // Set lokal ke Bahasa Indonesia
+    //     minDate: "today",
+    //     minDate: new Date(),
+    // });
+
+    // Animate loading & notification ketika halaman dimuat
+    window.addEventListener("load", function() {
+        setTimeout(function() {
+            document.getElementById("loading-spinner").classList.add("hidden");
+
+            // Tampilkan SweetAlert Toast setelah animasi loading selesai
+            setTimeout(function() {
+                @if (session('success'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('error'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "error",
+                        title: "{{ session('error') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('info'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "info",
+                        title: "{{ session('info') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @elseif (session('warning'))
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "warning",
+                        title: "{{ session('warning') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: false
+                    });
+                @endif
+            }, 500); // Muncul 0.5 detik setelah loading selesai
+        }, 1000); // Loading hilang setelah 1 detik
     });
 
-    let masaAkhir = flatpickr("#selesai-sewa", {
-        dateFormat: "d F Y",
-        locale: "id", // Set lokal ke Bahasa Indonesia
-        minDate: "today",
-        minDate: new Date(),
-    });
-</script> --}}
+    const durasiSelect = document.getElementById('durasi_jam');
+    const tanggalMulaiInput = document.getElementById('tanggal_mulai');
+    const tanggalSelesaiInput = document.getElementById('tanggal_selesai');
+
+    function hitungTanggalSelesai() {
+        const durasiJam = parseInt(durasiSelect.value);
+        const tanggalMulai = new Date(tanggalMulaiInput.value);
+
+        if (!isNaN(durasiJam) && tanggalMulaiInput.value) {
+            // Tambah durasi ke tanggal mulai
+            tanggalMulai.setHours(tanggalMulai.getHours() + durasiJam);
+
+            // Format tanggal jadi yyyy-mm-dd
+            const yyyy = tanggalMulai.getFullYear();
+            const mm = String(tanggalMulai.getMonth() + 1).padStart(2, '0');
+            const dd = String(tanggalMulai.getDate()).padStart(2, '0');
+
+            tanggalSelesaiInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+    }
+
+    durasiSelect.addEventListener('change', hitungTanggalSelesai);
+    tanggalMulaiInput.addEventListener('change', hitungTanggalSelesai);
+</script>

@@ -28,6 +28,19 @@ class Barang extends Model
         return $this->hasMany(Pesanan::class);
     }
 
+    public function pesananItems()
+    {
+        return $this->hasMany(PesananItem::class);
+    }
+
+    // Di model Barang
+    public function keranjangItems()
+    {
+        return $this->hasMany(KeranjangItem::class);
+    }
+
+
+
     public static function generateKodeBarang($kategoriBarangId)
     {
         // Ambil nama kategori berdasarkan ID

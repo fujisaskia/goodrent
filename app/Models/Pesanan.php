@@ -6,11 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    protected $fillable = ['user_id', 'barang_id', 'durasi_sewa', 'tanggal_mulai', 'tanggal_selesai'];
+    protected $fillable = [
+        'user_id',
+        'diskon_id',
+        'potongan_harga',
+        'total_bayar',
+        'status_pemesanan'
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(PesananItem::class);
     }
 
     public function barang()
@@ -18,13 +29,25 @@ class Pesanan extends Model
         return $this->belongsTo(Barang::class);
     }
 
-    public function keranjangItem()
+
+    public function diskon()
     {
-        return $this->hasOne(KeranjangItem::class);
+        return $this->belongsTo(Diskon::class);
     }
 
-    public function riwayatPesanan()
+    public function pembayaran()
     {
-        return $this->hasOne(RiwayatPesanan::class);
+        return $this->hasOne(Pembayaran::class);
     }
+
+    public function keranjangItems()
+    {
+        return $this->hasMany(KeranjangItem::class);
+    }
+
 }
+
+// public function riwayatPesanan()
+// {
+//     return $this->hasOne(RiwayatPesanan::class);
+// }

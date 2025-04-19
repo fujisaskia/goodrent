@@ -7,7 +7,7 @@
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Tambah Barang Baru</h1>
         <form action="{{ route('data-barang.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="grid md:grid-cols-2 gap-4">
+            <div class="grid md:grid-cols-2 gap-4 mb-2">
                 <!-- Kolom Kiri -->
                 <div class="space-y-4">
                     <!-- Nama Barang -->
@@ -39,40 +39,42 @@
                             placeholder="Kode barang otomatis akan terisi" readonly>
                     </div>
 
-                    <!-- Deskripsi -->
-                    <div>
-                        <label for="deskripsi" class="block text-gray-700 mb-2">Deskripsi Barang</label>
-                        <textarea name="deskripsi" placeholder="Silahkan isi deskripsi"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            rows="3" required></textarea>
-                    </div>
                 </div>
-
+                
                 <!-- Kolom Kanan -->
                 <div class="space-y-4">
-                    <!-- Harga -->
-                    <div>
-                        <label for="harga" class="block text-gray-700 mb-2">Harga</label>
-                        <input type="number" name="harga" placeholder="Silahkan isi harga"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            required>
-                    </div>
-
-                    <!-- Stok -->
-                    <div>
-                        <label for="stok" class="block text-gray-700 mb-2">Stok</label>
-                        <input type="number" name="stok" placeholder="Silahkan isi stok"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            required>
-                    </div>
-
+                    <div class="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-2">
+                        <!-- Harga -->
+                        <div class="w-full">
+                            <label for="harga" class="block text-gray-700 mb-2">Harga</label>
+                            <input type="number" name="harga" placeholder="Silahkan isi harga"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                required>
+                        </div>
+    
+                        <!-- Stok -->
+                        <div class="w-full">
+                            <label for="stok" class="block text-gray-700 mb-2">Stok</label>
+                            <input type="number" name="stok" placeholder="Silahkan isi stok"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                required>
+                            </div>
+                        </div>
+                        
                     <!-- Gambar -->
                     <div>
                         <label for="image" class="block font-medium text-gray-700">Foto Barang</label>
                         <input type="file" id="image" name="image" accept="image/*"
-                            class="mt-1 block w-full p-2 border rounded" required>
+                        class="mt-1 block w-full p-2 border rounded" required>
                     </div>
                 </div>
+            </div>
+            <!-- Deskripsi -->
+            <div class="w-full">
+                <label for="deskripsi" class="block text-gray-700 mb-2">Deskripsi Barang</label>
+                <textarea name="deskripsi" placeholder="Silahkan isi deskripsi"
+                    class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                    rows="3" required></textarea>
             </div>
 
             <div class="flex space-x-3 justify-end mt-6">

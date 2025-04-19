@@ -1,14 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Barang\BarangController;
-use App\Http\Controllers\Barang\KategoriBarangController;
 use App\Http\Controllers\Diskon\DiskonController;
+use App\Http\Controllers\Pesanan\PesananController;
+use App\Http\Controllers\Keranjang\KeranjangController;
+use App\Http\Controllers\Barang\KategoriBarangController;
+use App\Http\Controllers\Checkout\CheckOutController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Diskon\KategoriDiskonController;
 use App\Http\Controllers\Pembayaran\PembayaranController;
-use App\Http\Controllers\Pesanan\PesananController;
-use App\Http\Controllers\User\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Keranjang\KeranjangItemController;
+use App\Http\Controllers\Riwayatpesanan\RiwayatPesananController;
 
 // Landing Page ===========================//
 Route::get('/', function () {
@@ -38,9 +43,9 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 Route::middleware(['role:superadmin|admin'])->group(function () {
 
     // Dashboard ======================================================//  
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/get-monthly-revenue-data', [DashboardController::class, 'getMonthlyRevenueData']);
+
 
     Route::get('/admin/profile', function () {
         return view('admin.profile');
@@ -68,9 +73,8 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
 
     // Data Sewa ===================================================== //
-    Route::get('/admin/data-sewa', function () {
-        return view('admin.data-sewa.index');
-    })->name('admin.data-sewa.index');
+    Route::get('/admin/data-sewa', [PesananController::class, 'index'])->name('admin.data-sewa.index');
+
 
 
     // kelola pelanggan ===================================================== //
@@ -115,15 +119,15 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::get('/goodrent/produk', [BarangController::class, 'lihatBarang'])->name('lihat.produk');
 
     Route::get('/goodrent/lihat-produk/{id}', [PesananController::class, 'detailProdukUser'])->name('produk.detail');
-    Route::post('/pesan', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::post('/goodrent/tambah/keranjang', [KeranjangController::class, 'addToCart'])->name('tambah.keranjang');
+    Route::get('/goodrent/lihat-keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+    Route::delete('/keranjang/item/{id}', [KeranjangItemController::class, 'deleteItemFromCart'])->name('keranjang.hapusItem');
+    
+    Route::post('/goodrent/checkout', [CheckOutController::class, 'checkoutItems'])->name('checkout');
+    Route::post('/goodrent/checkout/batalkan/{pesanan}', [CheckoutController::class, 'checkoutCancelled'])->name('checkout.batal');
+    Route::get('/goodrent/checkout/summary/items/{id}', [CheckOutController::class, 'checkoutSummary'])->name('checkout.summary');
 
-    Route::get('/goodrent/cek-keranjang/', function () {
-        return view('user.keranjang');
-    })->name('user.keranjang');
-
-    Route::get('/goodrent/checkout/', function () {
-        return view('user.checkout');
-    })->name('user.checkout');
+    Route::post('/goodrent/checkout/pakai-diskon', [DiskonController::class, 'applyDiscount'])->name('apply.discount');
 
     // profile ===========================================//
     Route::get('/goodrent/profile', function () {
@@ -140,10 +144,11 @@ Route::middleware(['role:pelanggan'])->group(function () {
         return view('user.alamat.create');
     })->name('user.alamat.create');
 
-    Route::get('/goodrent/pemesanan-saya', function () {
-        return view('user.riwayat');
-    })->name('user.pemesanan');
+    Route::get('/goodrent/riwayat/pemesanan-saya', [RiwayatPesananController::class, 'userRiwayat'])->name('user.riwayat.index');
 
-    Route::get('/checkout/{checkoutId}/payment', [PembayaranController::class, 'showPaymentForm'])->name('user.payment.index');
-    Route::post('/checkout/{checkoutId}/payment', [PembayaranController::class, 'processPayment'])->name('user.payment.process');
+    Route::get('/goodrent/proses-pembayaran/{pesanan_id}', [PembayaranController::class, 'process'])->name('midtrans.process');
+    Route::post('/goodrent/pembayaran/success', [PembayaranController::class, 'paymentSuccess'])->name('pembayaran.success');
+
+    // Route::get('/checkout/{checkoutId}/payment', [PembayaranController::class, 'showPaymentForm'])->name('user.payment.index');
+    // Route::post('/checkout/{checkoutId}/payment', [PembayaranController::class, 'processPayment'])->name('user.payment.process');
 });

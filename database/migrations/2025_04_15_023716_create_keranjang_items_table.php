@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('keranjang_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('keranjang_id')->constrained('keranjangs')->onDelete('cascade');
-            $table->foreignId('pesanan_id')->constrained('pesanans')->onDelete('cascade'); // ambil dari pesanan
-            $table->integer('durasi_jam');
-            $table->decimal('harga', 15, 2);
+            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade');
+            $table->integer('durasi_sewa'); // Lama sewa dalam jam
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_selesai');
             $table->timestamps();
         });
     }

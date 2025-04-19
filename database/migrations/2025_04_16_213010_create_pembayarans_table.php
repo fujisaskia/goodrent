@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
-            // Relasi ke checkout karena pembayaran berdasarkan checkout
-            $table->foreignId('check_out_id')->constrained('check_outs')->onDelete('cascade');
+            // Relasi ke pesanan
+            $table->foreignId('pesanan_id')->constrained('pesanans')->onDelete('cascade');
 
-            $table->enum('metode_pembayaran', ['Digital', 'Non-Digital']);
-            $table->decimal('jumlah_bayar', 15, 2);
+            $table->decimal('total_bayar', 15, 2);
+
+            $table->string('nomor_pembayaran')->unique(); // bisa nomor transaksi atau kode bayar
+            $table->dateTime('tanggal_bayar')->nullable(); // bisa diisi saat pembayaran berhasil
+            
+            $table->enum('metode_pembayaran', ['Tunal', 'Digital']);
 
             $table->enum('status_pembayaran', ['Menunggu', 'Berhasil', 'Gagal'])->default('Menunggu');
             $table->timestamps();

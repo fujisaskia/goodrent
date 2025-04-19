@@ -2,28 +2,30 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KeranjangItem extends Model
+class PesananItem extends Model
 {
-    protected $table = 'keranjang_items';
+    use HasFactory;
 
     protected $fillable = [
-        'keranjang_id',
+        'pesanan_id',
         'barang_id',
         'durasi_sewa',
         'tanggal_mulai',
-        'tanggal_selesai'
+        'tanggal_selesai',
+        'harga_barang',
+        'subtotal',
     ];
 
-    public function keranjang()
+    public function pesanan()
     {
-        return $this->belongsTo(Keranjang::class);
+        return $this->belongsTo(Pesanan::class);
     }
 
     public function barang()
     {
         return $this->belongsTo(Barang::class);
     }
-    
 }

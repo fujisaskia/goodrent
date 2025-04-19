@@ -84,13 +84,19 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
                 @foreach ($barangs as $barang)
                     <div class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300">
-                        <img src="{{ asset('storage/' . $barang->gambar) }}" alt="{{ $barang->nama_barang }}"
+                        <img src="{{ asset('storage/barangs/' . $barang->image) }}" alt="{{ $barang->nama_barang }}"
                             class="w-full rounded-t h-32 object-cover">
                         <div class="p-3">
                             <h3 class="font-medium">{{ $barang->nama_barang }}</h3>
-                            <p class="font-bold text-base">Rp{{ number_format($barang->harga, 0, ',', '.') }}</p>
-                            <p class="text-xs text-gray-700">/ jam</p>
-                            <a href="{{ route('lihat.produk', $barang->id) }}"
+                            @php
+                                $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first();
+                            @endphp
+
+
+                            <p class="font-bold text-base">Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }}
+                            </p>
+                            <p class="text-xs text-gray-700">/24 jam</p>
+                            <a href="{{ route('produk.detail', $barang->id) }}"
                                 class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md block mt-5">
                                 <button class="w-full font-semibold group-focus:scale-95 duration-300 text-xs">
                                     Pilih
@@ -108,66 +114,6 @@
         <div class="max-w-6xl mx-auto">
             <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Tambah Barang Tambahan yang kamu inginkan!</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
-                <div
-                    class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
-                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk" class="w-full rounded-t">
-                    <div class="p-3">
-                        <h3 class="font-medium">Kabel 5 Km</h3>
-                        <p class="font-bold text-base">Rp25,000</p>
-                        <span class="text-xs text-gray-700">/ jam</span>
-                        <a href="/goodrent/lihat-produk/"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                            <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
-                                Pilih
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
-                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk" class="w-full rounded-t">
-                    <div class="p-3">
-                        <h3 class="font-medium">Kabel 5 Km</h3>
-                        <p class="font-bold text-base">Rp25,000</p>
-                        <span class="text-xs text-gray-700">/ jam</span>
-                        <a href="/goodrent/lihat-produk/"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                            <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
-                                Pilih
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
-                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk" class="w-full rounded-t">
-                    <div class="p-3">
-                        <h3 class="font-medium">Kabel 5 Km</h3>
-                        <p class="font-bold text-base">Rp25,000</p>
-                        <span class="text-xs text-gray-700">/ jam</span>
-                        <a href="/goodrent/lihat-produk/"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                            <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
-                                Pilih
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
-                    <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk" class="w-full rounded-t">
-                    <div class="p-3">
-                        <h3 class="font-medium">Kabel 5 Km</h3>
-                        <p class="font-bold text-base">Rp25,000</p>
-                        <span class="text-xs text-gray-700">/ jam</span>
-                        <a href="/goodrent/lihat-produk/"
-                            class="bg-emerald-500 hover:bg-emerald-600 text-white py-1.5 rounded-md">
-                            <button class="w-full mt-5 font-semibold group-focus:scale-95 duration-300 text-xs">
-                                Pilih
-                            </button>
-                        </a>
-                    </div>
-                </div>
                 <div
                     class="shadow-md rounded hover:shadow-2xl hover:shadow-emerald-200 duration-300 border border-gray-100">
                     <img src="{{ asset('assets/kabel.png') }}" alt="Nama Produk" class="w-full rounded-t">

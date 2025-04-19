@@ -30,6 +30,12 @@ class User extends Authenticatable
         'status_pelanggan',
     ];
 
+    public function pesanans()
+    {
+        return $this->hasMany(Pesanan::class);
+    }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

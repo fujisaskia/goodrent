@@ -125,4 +125,36 @@ class DiskonController extends Controller
 
         return redirect()->route('diskon.index')->with('success', 'Data diskon yang dipilih berhasil dihapus.');
     }
+
+
+    // Apply discount
+    public function applyDiscount(Request $request)
+    {
+        $user = auth()->user();
+        $pesanan = $user->pesanans()->latest()->first();
+
+        if (!$pesanan) {
+            return response()->json(['error' => 'Pesanan tidak ditemukan'], 400);
+        }
+
+        // Temukan diskon berdasarkan ID
+        $diskon = Diskon::find($request->diskon_id);
+        if (!$diskon) {
+            return response()->json(['error' => 'Diskon tidak valid'], 400);
+        }
+
+        // Hitung potongan harga
+        // $potonganHarga = ($diskon->besar_diskon / 100) * $pesanan->total_bayar;
+        $potonganHarga = $diskon->besar_diskon;
+        $totalBayar = $pesanan->total_bayar - $potonganHarga;
+
+        // Update pesanan dengan diskon
+        $pesanan->diskon_id = $diskon->id;
+        $pesanan->potongan_harga = $potonganHarga;
+        $pesanan->total_bayar = $totalBayar;
+        $pesanan->save();
+
+        // Kirimkan response dengan total bayar yang telah diperbarui
+        return response()->json(['success' => true, 'total_bayar' => number_format($totalBayar, 0, ',', '.')]);
+    }
 }

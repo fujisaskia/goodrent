@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Riwayatpesanan;
 
-use App\Http\Controllers\Controller;
-use App\Models\RiwayatPesanan;
+use App\Models\Pesanan;
 use Illuminate\Http\Request;
+use App\Models\RiwayatPesanan;
+use App\Http\Controllers\Controller;
 
 class RiwayatPesananController extends Controller
 {
     public function userRiwayat()
     {
-        $riwayatPesanans = RiwayatPesanan::with(['pesanan', 'user'])
-            ->where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        return view('user.riwayat', compact('riwayatPesanans'));
+        $pesanans = Pesanan::with(['items.barang', 'pembayaran'])
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('created_at', 'desc') // urutkan dari yang terbaru
+            ->get();
+    
+        return view('user.riwayat', compact('pesanans'));
     }
-
+    
     public function adminRiwayat()
     {
         $riwayatPesanans = RiwayatPesanan::with(['pesanan', 'user'])
