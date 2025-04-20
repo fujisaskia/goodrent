@@ -92,7 +92,7 @@ class PembayaranController extends Controller
             'total_bayar' => $totalBayar,
             'nomor_pembayaran' => $nomorPembayaran,
             'tanggal_bayar' => now(),
-            'metode_pembayaran' => 'Tunal',
+            'metode_pembayaran' => 'Tunai',
             'status_pembayaran' => 'Berhasil',
         ]);
 

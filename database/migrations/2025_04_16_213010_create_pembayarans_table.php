@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nomor_pembayaran')->unique(); // bisa nomor transaksi atau kode bayar
             $table->dateTime('tanggal_bayar')->nullable(); // bisa diisi saat pembayaran berhasil
             
-            $table->enum('metode_pembayaran', ['Tunal', 'Digital']);
+            $table->enum('metode_pembayaran', ['Tunai', 'Digital']);
 
             $table->enum('status_pembayaran', ['Menunggu', 'Berhasil', 'Gagal'])->default('Menunggu');
             $table->timestamps();
