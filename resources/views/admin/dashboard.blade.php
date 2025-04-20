@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="mx-auto p-2">
+    <div class="mx-auto p-5 bg-white rounded-xl shadow-md mt-6 mb-6">
         <!-- Header -->
         <div
             class="flex flex-col md:flex-row bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl shadow-lg p-6 items-center h-72 justify-between md:h-48 relative overflow-hidden">
@@ -75,21 +75,155 @@
         <!-- Chart Section -->
         <h2 class="text-lg font-semibold text-gray-700 mt-6 mb-5">Performance Chart</h2>
 
+        <div class="flex justify-end mb-4">
+            <select id="filterYear" class="border border-gray-300 rounded px-4 py-2">
+                <!-- Tahun akan diisi lewat JS -->
+            </select>
+        </div>
+
         <div class="flex gap-6">
             <!-- Diagram 1 -->
-            <div class="bg-white p-6 rounded-lg shadow-md w-full h-96">
-                <canvas id="performanceChart"></canvas>
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
+                <canvas id="performanceChartPemesanan"></canvas>
             </div>
 
-            <!-- Pie Chart -->
-            {{-- <div class="bg-white p-6 rounded-lg shadow-md lg:w-1/3 h-96">
-                <canvas id="pieChart"></canvas>
-            </div> --}}
+            <!-- Diagram 2 -->
+            <div class="bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
+                <canvas id="performanceChartPendapatan"></canvas>
+            </div>
         </div>
 
     </div>
 
     <script>
+        let pemesananChart;
+        let pendapatanChart;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const yearSelect = document.getElementById("filterYear");
+            const currentYear = new Date().getFullYear();
+
+            fetch('/get-available-years')
+                .then(res => res.json())
+                .then(years => {
+                    years.forEach(year => {
+                        const option = document.createElement("option");
+                        option.value = year;
+                        option.textContent = year;
+                        if (year == currentYear) option.selected = true;
+                        yearSelect.appendChild(option);
+                    });
+
+                    loadAllCharts(currentYear);
+                });
+
+            yearSelect.addEventListener("change", () => {
+                const selectedYear = yearSelect.value;
+                loadAllCharts(selectedYear);
+            });
+        });
+
+        function loadAllCharts(year) {
+            loadPendapatanChart(year);
+            loadPemesananChart(year);
+        }
+
+        function loadPendapatanChart(year) {
+            fetch(`/get-monthly-revenue-data/${year}`)
+                .then(res => res.json())
+                .then(data => {
+                    const ctx = document.getElementById('performanceChartPendapatan').getContext('2d');
+                    if (pendapatanChart) pendapatanChart.destroy();
+                    pendapatanChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Pendapatan Bulanan (Ribu Rupiah)',
+                                data: data.data,
+                                borderColor: '#a855f7',
+                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                                fill: true,
+                                tension: 0.3,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 500,
+                                        callback: value => value + 'K'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: context => 'Rp ' + context.parsed.y.toLocaleString() + 'K'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
+        function loadPemesananChart(year) {
+            fetch(`/get-monthly-data/${year}`)
+                .then(res => res.json())
+                .then(data => {
+                    const ctx = document.getElementById('performanceChartPemesanan').getContext('2d');
+                    if (pemesananChart) pemesananChart.destroy();
+                    pemesananChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Pemesanan Bulanan',
+                                data: data.data,
+                                borderColor: '#0fb47e',
+                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                                fill: true,
+                                tension: 0.3,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    grid: {
+                                        display: false
+                                    }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 1,
+                                        callback: value => value
+                                    }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        label: context => context.parsed.y.toLocaleString()
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+        }
+
         // menghitung angka card ketika halaman dimuat
         document.addEventListener("DOMContentLoaded", () => {
             const counters = document.querySelectorAll("h3[data-target]");
@@ -108,79 +242,6 @@
                 };
                 updateCount();
             });
-        });
-
-        // Line Chart
-        document.addEventListener("DOMContentLoaded", function() {
-            // Ambil data pendapatan per bulan dari server
-            fetch('/get-monthly-revenue-data')
-                .then(response => response.json())
-                .then(data => {
-                    const labels = data.labels;
-                    const revenueData = data.data;
-
-                    // Konfigurasi Chart.js
-                    const ctx = document.getElementById('performanceChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels, // Bulan-bulan
-                            datasets: [{
-                                label: 'Pendapatan Bulanan (Ribu Rupiah)',
-                                data: revenueData, // Pendapatan per bulan dalam ribuan
-                                borderColor: '#4e73df',
-                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
-                                fill: true,
-                                tension: 0.3,
-                            }],
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        display: false,
-                                    },
-                                },
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        stepSize: 500,
-                                        callback: function(value) {
-                                            return value + 'K';
-                                        }
-                                    }
-                                },
-                            },
-                            plugins: {
-                                tooltip: {
-                                    callbacks: {
-                                        label: function(context) {
-                                            let value = context.parsed.y;
-                                            return 'Rp ' + value.toLocaleString() + 'K';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                });
-        });
-
-
-        // Pie Chart
-        const ctx2 = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['Completed', 'Pending', 'Failed'],
-                datasets: [{
-                    data: [60, 30, 10],
-                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336']
-                }]
-            }
         });
     </script>
 

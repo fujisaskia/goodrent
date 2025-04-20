@@ -25,32 +25,64 @@ class DashboardController extends Controller
         return view('admin.dashboard', compact('jumlahPemesanan', 'jumlahPelanggan', 'pendapatanBulanIni'));
     }
 
-    public function getMonthlyRevenueData()
+    public function getMonthlyRevenueData($year)
     {
-        $currentYear = now()->year;
         $pendapatanPerBulan = [];
         $labels = [];
 
         for ($month = 1; $month <= 12; $month++) {
-            // Buat objek tanggal berdasarkan bulan
-            $date = Carbon::createFromDate($currentYear, $month, 1);
+            $date = Carbon::createFromDate($year, $month, 1);
 
-            // Hitung pendapatan hanya bulan itu
             $pendapatanBulanan = DB::table('pembayarans')
                 ->where('status_pembayaran', 'Berhasil')
                 ->whereMonth('created_at', $month)
-                ->whereYear('created_at', $currentYear)
+                ->whereYear('created_at', $year)
                 ->sum('total_bayar');
 
-            // Tambahkan ke array
-            $pendapatanPerBulan[] = $pendapatanBulanan / 1000; // Dalam ribuan
-            $labels[] = $date->translatedFormat('F Y'); // Contoh: Januari, Februari
+            $pendapatanPerBulan[] = $pendapatanBulanan / 1000; // ribuan
+            $labels[] = $date->translatedFormat('M Y');
         }
 
         return response()->json([
             'labels' => $labels,
             'data' => $pendapatanPerBulan,
         ]);
+    }
+
+    public function getMonthlyData($year)
+    {
+        $pemesananPerBulan = [];
+        $labels = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $date = Carbon::createFromDate($year, $month, 1);
+
+            $jumlahUser = DB::table('pembayarans')
+                ->where('status_pembayaran', 'Berhasil')
+                ->whereMonth('created_at', $month)
+                ->whereYear('created_at', $year)
+                ->distinct('pesanan_id')
+                ->count('pesanan_id');
+
+            $pemesananPerBulan[] = $jumlahUser;
+            $labels[] = $date->translatedFormat('M Y');
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $pemesananPerBulan,
+        ]);
+    }
+
+    public function getAvailableYears()
+    {
+        $years = DB::table('pembayarans')
+            ->selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'asc')
+            ->pluck('year');
+
+        return response()->json($years);
     }
 
     // Fungsi untuk mendapatkan label bulan

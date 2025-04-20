@@ -81,12 +81,12 @@
                                                 1 Hari
                                             @break
 
-                                            @case(48)
-                                                2 Hari
-                                            @break
-
                                             @case(72)
                                                 3 Hari
+                                            @break
+
+                                            @case(168)
+                                                7 Hari
                                             @break
 
                                             @default

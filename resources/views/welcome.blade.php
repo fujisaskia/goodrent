@@ -28,6 +28,7 @@
         <div class="max-w-6xl mx-4 lg:mx-auto flex justify-between items-center py-2">
             <!-- Logo -->
             <div class="flex items-center space-x-2">
+                <img src="{{ asset('assets/logo.png') }}" alt="Goodrent Logo" class="w-8 h-8 rounded-full items-center">
                 <span class="font-extrabold text-xl text-emerald-600">GoodRent</span>
             </div>
             <div id="menu-button" class="flex lg:hidden">
@@ -60,12 +61,12 @@
             <!-- Button -->
             <div class="hidden lg:flex items-center space-x-2">
                 {{-- button masuk --}}
-                <a href="/login"
+                <a href="{{ route('login.page')}}"
                     class="flex space-x-1 items-center font-semibold py-2 px-8 text-white bg-emerald-600 hover:bg-emerald-700 focus:scale-95 rounded-lg duration-300">
                     <span>Masuk</span>
                 </a>
                 {{-- button daftar --}}
-                <a href="/register"
+                <a href="{{ route('register.page')}}"
                     class="flex space-x-1 items-center font-semibold py-2 px-8 text-white border-2 border-white focus:scale-95 rounded-lg duration-300">
                     <span>Daftar</span>
                 </a>
