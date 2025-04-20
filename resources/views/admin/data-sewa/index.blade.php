@@ -31,6 +31,7 @@
                             <th class="p-3">durasi sewa</th>
                             <th class="p-3">Metode Bayar</th>
                             <th class="p-3">Status Bayar</th>
+                            <th class="p-3">Status Pesanan</th>
                             <th class="p-3">Aksi</th>
                         </tr>
                     </thead>
@@ -58,6 +59,7 @@
                                 {{-- <td class="p-3">{{ $pesanan->items->first()?->barang->nomor_ps ?? '-' }}</td> --}}
                                 <td class="p-3">{{ $pesanan->pembayaran->metode_pembayaran ?? '-' }}</td>
                                 <td class="p-3">{{ $pesanan->pembayaran->status_pembayaran ?? '-' }}</td>
+                                <td class="p-3">{{ $pesanan->status_pemesanan ?? '-' }}</td>
                                 <td class="p-3 flex items-center justify-center gap-2">
                                     <a href="">
                                         @include('components.crud.read')
