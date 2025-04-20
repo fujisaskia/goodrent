@@ -47,8 +47,9 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
     // Dashboard ======================================================//  
     Route::get('/admin/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/get-monthly-revenue-data', [DashboardController::class, 'getMonthlyRevenueData']);
-
+    Route::get('/get-monthly-revenue-data/{year}', [DashboardController::class, 'getMonthlyRevenueData']);
+    Route::get('/get-monthly-data/{year}', [DashboardController::class, 'getMonthlyData']);
+    Route::get('/get-available-years', [DashboardController::class, 'getAvailableYears']);
 
     Route::get('/admin/profile', function () {
         return view('admin.profile');
