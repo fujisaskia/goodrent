@@ -11,16 +11,15 @@ class KategoriBarangController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
+
         $kategoriBarangs = KategoriBarang::when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%');
-            })
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-    
+
         return view('admin.kategori-barang.index', compact('kategoriBarangs'));
     }
-    
 
     public function create()
     {
@@ -51,13 +50,14 @@ class KategoriBarangController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Update kategori barang di database
+        $kategoriBarang = KategoriBarang::findOrFail($id);
+
         $request->validate([
             'nama' => 'required|string|max:255',
             'status' => 'required',
         ]);
 
-        // Update kategori barang di database
-        $kategoriBarang = KategoriBarang::findOrFail($id);
         $kategoriBarang->update([
             'nama' => $request->nama,
             'status' => $request->status,

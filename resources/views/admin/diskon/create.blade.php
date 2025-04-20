@@ -24,8 +24,11 @@
                             required onchange="generateKodeDiskon()">
                             <option value="" disabled selected>Pilih kategori</option>
                             @foreach ($kategoriDiskons as $kategori)
-                                <option value="{{ $kategori->id }}" data-nama="{{ Str::slug($kategori->nama, '-') }}">
-                                    {{ $kategori->nama }}</option>
+                                @if ($kategori->status !== 'Draft')
+                                    <option value="{{ $kategori->id }}"
+                                        data-nama="{{ Str::slug($kategori->nama, '-') }}">
+                                        {{ $kategori->nama }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
