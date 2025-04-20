@@ -31,10 +31,12 @@
                             required>
                             <option value="">Pilih Kategori</option>
                             @foreach ($kategoriBarangs as $kategori)
-                                <option value="{{ $kategori->id }}"
-                                    {{ $barang->kategori_barang_id == $kategori->id ? 'selected' : '' }}>
-                                    {{ $kategori->nama }}
-                                </option>
+                                @if ($kategori->status !== 'Draft')
+                                    <option value="{{ $kategori->id }}"
+                                        {{ $barang->kategori_barang_id == $kategori->id ? 'selected' : '' }}>
+                                        {{ $kategori->nama }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

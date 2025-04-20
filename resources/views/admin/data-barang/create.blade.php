@@ -26,7 +26,9 @@
                             required>
                             <option value="">Pilih Kategori</option>
                             @foreach ($kategoriBarangs as $kategori)
-                                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @if ($kategori->status !== 'Draft')
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -40,7 +42,7 @@
                     </div>
 
                 </div>
-                
+
                 <!-- Kolom Kanan -->
                 <div class="space-y-4">
                     <div class="flex flex-row md:flex-col space-x-2 md:space-x-0 md:space-y-2">
@@ -51,21 +53,21 @@
                                 class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                                 required>
                         </div>
-    
+
                         <!-- Stok -->
                         <div class="w-full">
                             <label for="stok" class="block text-gray-700 mb-2">Stok</label>
                             <input type="number" name="stok" placeholder="Silahkan isi stok"
                                 class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                                 required>
-                            </div>
                         </div>
-                        
+                    </div>
+
                     <!-- Gambar -->
                     <div>
                         <label for="image" class="block font-medium text-gray-700">Foto Barang</label>
                         <input type="file" id="image" name="image" accept="image/*"
-                        class="mt-1 block w-full p-2 border rounded" required>
+                            class="mt-1 block w-full p-2 border rounded" required>
                     </div>
                 </div>
             </div>
@@ -94,39 +96,39 @@
 
 <script>
     document.getElementById('kategori_barang_select').addEventListener('change', function() {
-    const kategoriId = this.value;
-    const kodeInput = document.getElementById('kode_barang_input');
+        const kategoriId = this.value;
+        const kodeInput = document.getElementById('kode_barang_input');
 
-    // Reset kode barang jika kategori tidak dipilih
-    if (!kategoriId) {
-        kodeInput.value = '';
-        return;
-    }
-
-    // Mengambil kode barang berdasarkan kategori yang dipilih
-    fetch(`/get-kode-barang/${kategoriId}`)
-        .then(response => {
-            // Memeriksa jika status respons sukses (HTTP 2xx)
-            if (!response.ok) {
-                throw new Error('Gagal mengambil data dari server.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.kode_barang) {
-                // Menghapus 'S' jika ada dalam kode barang sebelum ditampilkan
-                const kodeBarang = data.kode_barang.replace('S', '');
-                kodeInput.value = kodeBarang;
-            } else {
-                // Reset nilai jika kode barang tidak ada
-                kodeInput.value = '';
-                alert('Gagal mengambil kode barang.');
-            }
-        })
-        .catch(err => {
-            // Menangani error jika fetch gagal
+        // Reset kode barang jika kategori tidak dipilih
+        if (!kategoriId) {
             kodeInput.value = '';
-            alert('Terjadi kesalahan saat mengambil kode: ' + err.message);
-        });
-});
+            return;
+        }
+
+        // Mengambil kode barang berdasarkan kategori yang dipilih
+        fetch(`/get-kode-barang/${kategoriId}`)
+            .then(response => {
+                // Memeriksa jika status respons sukses (HTTP 2xx)
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data dari server.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.kode_barang) {
+                    // Menghapus 'S' jika ada dalam kode barang sebelum ditampilkan
+                    const kodeBarang = data.kode_barang.replace('S', '');
+                    kodeInput.value = kodeBarang;
+                } else {
+                    // Reset nilai jika kode barang tidak ada
+                    kodeInput.value = '';
+                    alert('Gagal mengambil kode barang.');
+                }
+            })
+            .catch(err => {
+                // Menangani error jika fetch gagal
+                kodeInput.value = '';
+                alert('Terjadi kesalahan saat mengambil kode: ' + err.message);
+            });
+    });
 </script>
