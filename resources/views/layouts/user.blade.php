@@ -71,9 +71,9 @@
                     </li>
                 </a>
 
-                <a href="/goodrent/pemesanan-saya">
+                <a href="/goodrent/riwayat/pemesanan-saya">
                     <li
-                        class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('goodrent/pemesanan-saya') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
+                        class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('goodrent/riwayat/pemesanan-saya') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -82,35 +82,30 @@
                         <p class="group-hover:translate-x-1 duration-500">Pemesanan</p>
                     </li>
                 </a>
-
+                
+                
                 {{-- <a href="/goodrent/profile/alamat">
                     <li
                         class="flex items-center space-x-3 font-medium py-2 rounded-r-xl px-4 {{ Request::is('') ? 'bg-gray-100 text-emerald-700 border-l-4 border-gray-600 hover:bg-gray-200 font-semibold' : 'hover:bg-slate-100 text-gray-600 hover:text-gray-700 ' }} group">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                         </svg>
-
+                        
                         <p class="group-hover:translate-x-1 duration-500">Alamat</p>
                     </li>
                 </a> --}}
 
+                    <div class="w-2/3 text-center justify-center mx-auto h-px bg-gray-200 my-4"></div>
 
-                <form action="{{ route('logout') }}" method="POST" class="flex text-xs">
-                    @csrf
-                    <button type="submit"
-                        class="flex w-full border-t text-gray-600 hover:text-gray-800 items-center space-x-3 font-medium py-2 rounded-xl px-4 mt-1 hover:bg-red-100 duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-                        </svg>
-                        <p class="">Keluar</p>
-                    </button>
-                </form>
+                    <a href="{{ route('lihat.produk') }}"
+                        class="flex w-full bg-gray-50 hover:bg-gray-200 text-emerald-900 hover:text-emerald-800 items-center space-x-3 font-medium py-2 rounded-xl px-4 mt-1 duration-300">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <p class="">Kembali ke beranda</p>
+                    </a>
 
             </div>
 

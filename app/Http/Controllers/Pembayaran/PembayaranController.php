@@ -77,6 +77,31 @@ class PembayaranController extends Controller
         return response()->json(['redirect' => route('user.riwayat.index')]); // arahkan ke halaman pemesanan
     }
 
+    public function processCash($pesanan_id)
+    {
+        \Log::info('Proses pembayaran tunai untuk pesanan ID: ' . $pesanan_id);
+
+        $pesanan = Pesanan::findOrFail($pesanan_id);  // Menangani pencarian pesanan berdasarkan ID
+
+        $totalBayar = $pesanan->total_bayar;
+        $nomorPembayaran = 'NUM' . str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT) . date('Y');
+
+        // Simpan pembayaran tunai
+        Pembayaran::create([
+            'pesanan_id' => $pesanan->id,
+            'total_bayar' => $totalBayar,
+            'nomor_pembayaran' => $nomorPembayaran,
+            'tanggal_bayar' => now(),
+            'metode_pembayaran' => 'Tunal',
+            'status_pembayaran' => 'Berhasil',
+        ]);
+
+        // Mengembalikan response JSON
+        return response()->json([
+            'message' => 'Pembayaran tunai berhasil diproses',
+            'redirect' => route('user.riwayat.index'), // Pastikan route sudah benar
+        ]);
+    }
 
     //     // Menampilkan halaman pembayaran
     //     public function showPaymentForm($checkoutId)
