@@ -14,13 +14,15 @@
             <div class="flex flex-col md:flex-row justify-between mb-4">
                 <form method="GET" action="{{ route('kategori-diskon.index') }}">
                     <div class="flex space-x-3 mb-2 md:mb-0">
-                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Kategori Diskon"
+                        <input type="search" name="search" value="{{ request('search') }}"
+                            placeholder="Cari Kategori Diskon"
                             class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                        <button type="submit" class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                        <button type="submit"
+                            class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
-                </form>                
+                </form>
                 <div class="flex justify-end gap-3">
                     {{-- Tombol Hapus Semua (default: hidden) --}}
                     <form action="{{ route('kategori-diskon.destroySelected') }}" method="POST" id="bulk-delete-form">
@@ -78,13 +80,11 @@
                                     {{-- button edit --}}
                                     <button
                                         class="btn-edit-kategori-diskon bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
-                                            text-white py-2 px-2.5 rounded-full"
-                                        title="Edit Kategori" data-kategori-id="{{ $kategori->id }}">
+                                        text-white py-2 px-2.5 rounded-full"
+                                        title="Edit Kategori"
+                                        onclick="openModalEditKategoriDiskon(this.dataset.id)" data-id="{{ $kategori->id }}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-
-                                    {{-- Modal edit --}}
-                                    @include('admin.kategori-diskon.edit', ['kategori' => $kategori])
 
                                     {{-- button hapus --}}
                                     <form action="{{ route('kategori-diskon.destroy', $kategori->id) }}" method="POST"
@@ -106,6 +106,9 @@
                 </table>
             </div>
         </div>
+
+        {{-- Modal edit --}}
+        @include('admin.kategori-diskon.edit', ['kategori' => $kategori])
         {{-- Pagination --}}
         <div class="flex justify-center mt-5">
             {{ $kategoriDiskons->links('vendor.pagination.custom') }}
@@ -177,43 +180,43 @@
         }
 
         // membuka modal edit diskon
-        document.querySelectorAll('.btn-edit-kategori-diskon').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-kategori-id');
-                openModalEditKategoriDiskon(itemId);
-            });
-        });
+        // document.querySelectorAll('.btn-edit-kategori-diskon').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const itemId = this.getAttribute('data-kategori-id');
+        //         openModalEditKategoriDiskon(itemId);
+        //     });
+        // });
 
-        function openModalEditKategoriDiskon(id) {
-            let overlay = document.getElementById('modal-overlay-edit-kategori-diskon');
-            let modal = document.getElementById('modal-edit-kategori-diskon');
+        // function openModalEditKategoriDiskon(id) {
+        //     let overlay = document.getElementById('modal-overlay-edit-kategori-diskon');
+        //     let modal = document.getElementById('modal-edit-kategori-diskon');
 
-            // Bisa juga tambahkan logika untuk menampilkan data sesuai id
+        //     // Bisa juga tambahkan logika untuk menampilkan data sesuai id
 
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('scale-95', 'opacity-0');
-                modal.classList.add('scale-100', 'opacity-100');
-            }, 50);
+        //     overlay.classList.remove('hidden');
+        //     setTimeout(() => {
+        //         modal.classList.remove('scale-95', 'opacity-0');
+        //         modal.classList.add('scale-100', 'opacity-100');
+        //     }, 50);
 
-            document.body.classList.add('overflow-hidden');
-        }
+        //     document.body.classList.add('overflow-hidden');
+        // }
 
-        // menutup modal edit diskon
-        function closeModalEditKategoriDiskon() {
-            let modal = document.getElementById('modal-edit-kategori-diskon');
-            let overlay = document.getElementById('modal-overlay-edit-kategori-diskon');
+        // // menutup modal edit diskon
+        // function closeModalEditKategoriDiskon() {
+        //     let modal = document.getElementById('modal-edit-kategori-diskon');
+        //     let overlay = document.getElementById('modal-overlay-edit-kategori-diskon');
 
-            // Tambahkan animasi keluar
-            modal.classList.add('scale-95', 'opacity-0');
-            modal.classList.remove('scale-100', 'opacity-100');
+        //     // Tambahkan animasi keluar
+        //     modal.classList.add('scale-95', 'opacity-0');
+        //     modal.classList.remove('scale-100', 'opacity-100');
 
-            // Tunggu animasi selesai sebelum menyembunyikan modal
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300); // Sesuai dengan durasi transition (300ms)
-        }
+        //     // Tunggu animasi selesai sebelum menyembunyikan modal
+        //     setTimeout(() => {
+        //         overlay.classList.add('hidden');
+        //         document.body.classList.remove('overflow-hidden');
+        //     }, 300); // Sesuai dengan durasi transition (300ms)
+        // }
 
         document.addEventListener('DOMContentLoaded', function() {
             const bulkDeleteBtn = document.getElementById('bulk-delete-btn');

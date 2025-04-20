@@ -56,9 +56,10 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
     // Data Barang ===================================================== //
     Route::get('/admin/data-barang', [BarangController::class, 'index'])->name('data-barang.index');
+    Route::get('/admin/data-barang/lihat-barang/{id}', [BarangController::class, 'show'])->name('data-barang.show');
     Route::get('/admin/data-barang/create', [BarangController::class, 'create'])->name('data-barang.create');
     Route::post('/admin/data-barang/store', [BarangController::class, 'store'])->name('data-barang.store');
-    Route::get('/admin/data-barang/edit/{id}', [BarangController::class, 'edit'])->name('data-barang.edit');
+    Route::get('/admin/data-barang/edit/{id}', [BarangController::class, 'editData'])->name('barang.edit-data');
     Route::put('/admin/data-barang/update/{id}', [BarangController::class, 'update'])->name('data-barang.update');
     Route::delete('/admin/data-barang/delete/{id}', [BarangController::class, 'destroy'])->name('data-barang.destroy');
     Route::get('/admin/data-barang/lihat-barang/{id}', [BarangController::class, 'show'])->name('data-barang.show');

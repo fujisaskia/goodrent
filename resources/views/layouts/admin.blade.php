@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     {{-- Data AOS Animate --}}
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -29,8 +32,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script> <!-- Lokal Bahasa Indonesia -->
 
-    <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <!-- Toastr CSS -->
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}

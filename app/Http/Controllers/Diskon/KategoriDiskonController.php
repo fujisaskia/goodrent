@@ -46,8 +46,11 @@ class KategoriDiskonController extends Controller
     public function edit($id)
     {
         $kategoriDiskon = KategoriDiskon::findOrFail($id);
-        return view('admin.kategori-diskon.edit', compact('kategoriDiskon'));
+        return response()->json([
+            'kategoriDiskon' => $kategoriDiskon
+        ]);
     }
+    
 
     public function update(Request $request, $id)
     {

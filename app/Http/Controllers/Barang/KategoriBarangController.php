@@ -45,7 +45,8 @@ class KategoriBarangController extends Controller
     public function edit($id)
     {
         $kategoriBarang = KategoriBarang::findOrFail($id);
-        return view('admin.kategori-barang.edit', compact('kategoriBarang'));
+        
+        return response()->json($kategoriBarang);    
     }
 
     public function update(Request $request, $id)

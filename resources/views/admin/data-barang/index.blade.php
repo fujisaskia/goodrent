@@ -92,23 +92,13 @@
                                 </td>
                                 <td class="p-3">
                                     <div class="flex items-center justify-center gap-2 h-full">
-                                        {{-- button lihat --}}
-                                        {{-- <a href="{{ route('lihat.produk', $barang->id) }}">
-                                            @include('components.crud.read')
-                                        </a> --}}
                                         <button 
-                                            class="lihat-barang bg-blue-400 hover:bg-blue-500 shadow-md shadow-blue-300 hover:shadow-none focus:scale-95 duration-300
-                                            text-white py-2 px-2.5 rounded-full"
-                                            data-id="{{ $barang->id }}"
-                                            title="Lihat"
-                                            onclick="openModalLihatBarang({{ $barang->id }})">
+                                            onclick="openModalLihatBarang({{ $barang->id }})"
+                                            class="lihat-barang bg-blue-400 hover:bg-blue-500 text-white py-2 px-2.5 rounded-full"
+                                            title="Lihat">
                                             <i class="fa-regular fa-eye"></i>
-                                        </button>
-                                    
-                                        
-                                        {{-- Modal Lihat Barang --}}
-                                        @include('admin.data-barang.show')
-
+                                        </button>                    
+                                            
                                         {{-- button edit --}}
                                         <button
                                             class="btn-edit-barang bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
@@ -117,9 +107,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
 
-                                        {{-- Modal edit (optional, bisa pakai ID atau modal global) --}}
-                                        @include('admin.data-barang.edit')
-
+                                        
                                         {{-- button hapus --}}
                                         <form action="{{ route('data-barang.destroy', $barang->id) }}" method="POST"
                                             id="delete-form">
@@ -130,22 +118,30 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
+                            @empty
                             <tr>
                                 <td colspan="8" class="text-center p-5 text-gray-500">Data barang tidak tersedia.
                                 </td>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            @endforelse
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        {{-- Pagination --}}
-        <div class="flex justify-center mt-5">
-            {{ $barangs->links() }}
+            
+            {{-- Pagination --}}
+            <div class="flex justify-center mt-5">
+                {{ $barangs->links() }}
+            </div>
+            
         </div>
 
-    </div>
+        {{-- Modal Lihat Barang --}}
+        @include('admin.data-barang.show')
+        
+        {{-- Modal edit --}}
+        @include('admin.data-barang.edit')
 
     <script>
         document.querySelectorAll('#delete-btn').forEach(button => {
@@ -216,76 +212,6 @@
             }, 300);
         }
 
-        // membuka modal edit barang
-        document.querySelectorAll('.btn-edit-barang').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-barang-id');
-                openModalEditBarang(itemId);
-            });
-        });
-
-        function openModalEditBarang(id) {
-            let overlay = document.getElementById('modal-overlay-edit-barang');
-            let modal = document.getElementById('modal-edit-barang');
-
-            // Bisa juga tambahkan logika untuk menampilkan data sesuai id
-
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('scale-95', 'opacity-0');
-                modal.classList.add('scale-100', 'opacity-100');
-            }, 50);
-
-            document.body.classList.add('overflow-hidden');
-        }
-
-        // menutup modal edit barang
-        function closeModalEditBarang() {
-            let modal = document.getElementById('modal-edit-barang');
-            let overlay = document.getElementById('modal-overlay-edit-barang');
-
-            // Tambahkan animasi keluar
-            modal.classList.add('scale-95', 'opacity-0');
-            modal.classList.remove('scale-100', 'opacity-100');
-
-            // Tunggu animasi selesai sebelum menyembunyikan modal
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300); // Sesuai dengan durasi transition (300ms)
-        }
-
-        // Membuka Detail / Lihat Barang terkait
-        function openModalLihatBarang(id) {
-            let overlay = document.getElementById('modal-overlay-lihat-barang');
-            let modal = document.getElementById('modal-lihat-barang');
-
-            // Bisa juga tambahkan logika untuk menampilkan data sesuai id
-
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('scale-95', 'opacity-0');
-                modal.classList.add('scale-100', 'opacity-100');
-            }, 50);
-
-            document.body.classList.add('overflow-hidden');
-        }
-
-        // menutup modal lihat barang
-        function closeModalLihatBarang() {
-            let modal = document.getElementById('modal-lihat-barang');
-            let overlay = document.getElementById('modal-overlay-lihat-barang');
-
-            // Tambahkan animasi keluar
-            modal.classList.add('scale-95', 'opacity-0');
-            modal.classList.remove('scale-100', 'opacity-100');
-
-            // Tunggu animasi selesai sebelum menyembunyikan modal
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300); // Sesuai dengan durasi transition (300ms)
-        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const bulkDeleteBtn = document.getElementById('bulk-delete-btn');

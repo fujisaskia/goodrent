@@ -72,10 +72,25 @@ class DiskonController extends Controller
 
     public function edit($id)
     {
-        $diskon = Diskon::findOrFail($id);
-        $kategoriDiskons = KategoriDiskon::all(); // Ambil semua kategori diskon untuk dropdown
-        return view('admin.diskon.edit', compact('diskon', 'kategoriDiskons'));
+        $diskon = Diskon::find($id);
+    
+        if (!$diskon) {
+            return response()->json(['error' => 'Diskon tidak ditemukan'], 404);
+        }
+    
+        return response()->json([
+            'diskon' => [
+                'id' => $diskon->id,
+                'nama_diskon' => $diskon->nama_diskon,
+                'kategori_diskon_id' => $diskon->kategori_diskon_id,
+                'kode_diskon' => $diskon->kode_diskon,
+                'besar_diskon' => $diskon->besar_diskon,
+                'tanggal_mulai' => $diskon->tanggal_mulai,
+                'tanggal_selesai' => $diskon->tanggal_selesai,
+            ]
+        ]);
     }
+    
 
     public function update(Request $request, $id)
     {

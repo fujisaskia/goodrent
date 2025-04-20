@@ -5,7 +5,7 @@
         class="w-full max-w-2xl md:max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg border border-gray-400 md:border-none transform scale-95 opacity-0 transition-all duration-300">
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Edit Diskon</h1>
 
-        <form action="{{ route('diskon.update', $diskon->id) }}" method="POST">
+        <form id="form-edit-diskon" action="{{ route('diskon.update', $diskon->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,31 +83,93 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let tanggalSelesai = flatpickr("#tanggal_selesai", {
+        document.querySelectorAll(".btn-edit-diskon").forEach(button => {
+            button.addEventListener("click", function() {
+                const id = this.getAttribute("data-id");
+
+                fetch(`/admin/kelola-diskon/edit/${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Gagal mengambil data diskon.");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const form = document.getElementById('form-edit-diskon');
+
+                        // Set form action
+                        form.action = `/admin/kelola-diskon/update/${id}`;
+
+                        // Isi data ke form
+                        form.querySelector("input[name='nama_diskon']").value = data.diskon
+                            .nama_diskon;
+                        form.querySelector("select[name='kategori_diskon_id']").value = data
+                            .diskon.kategori_diskon_id;
+                        form.querySelector("input[name='kode_diskon']").value = data.diskon
+                            .kode_diskon;
+                        form.querySelector("input[name='besar_diskon']").value = data.diskon
+                            .besar_diskon;
+                        form.querySelector("input[name='tanggal_mulai']").value = data
+                            .diskon.tanggal_mulai;
+                        form.querySelector("input[name='tanggal_selesai']").value = data
+                            .diskon.tanggal_selesai;
+
+                        // Tampilkan modal
+                        document.getElementById('modal-overlay-edit-diskon').classList
+                            .remove('hidden');
+                        setTimeout(() => {
+                            const modal = document.getElementById(
+                                'modal-edit-diskon');
+                            modal.classList.remove('scale-95', 'opacity-0');
+                            modal.classList.add('scale-100', 'opacity-100');
+                        }, 50);
+                        document.body.classList.add('overflow-hidden');
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat memuat data diskon.");
+                    });
+            });
+        });
+    });
+
+
+    // Fungsi close modal
+    function closeModalEditDiskon() {
+        const overlay = document.getElementById('modal-overlay-edit-diskon');
+        const modal = document.getElementById('modal-edit-diskon');
+
+        modal.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const tanggalSelesaiEl = document.getElementById("tanggal_selesai");
+        const tanggalMulaiEl = document.getElementById("tanggal_mulai");
+
+        const tanggalSelesai = flatpickr(tanggalSelesaiEl, {
             altInput: true,
             altFormat: "d F Y",
             dateFormat: "Y-m-d",
             locale: "id",
             minDate: "today",
-            defaultDate: document.getElementById("tanggal_selesai").value
+            defaultDate: tanggalSelesaiEl.value
         });
 
-        flatpickr("#tanggal_mulai", {
+        flatpickr(tanggalMulaiEl, {
             altInput: true,
             altFormat: "d F Y",
             dateFormat: "Y-m-d",
             locale: "id",
             minDate: "today",
-            defaultDate: document.getElementById("tanggal_mulai").value,
+            defaultDate: tanggalMulaiEl.value,
             onChange: function(selectedDates, dateStr) {
-                if (tanggalSelesai) {
-                    tanggalSelesai.set("minDate", dateStr);
-                }
+                tanggalSelesai.set("minDate", dateStr);
             },
             onReady: function(_, dateStr) {
-                if (tanggalSelesai) {
-                    tanggalSelesai.set("minDate", dateStr || "today");
-                }
+                tanggalSelesai.set("minDate", dateStr || "today");
             }
         });
     });
@@ -120,7 +182,8 @@
         const kategoriSlug = selectedOption?.getAttribute('data-nama');
 
         if (kategoriSlug) {
-            const kode = kategoriSlug.toUpperCase().replace(/[^A-Z0-9]/g, '') + Math.floor(100 + Math.random() * 900);
+            const kode = kategoriSlug.toUpperCase().replace(/[^A-Z0-9]/g, '') + Math.floor(100 + Math
+                .random() * 900);
             kodeDiskonInput.value = kode;
         } else {
             kodeDiskonInput.value = '';

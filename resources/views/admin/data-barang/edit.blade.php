@@ -17,37 +17,41 @@
                     <!-- Nama Barang -->
                     <div>
                         <label for="nama_barang" class="block text-gray-700 mb-2">Nama Barang</label>
-                        <input type="text" name="nama_barang" value="{{ $barang->nama_barang }}"
+                        <input type="text" name="nama_barang" value=""
                             placeholder="Silahkan isi nama barang"
                             class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                             required>
                     </div>
 
-                    <!-- Kategori Barang -->
-                    <div>
-                        <label for="kategori_barang_id" class="block text-gray-700 mb-2">Kategori Barang</label>
-                        <select name="kategori_barang_id" id="kategori_barang_select"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            required>
-                            <option value="">Pilih Kategori</option>
-                            @foreach ($kategoriBarangs as $kategori)
-                                @if ($kategori->status !== 'Draft')
-                                    <option value="{{ $kategori->id }}"
-                                        {{ $barang->kategori_barang_id == $kategori->id ? 'selected' : '' }}>
-                                        {{ $kategori->nama }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
+                    <div class="flex flex-row md:flex-col space-x-3 md:space-x-0">
+                        <!-- Kategori Barang -->
+                        <div class="w-full">
+                            <label for="kategori_barang_id" class="block text-gray-700 mb-2">Kategori Barang</label>
+                            <select name="kategori_barang_id" id="kategori_barang_select"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                required>
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($kategoriBarangs as $kategori)
+                                    @if ($kategori->status !== 'Draft')
+                                        <option value="{{ $kategori->id }}"
+                                            {{ $barang->kategori_barang_id == $kategori->id ? 'selected' : '' }}>
+                                            {{ $kategori->nama }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Kode Barang -->
+                        <div class="w-full">
+                            <label for="kode_barang" class="block text-gray-700 mb-2">Kode Barang</label>
+                            <input type="text" name="kode_barang" id="kode_barang_input"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                value="{{ $barang->kode_barang }}" placeholder="Kode barang otomatis akan terisi"
+                                readonly>
+                        </div>
                     </div>
 
-                    <!-- Kode Barang -->
-                    <div>
-                        <label for="kode_barang" class="block text-gray-700 mb-2">Kode Barang</label>
-                        <input type="text" name="kode_barang" id="kode_barang_input"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            value="{{ $barang->kode_barang }}" placeholder="Kode barang otomatis akan terisi" readonly>
-                    </div>
 
                     <!-- Deskripsi -->
                     <div>
@@ -58,46 +62,53 @@
                     </div>
                 </div>
 
-                <!-- Kolom Kanan -->
                 <div class="space-y-4">
-                    <!-- Harga -->
-                    <div>
-                        <label for="harga" class="block text-gray-700 mb-2">Harga</label>
-                        <input type="number" name="harga" value="{{ old('harga', $harga24jam) }}"
-                            placeholder="Silahkan isi harga"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            required>
+                    <!-- Kolom Kanan -->
+                    <div class="flex flex-row md:flex-col space-x-3 md:space-x-0">
+                        <!-- Harga -->
+                        <div class="w-full">
+                            <label for="harga" class="block text-gray-700 mb-2">Harga</label>
+                            <input type="number" name="harga" value="{{ old('harga', $harga24jam) }}"
+                                placeholder="Silahkan isi harga"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                required>
+                        </div>
+
+                        <!-- Stok -->
+                        <div class="w-full">
+                            <label for="stok" class="block text-gray-700 mb-2">Stok</label>
+                            <input type="number" name="stok" value="{{ $barang->stok }}"
+                                placeholder="Silahkan isi stok"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
+                                required>
+                        </div>
+
                     </div>
 
-                    <!-- Stok -->
-                    <div>
-                        <label for="stok" class="block text-gray-700 mb-2">Stok</label>
-                        <input type="number" name="stok" value="{{ $barang->stok }}" placeholder="Silahkan isi stok"
-                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
-                            required>
-                    </div>
+                    <div class="flex flex-row md:flex-col space-x-3 md:space-x-0">
+                        <!-- Foto Lama -->
+                        <div class="w-full">
+                            <label class="block font-medium text-gray-700">Foto Barang Lama</label>
+                            <div class="flex justify-start items-start mb-4">
+                                @if ($barang->image)
+                                    <img src="{{ asset('storage/barangs/' . $barang->image) }}"
+                                        alt="{{ $barang->nama_barang }}" class="w-28 rounded-sm">
+                                @else
+                                    <p class="text-sm text-gray-500 italic">Tidak ada foto</p>
+                                @endif
+                            </div>
+                        </div>
 
-                    <!-- Foto Lama -->
-                    <div>
-                        <label class="block font-medium text-gray-700">Foto Barang Lama</label>
-                        <div class="flex justify-start items-start mb-4">
-                            @if ($barang->image)
-                                <img src="{{ asset('storage/barangs/' . $barang->image) }}"
-                                    alt="{{ $barang->nama_barang }}" class="w-28 rounded-sm">
-                            @else
-                                <p class="text-sm text-gray-500 italic">Tidak ada foto</p>
-                            @endif
+                        <!-- Gambar -->
+                        <div>
+                            <label for="image" class="block font-medium text-gray-700">Foto Barang</label>
+                            <input type="file" id="image" name="image" accept="image/*"
+                                class="mt-1 block w-full p-2 border rounded">
+                            <small class="text-xs text-gray-500">Biarkan kosong jika tidak ingin mengganti.</small>
                         </div>
                     </div>
-
-                    <!-- Gambar -->
-                    <div>
-                        <label for="image" class="block font-medium text-gray-700">Foto Barang</label>
-                        <input type="file" id="image" name="image" accept="image/*"
-                            class="mt-1 block w-full p-2 border rounded">
-                        <small class="text-xs text-gray-500">Biarkan kosong jika tidak ingin mengganti.</small>
-                    </div>
                 </div>
+
             </div>
 
             <div class="flex space-x-3 justify-end mt-8">
@@ -116,6 +127,79 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-edit-barang").forEach(button => {
+            button.addEventListener("click", function() {
+                const id = this.getAttribute("data-id");
+
+                fetch(`/admin/data-barang/edit/${id}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Network error");
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            return;
+                        }
+
+                        // Isi form
+                        const modal = document.getElementById('modal-overlay-edit-barang');
+                        modal.classList.remove("hidden");
+
+                        // Set action URL form
+                        const form = modal.querySelector("form");
+                        form.action = `/admin/data-barang/update/${data.id}`;
+
+                        // Isi input field
+                        form.querySelector("input[name='nama_barang']").value = data
+                            .nama_barang;
+                        form.querySelector("select[name='kategori_barang_id']").value = data
+                            .kategori_barang_id;
+                        form.querySelector("input[name='kode_barang']").value = data
+                            .kode_barang;
+                        form.querySelector("textarea[name='deskripsi']").value = data
+                            .deskripsi;
+                        form.querySelector("input[name='harga']").value = data.harga;
+                        form.querySelector("input[name='stok']").value = data.stok;
+
+                        // Foto lama
+                        const fotoContainer = form.querySelector(".flex.justify-start img");
+                        const noFotoText = form.querySelector(".flex.justify-start p");
+
+                        if (data.image) {
+                            if (fotoContainer) fotoContainer.src = data.image;
+                            if (noFotoText) noFotoText.classList.add("hidden");
+                        } else {
+                            if (fotoContainer) fotoContainer.classList.add("hidden");
+                            if (noFotoText) noFotoText.classList.remove("hidden");
+                        }
+
+                        // Tampilkan modal
+                        setTimeout(() => {
+                            document.getElementById('modal-edit-barang').classList
+                                .remove('scale-95', 'opacity-0');
+                        }, 50);
+                    })
+                    .catch(error => {
+                        console.error("Gagal ambil data:", error);
+                        alert("Gagal ambil data barang.");
+                    });
+            });
+        });
+    });
+
+    // Fungsi close modal
+    function closeModalEditBarang() {
+        const overlay = document.getElementById('modal-overlay-edit-barang');
+        const modal = document.getElementById('modal-edit-barang');
+
+        modal.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300);
+    }
+
     document.getElementById('kategori_barang_select').addEventListener('change', function() {
         const kategoriId = this.value;
         const kodeInput = document.getElementById('kode_barang_input');

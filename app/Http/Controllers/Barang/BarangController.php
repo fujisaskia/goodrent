@@ -99,17 +99,30 @@ class BarangController extends Controller
         }
     }
 
-    public function edit(Barang $barang, $id)
+    public function editData($id)
     {
-        $barang = Barang::findOrFail($id);
-        $kategoriBarangs = KategoriBarang::all();
+        $barang = Barang::find($id);
+        $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first()?->harga;
 
-        // Ambil satu harga sewa dari durasi 12 jam
-        $harga24jam = $barang->hargaSewas()->where('durasi_jam', 24)->value('harga');
+        \Log::info("Mengambil barang id: " . $id);
 
-        return view('admin.data-barang.edit', compact('barang', 'kategoriBarangs', 'harga24jam'));
+    
+        if (!$barang) {
+            return response()->json(['error' => 'Data barang tidak ditemukan'], 404);
+        }
+    
+        return response()->json([
+            'id' => $barang->id,
+            'nama_barang' => $barang->nama_barang,
+            'kategori_barang_id' => $barang->kategori_barang_id,
+            'kode_barang' => $barang->kode_barang,
+            'deskripsi' => $barang->deskripsi,
+            'harga' => $harga24jam,
+            'stok' => $barang->stok,
+            'image' => $barang->image ? asset('storage/barangs/' . $barang->image) : null,
+        ]);
     }
-
+    
     public function update(Request $request)
     {
         $barang = Barang::findOrFail($request->id);
@@ -184,18 +197,19 @@ class BarangController extends Controller
         $barang->delete();
 
         return redirect()->route('data-barang.index')->with('success', 'Barang berhasil dihapus.');
-    }
+    }   
 
     public function show($id)
     {
-
         $barang = Barang::findOrFail($id);
-
-        // Ambil satu harga sewa dari durasi 12 jam
         $harga24jam = $barang->hargaSewas()->where('durasi_jam', 24)->value('harga');
-        
-        return view('admin.data-barang.show', compact('barang', 'harga24jam'));
+    
+        return response()->json([
+            'barang' => $barang,
+            'harga24jam' => $harga24jam,
+        ]);
     }    
+
 
     public function lihatBarang()
     {

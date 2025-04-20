@@ -83,9 +83,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
 
-                                    {{-- Modal Edit --}}
-                                    @include('admin.kategori-barang.edit', ['kategori' => $kategori])
-
+                                    
                                     {{-- button hapus --}}
                                     <form action="{{ route('kategori-barang.destroy', $kategori->id) }}" method="POST"
                                         id="delete-form-{{ $kategori->id }}">
@@ -98,22 +96,25 @@
                                     </form>
                                 </td>
                             </tr>
-                        @empty
+                            @empty
                             <tr>
                                 <td colspan="5" class="text-center py-6 text-gray-500">
                                     Tidak ada data kategori barang.
                                 </td>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         {{-- Pagination --}}
         <div class="flex justify-center mt-5">
             {{ $kategoriBarangs->links('vendor.pagination.custom') }}
         </div>
     </div>
+    
+    {{-- Modal Edit --}}
+    @include('admin.kategori-barang.edit', ['kategori' => $kategori])
 
     <script>
         // Menambahkan event listener untuk setiap tombol hapus berdasarkan ID dinamis
@@ -187,42 +188,42 @@
 
         // membuka modal edit barang
         document.querySelectorAll('.btn-edit-kategori-barang').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-kategori-id');
-                openModalEditKategoriBarang(itemId);
-            });
-        });
+        //     button.addEventListener('click', function() {
+        //         const itemId = this.getAttribute('data-kategori-id');
+        //         openModalEditKategoriBarang(itemId);
+        //     });
+        // });
 
-        function openModalEditKategoriBarang(id) {
-            let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
-            let modal = document.getElementById('modal-edit-kategori-barang');
+        // function openModalEditKategoriBarang(id) {
+        //     let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
+        //     let modal = document.getElementById('modal-edit-kategori-barang');
 
-            // Bisa juga tambahkan logika untuk menampilkan data sesuai id
+        //     // Bisa juga tambahkan logika untuk menampilkan data sesuai id
 
-            overlay.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('scale-95', 'opacity-0');
-                modal.classList.add('scale-100', 'opacity-100');
-            }, 50);
+        //     overlay.classList.remove('hidden');
+        //     setTimeout(() => {
+        //         modal.classList.remove('scale-95', 'opacity-0');
+        //         modal.classList.add('scale-100', 'opacity-100');
+        //     }, 50);
 
-            document.body.classList.add('overflow-hidden');
-        }
+        //     document.body.classList.add('overflow-hidden');
+        // }
 
-        // menutup modal edit barang
-        function closeModalEditKategoriBarang() {
-            let modal = document.getElementById('modal-edit-kategori-barang');
-            let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
+        // // menutup modal edit barang
+        // function closeModalEditKategoriBarang() {
+        //     let modal = document.getElementById('modal-edit-kategori-barang');
+        //     let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
 
-            // Tambahkan animasi keluar
-            modal.classList.add('scale-95', 'opacity-0');
-            modal.classList.remove('scale-100', 'opacity-100');
+        //     // Tambahkan animasi keluar
+        //     modal.classList.add('scale-95', 'opacity-0');
+        //     modal.classList.remove('scale-100', 'opacity-100');
 
-            // Tunggu animasi selesai sebelum menyembunyikan modal
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300); // Sesuai dengan durasi transition (300ms)
-        }
+        //     // Tunggu animasi selesai sebelum menyembunyikan modal
+        //     setTimeout(() => {
+        //         overlay.classList.add('hidden');
+        //         document.body.classList.remove('overflow-hidden');
+        //     }, 300); // Sesuai dengan durasi transition (300ms)
+        // }
 
         document.addEventListener('DOMContentLoaded', function() {
             const bulkDeleteBtn = document.getElementById('bulk-delete-btn');

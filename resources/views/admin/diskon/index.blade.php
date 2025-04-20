@@ -91,11 +91,10 @@
                                     <button
                                         class="btn-edit-diskon bg-yellow-500 hover:bg-yellow-600 shadow-md shadow-yellow-300 hover:shadow-none focus:scale-95 duration-300 
                                             text-white py-2 px-2.5 rounded-full"
-                                        title="Edit Diskon" onclick="openModalEditDiskon({{ $diskon->id }}">
+                                        title="Edit Diskon"
+                                        data-id="{{ $diskon->id }}">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-
-                                    @include('admin.diskon.edit')
 
                                     {{-- button hapus --}}
                                     <form action="{{ route('diskon.destroy', $diskon->id) }}" method="POST"
@@ -120,6 +119,8 @@
             {{ $diskons->links('vendor.pagination.custom') }}
         </div>
     </div>
+
+    @include('admin.diskon.edit')
 
     <script>
         document.querySelectorAll('#delete-btn').forEach(button => {
@@ -185,44 +186,44 @@
         }
 
         // membuka modal edit diskon
-        document.querySelectorAll('.btn-edit-diskon').forEach(button => {
-            button.addEventListener('click', function() {
-                const itemId = this.getAttribute('data-diskon-id');
-                openModalEditDiskon(itemId);
-            });
-        });
+        // document.querySelectorAll('.btn-edit-diskon').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const itemId = this.getAttribute('data-id');
+        //         openModalEditDiskon(itemId);
+        //     });
+        // });
 
-        // membuka modal edit diskon
-        function openModalEditDiskon(id) {
-            let overlay = document.getElementById('modal-overlay-edit-diskon');
-            let modal = document.getElementById('modal-edit-diskon');
+        // // membuka modal edit diskon
+        // function openModalEditDiskon(id) {
+        //     let overlay = document.getElementById('modal-overlay-edit-diskon');
+        //     let modal = document.getElementById('modal-edit-diskon');
 
-            // Tampilkan overlay
-            overlay.classList.remove('hidden');
+        //     // Tampilkan overlay
+        //     overlay.classList.remove('hidden');
 
-            // Beri jeda untuk animasi
-            setTimeout(() => {
-                modal.classList.remove('scale-95', 'opacity-0');
-                modal.classList.add('scale-100', 'opacity-100');
-            }, 50);
+        //     // Beri jeda untuk animasi
+        //     setTimeout(() => {
+        //         modal.classList.remove('scale-95', 'opacity-0');
+        //         modal.classList.add('scale-100', 'opacity-100');
+        //     }, 50);
 
-            document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
-        }
+        //     document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
+        // }
 
-        function closeModalEditDiskon() {
-            let modal = document.getElementById('modal-edit-diskon');
-            let overlay = document.getElementById('modal-overlay-edit-diskon');
+        // function closeModalEditDiskon() {
+        //     let modal = document.getElementById('modal-edit-diskon');
+        //     let overlay = document.getElementById('modal-overlay-edit-diskon');
 
-            // tambahkan animasi keluar
-            modal.classList.add('scale-95', 'opacity-0');
-            modal.classList.remove('scale-100', 'opacity-100');
+        //     // tambahkan animasi keluar
+        //     modal.classList.add('scale-95', 'opacity-0');
+        //     modal.classList.remove('scale-100', 'opacity-100');
 
-            // Tunggu animasi selesai sebelum menyembunyikan modal
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }, 300); // Sesuai dengan durasi transition (300ms)
-        }
+        //     // Tunggu animasi selesai sebelum menyembunyikan modal
+        //     setTimeout(() => {
+        //         overlay.classList.add('hidden');
+        //         document.body.classList.remove('overflow-hidden');
+        //     }, 300); // Sesuai dengan durasi transition (300ms)
+        // }
 
         document.addEventListener('DOMContentLoaded', function() {
             const bulkDeleteBtn = document.getElementById('bulk-delete-btn');

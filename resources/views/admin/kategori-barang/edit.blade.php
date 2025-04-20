@@ -7,19 +7,20 @@
 
         <h1 class="text-lg md:text-xl font-semibold mb-6 pb-2 border-b text-center">Edit Kategori Barang</h1>
 
-        <form action="{{ route('kategori-barang.update', $kategori->id) }}" method="POST" class="text-start">
+        <form id="form-edit-kategori-barang" action="{{ route('kategori-barang.update', $kategori->id) }}" method="POST"
+            class="text-start">
             @csrf
             @method('PUT')
             <div class="space-y-4">
                 <div class="">
                     <label for="nama" class="block text-gray-700 mb-2">Nama Kategori</label>
-                    <input type="text" name="nama" value="{{ $kategori->nama }}"
+                    <input type="text" id="edit-nama-kategori" name="nama" value="{{ $kategori->nama }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                         required>
                 </div>
                 <div class="">
                     <label for="status" class="block text-gray-700 mb-2">Status</label>
-                    <select name="status"
+                    <select id="edit-status-kategori" name="status"
                         class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                         required>
                         <option value="Draft" {{ $kategori->status == 'Draft' ? 'selected' : '' }}>Draft</option>
@@ -42,3 +43,46 @@
         </form>
     </div>
 </div>
+
+<script>
+    function openModalEditKategoriBarang(id) {
+        let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
+        let modal = document.getElementById('modal-edit-kategori-barang');
+
+        // Ambil data via AJAX
+        fetch(`/admin/kategori-barang/edit/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                // Isi form
+                document.getElementById('edit-nama-kategori').value = data.nama;
+                document.getElementById('edit-status-kategori').value = data.status;
+
+                // Set action URL form
+                const form = document.getElementById('form-edit-kategori-barang');
+                form.action = `/admin/kategori-barang/update/${id}`; // Sesuai route update
+            });
+
+        // Tampilkan modal
+        overlay.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('scale-95', 'opacity-0');
+            modal.classList.add('scale-100', 'opacity-100');
+        }, 50);
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModalEditKategoriBarang() {
+        let modal = document.getElementById('modal-edit-kategori-barang');
+        let overlay = document.getElementById('modal-overlay-edit-kategori-barang');
+
+        // Tambahkan animasi keluar
+        modal.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('scale-100', 'opacity-100');
+
+        // Tunggu animasi selesai sebelum menyembunyikan modal
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }, 300); // Sesuai dengan durasi transition (300ms)
+    }
+</script>
