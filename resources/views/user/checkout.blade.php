@@ -84,7 +84,6 @@
 
                 <div class="bg-white border border-gray-200 p-4 rounded shadow-md items-center">
                     <h2 class="text-gray-700 text-lg font-semibold text-center md:text-start mb-5">Rincian Pemesanan
-                        {{ $pesanan->id }}
                     </h2>
 
                     <div class="flex flex-col space-y-2 mb-2">

@@ -15,10 +15,28 @@ class RiwayatPesananController extends Controller
             ->where('user_id', auth()->user()->id)
             ->orderBy('created_at', 'desc') // urutkan dari yang terbaru
             ->get();
-    
+
         return view('user.riwayat', compact('pesanans'));
     }
-    
+
+    public function batalkanPenyewaan($id)
+    {
+        $pesanan = Pesanan::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        // Hanya bisa dibatalkan jika status belum disewa
+        if ($pesanan->status_pemesanan === 'Menunggu') {
+            $pesanan->update([
+                'status_pemesanan' => 'Dibatalkan',
+            ]);
+
+            return redirect()->back()->with('success', 'Penyewaan berhasil dibatalkan.');
+        }
+
+        return redirect()->back()->with('error', 'Penyewaan tidak dapat dibatalkan karena sudah dalam proses.');
+    }
+
     public function adminRiwayat()
     {
         $riwayatPesanans = RiwayatPesanan::with(['pesanan', 'user'])

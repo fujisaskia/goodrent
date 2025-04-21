@@ -29,7 +29,6 @@ class Pesanan extends Model
         return $this->belongsTo(Barang::class);
     }
 
-
     public function diskon()
     {
         return $this->belongsTo(Diskon::class);
@@ -45,7 +44,6 @@ class Pesanan extends Model
     {
         return $this->hasMany(KeranjangItem::class);
     }
-
 }
 
 // public function riwayatPesanan()

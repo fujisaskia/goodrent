@@ -74,62 +74,61 @@ class CheckOutController extends Controller
     // }
 
     public function checkoutItems()
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    $keranjang = Keranjang::with('items.barang.hargaSewas')->where('user_id', $user->id)->first();
+        $keranjang = Keranjang::with('items.barang.hargaSewas')->where('user_id', $user->id)->first();
 
-    if (!$keranjang || $keranjang->items->isEmpty()) {
-        return redirect()->back()->with('error', 'Keranjang Anda kosong.');
-    }
-
-    DB::beginTransaction();
-
-    try {
-        $totalBayar = 0;
-
-        // Simpan ke tabel pesanans
-        $pesanan = Pesanan::create([
-            'user_id' => $user->id,
-            'total_bayar' => 0,
-        ]);
-
-        foreach ($keranjang->items as $item) {
-            $harga = $item->barang->hargaSewas
-                ->where('durasi_jam', $item->durasi_sewa)
-                ->first()
-                ->harga ?? 0;
-
-            $totalBayar += $harga;
-
-            PesananItem::create([
-                'pesanan_id' => $pesanan->id,
-                'barang_id' => $item->barang->id,
-                'durasi_sewa' => $item->durasi_sewa,
-                'tanggal_mulai' => $item->tanggal_mulai,
-                'tanggal_selesai' => $item->tanggal_selesai,
-                'harga_barang' => $harga,
-                'subtotal' => $harga,
-            ]);
+        if (!$keranjang || $keranjang->items->isEmpty()) {
+            return redirect()->back()->with('error', 'Keranjang Anda kosong.');
         }
 
-        $pesanan->update([
-            'total_bayar' => $totalBayar,
-        ]);
+        DB::beginTransaction();
 
-        $keranjang->items()->delete();
+        try {
+            $totalBayar = 0;
 
-        DB::commit();
+            // Simpan ke tabel pesanans
+            $pesanan = Pesanan::create([
+                'user_id' => $user->id,
+                'total_bayar' => 0,
+            ]);
 
-        // Redirect ke halaman checkout dengan ID pesanan
-        return redirect()->route('checkout.summary', ['id' => $pesanan->id])
-            ->with('success', 'Checkout berhasil!');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect()->back()->with('error', 'Checkout gagal: ' . $e->getMessage());
+            foreach ($keranjang->items as $item) {
+                $harga = $item->barang->hargaSewas
+                    ->where('durasi_jam', $item->durasi_sewa)
+                    ->first()
+                    ->harga ?? 0;
+
+                $totalBayar += $harga;
+
+                PesananItem::create([
+                    'pesanan_id' => $pesanan->id,
+                    'barang_id' => $item->barang->id,
+                    'durasi_sewa' => $item->durasi_sewa,
+                    'tanggal_mulai' => $item->tanggal_mulai,
+                    'tanggal_selesai' => $item->tanggal_selesai,
+                    'harga_barang' => $harga,
+                    'subtotal' => $harga,
+                ]);
+            }
+
+            $pesanan->update([
+                'total_bayar' => $totalBayar,
+            ]);
+
+            $keranjang->items()->delete();
+
+            DB::commit();
+
+            // Redirect ke halaman checkout dengan ID pesanan
+            return redirect()->route('checkout.summary', ['id' => $pesanan->id])
+                ->with('success', 'Checkout berhasil!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Checkout gagal: ' . $e->getMessage());
+        }
     }
-}
-
 
     public function checkoutCancelled(Pesanan $pesanan)
     {
