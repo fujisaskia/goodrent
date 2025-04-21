@@ -15,7 +15,7 @@
                 <div class="flex space-x-4 mb-3">
                     <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Pelanggan"
                         class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    <button type="submit"
+                        <button type="submit"
                         class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -60,7 +60,22 @@
 
                                 {{-- <td class="p-3">{{ $pesanan->items->first()?->barang->jenis_ps ?? '-' }}</td> --}}
                                 {{-- <td class="p-3">{{ $pesanan->items->first()?->barang->nomor_ps ?? '-' }}</td> --}}
-                                <td class="p-3">{{ $pesanan->pembayaran->metode_pembayaran ?? '-' }}</td>
+                                <td class="p-3">
+                                    @php
+                                        $metodePembayaran = $pesanan->pembayaran->metode_pembayaran ?? null;
+
+                                        $metodeColor = match ($metodePembayaran) {
+                                            'Digital' => 'bg-yellow-500',
+                                            'Tunai' => 'bg-blue-500',
+                                        };
+
+                                        $labelMetode = $metodePembayaran ?? '-';
+                                    @endphp
+
+                                    <span class="py-1 px-3 {{ $metodeColor }} text-white rounded-full">
+                                        {{ $labelMetode }}
+                                    </span>
+                                </td>
                                 <td class="p-3">
                                     @php
                                         $statusPembayaran = $pesanan->pembayaran->status_pembayaran ?? '-';
@@ -106,12 +121,65 @@
                                         title="Lihat">
                                         <i class="fa-regular fa-eye"></i>
                                     </button>
-                                    <button
-                                        class="bg-green-600 hover:bg-green-500  shadow-md shadow-green-600 hover:shadow-none focus:scale-95 duration-300
-                                        text-white py-2 px-2.5 rounded-full"
-                                        title="Selesai Sewa">
-                                        <i class="fa-solid fa-check"></i>
-                                    </button>
+                                    {{-- Jika status pemesanan belum selesai --}}
+                                    @if ($pesanan->status_pemesanan !== 'Selesai')
+                                        {{-- Jika metode pembayaran adalah Tunai --}}
+                                        @if ($pesanan->pembayaran->metode_pembayaran === 'Tunai')
+                                            {{-- Jika status pembayaran belum berhasil --}}
+                                            @if ($pesanan->pembayaran->status_pembayaran !== 'Berhasil')
+                                                {{-- Tombol untuk mengonfirmasi pembayaran Tunai --}}
+                                                <form id="form-tunai-{{ $pesanan->pembayaran->id }}"
+                                                    action="{{ route('pembayaran.updateStatusTunai', $pesanan->pembayaran->id) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="button"
+                                                        onclick="confirmPembayaranTunai('{{ $pesanan->pembayaran->id }}')"
+                                                        class="bg-green-600 hover:bg-green-500 shadow-md shadow-green-600 hover:shadow-none focus:scale-95 duration-300
+        text-white py-2 px-2.5 rounded-full"
+                                                        title="Konfirmasi Pembayaran Tunai">
+                                                        <i class="fa-solid fa-dollar-sign w-3 h-3"></i>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                {{-- Jika pembayaran tunai berhasil, tampilkan tombol selesaikan sewa --}}
+                                                <form action="{{ route('pesanan.updateStatusSelesai', $pesanan->id) }}"
+                                                    method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit"
+                                                        class="bg-green-600 hover:bg-green-500 shadow-md shadow-green-600 hover:shadow-none focus:scale-95 duration-300
+                text-white py-2 px-2.5 rounded-full"
+                                                        title="Selesaikan Sewa (Tunai)">
+                                                        <i class="fa-solid fa-check"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @endif
+
+                                        {{-- Jika metode pembayaran adalah Digital --}}
+                                        @if ($pesanan->pembayaran->metode_pembayaran === 'Digital')
+                                            {{-- Tombol untuk menyelesaikan sewa Digital --}}
+                                            <form action="{{ route('pesanan.updateStatusDigital', $pesanan->id) }}"
+                                                method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit"
+                                                    class="bg-green-600 hover:bg-green-500 shadow-md shadow-green-600 hover:shadow-none focus:scale-95 duration-300
+            text-white py-2 px-2.5 rounded-full"
+                                                    title="Selesaikan Sewa (Digital)">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @else
+                                        {{-- Jika status pemesanan sudah selesai, tombol disable --}}
+                                        <button disabled
+                                            class="bg-gray-400 text-white py-2 px-2.5 rounded-full cursor-not-allowed"
+                                            title="Pemesanan telah selesai">
+                                            <i class="fa-solid fa-check-double"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
@@ -128,5 +196,23 @@
 
     @include('admin.data-sewa.show')
 
+    <script>
+        function confirmPembayaranTunai(pesananId) {
+            Swal.fire({
+                title: 'Konfirmasi Pembayaran?',
+                text: "Apakah Anda yakin ingin mengonfirmasi pembayaran tunai ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#16a34a',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Konfirmasi!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-tunai-' + pesananId).submit();
+                }
+            })
+        }
+    </script>
 
 @endsection

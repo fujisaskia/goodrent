@@ -94,6 +94,27 @@ class PembayaranController extends Controller
         return response()->json(['redirect' => route('user.riwayat.index')]);
     }
 
+    public function paymentFailed(Request $request)
+    {
+        $pembayaran = Pembayaran::where('nomor_pembayaran', $request->order_id)->firstOrFail();
+
+        $pembayaran->update([
+            'status_pembayaran' => 'Gagal',
+            'tanggal_bayar' => now(),
+        ]);
+
+        // Update status pemesanan dan kurangi stok barang
+        if ($pembayaran->pesanan) {
+            $pesanan = $pembayaran->pesanan;
+
+            $pesanan->update([
+                'status_pemesanan' => 'Menunggu',
+            ]);
+        }
+
+        return response()->json(['redirect' => route('checkout.summary')]);
+    }
+
     public function processCash($pesanan_id)
     {
         \Log::info('Proses pembayaran tunai untuk pesanan ID: ' . $pesanan_id);
@@ -119,6 +140,8 @@ class PembayaranController extends Controller
             'redirect' => route('user.riwayat.index'), // Pastikan route sudah benar
         ]);
     }
+
+
 
     //     // Menampilkan halaman pembayaran
     //     public function showPaymentForm($checkoutId)

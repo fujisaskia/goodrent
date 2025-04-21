@@ -21,7 +21,7 @@ class RiwayatPesananController extends Controller
 
     public function batalkanPenyewaan($id)
     {
-        $pesanan = Pesanan::where('id', $id)
+        $pesanan = Pesanan::with('items.barang')->where('id', $id)
             ->where('user_id', auth()->id())
             ->firstOrFail();
 
@@ -30,6 +30,15 @@ class RiwayatPesananController extends Controller
             $pesanan->update([
                 'status_pemesanan' => 'Dibatalkan',
             ]);
+
+            // Tambahkan kembali stok barang
+            foreach ($pesanan->items as $item) {
+                if ($item->barang) {
+                    $barang = $item->barang;
+                    $barang->stok += 1; // Atau $item->jumlah jika stok berdasarkan kuantitas
+                    $barang->save();
+                }
+            }
 
             return redirect()->back()->with('success', 'Penyewaan berhasil dibatalkan.');
         }

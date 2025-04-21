@@ -91,7 +91,7 @@
                     $statusPemesanan = $pesanan->status_pemesanan;
 
                     $disableButton =
-                        in_array($statusPemesanan, ['Selesai', 'Dibatalkan'])
+                        in_array($statusPemesanan, ['Dalam Penyewaan' ,'Selesai', 'Dibatalkan'])
                 @endphp
 
                 <form id="form-batalkan-{{ $pesanan->id }}" action="{{ route('user.riwayat.batalkan', $pesanan->id) }}"

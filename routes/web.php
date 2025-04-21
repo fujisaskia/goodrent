@@ -80,7 +80,9 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     // Data Sewa ===================================================== //
     Route::get('/admin/data-sewa', [DataSewaController::class, 'index'])->name('admin.data-sewa.index');
     Route::get('/pesanan/{id}', [DataSewaController::class, 'show'])->name('pesanan.show');
-
+    Route::put('/pesanan/update-status-digital/{id}', [DataSewaController::class, 'updateStatusDigital'])->name('pesanan.updateStatusDigital');
+    Route::put('/pembayaran/update-status-tunai/{id}', [DataSewaController::class, 'updateStatusTunai'])->name('pembayaran.updateStatusTunai');
+    Route::put('/pesanan/update-status-selesai/{id}', [DataSewaController::class, 'updateStatusPesananTunai'])->name('pesanan.updateStatusSelesai');
 
     // kelola pelanggan ===================================================== //
     Route::get('/admin/kelola-pelanggan', [UserController::class, 'index'])->name('kelola-pelanggan');
@@ -130,7 +132,7 @@ Route::middleware(['role:pelanggan'])->group(function () {
     Route::post('/goodrent/tambah/keranjang', [KeranjangController::class, 'addToCart'])->name('tambah.keranjang');
     Route::get('/goodrent/lihat-keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::delete('/keranjang/item/{id}', [KeranjangItemController::class, 'deleteItemFromCart'])->name('keranjang.hapusItem');
-    
+
     Route::post('/goodrent/checkout', [CheckOutController::class, 'checkoutItems'])->name('checkout');
     Route::post('/goodrent/checkout/batalkan/{pesanan}', [CheckoutController::class, 'checkoutCancelled'])->name('checkout.batal');
     Route::get('/goodrent/checkout/summary/items/{id}', [CheckOutController::class, 'checkoutSummary'])->name('checkout.summary');
@@ -157,6 +159,7 @@ Route::middleware(['role:pelanggan'])->group(function () {
 
     Route::get('/goodrent/proses-pembayaran/{pesanan_id}', [PembayaranController::class, 'process'])->name('midtrans.process');
     Route::post('/goodrent/pembayaran/success', [PembayaranController::class, 'paymentSuccess'])->name('pembayaran.success');
+    Route::post('/goodrent/pembayaran/failed', [PembayaranController::class, 'paymentFailed'])->name('pembayaran.failed');
     Route::post('/goodrent/proses-pembayaran-tunai/{pesanan_id}', [PembayaranController::class, 'processCash']);
 
     // Route::get('/checkout/{checkoutId}/payment', [PembayaranController::class, 'showPaymentForm'])->name('user.payment.index');
