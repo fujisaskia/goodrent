@@ -187,7 +187,7 @@
         }
 
         // membuka modal edit barang
-        document.querySelectorAll('.btn-edit-kategori-barang').forEach(button => {
+        // document.querySelectorAll('.btn-edit-kategori-barang').forEach(button => {
         //     button.addEventListener('click', function() {
         //         const itemId = this.getAttribute('data-kategori-id');
         //         openModalEditKategoriBarang(itemId);

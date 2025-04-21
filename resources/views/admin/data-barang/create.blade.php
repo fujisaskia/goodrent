@@ -52,6 +52,7 @@
                             <input type="number" name="harga" placeholder="Silahkan isi harga"
                                 class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                                 required>
+                            <span class="text-[10px] text-blue-600 font-semibold">* Harga ini untuk 1 hari</span>
                         </div>
 
                         <!-- Stok -->

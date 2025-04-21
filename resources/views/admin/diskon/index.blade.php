@@ -185,46 +185,6 @@
             }, 300); // Sesuai dengan durasi transition (300ms)
         }
 
-        // membuka modal edit diskon
-        // document.querySelectorAll('.btn-edit-diskon').forEach(button => {
-        //     button.addEventListener('click', function() {
-        //         const itemId = this.getAttribute('data-id');
-        //         openModalEditDiskon(itemId);
-        //     });
-        // });
-
-        // // membuka modal edit diskon
-        // function openModalEditDiskon(id) {
-        //     let overlay = document.getElementById('modal-overlay-edit-diskon');
-        //     let modal = document.getElementById('modal-edit-diskon');
-
-        //     // Tampilkan overlay
-        //     overlay.classList.remove('hidden');
-
-        //     // Beri jeda untuk animasi
-        //     setTimeout(() => {
-        //         modal.classList.remove('scale-95', 'opacity-0');
-        //         modal.classList.add('scale-100', 'opacity-100');
-        //     }, 50);
-
-        //     document.body.classList.add('overflow-hidden'); // Mencegah scroll saat modal terbuka
-        // }
-
-        // function closeModalEditDiskon() {
-        //     let modal = document.getElementById('modal-edit-diskon');
-        //     let overlay = document.getElementById('modal-overlay-edit-diskon');
-
-        //     // tambahkan animasi keluar
-        //     modal.classList.add('scale-95', 'opacity-0');
-        //     modal.classList.remove('scale-100', 'opacity-100');
-
-        //     // Tunggu animasi selesai sebelum menyembunyikan modal
-        //     setTimeout(() => {
-        //         overlay.classList.add('hidden');
-        //         document.body.classList.remove('overflow-hidden');
-        //     }, 300); // Sesuai dengan durasi transition (300ms)
-        // }
-
         document.addEventListener('DOMContentLoaded', function() {
             const bulkDeleteBtn = document.getElementById('bulk-delete-btn');
             const bulkDeleteForm = document.getElementById('bulk-delete-form');

@@ -61,13 +61,13 @@
             <!-- Button -->
             <div class="hidden lg:flex items-center space-x-2">
                 {{-- button masuk --}}
-                <a href="{{ route('login.page')}}"
+                <a href="{{ route('login.page') }}"
                     class="flex space-x-1 items-center font-semibold py-2 px-8 text-white bg-emerald-600 hover:bg-emerald-700 focus:scale-95 rounded-lg duration-300">
                     <span>Masuk</span>
                 </a>
                 {{-- button daftar --}}
-                <a href="{{ route('register.page')}}"
-                    class="flex space-x-1 items-center font-semibold py-2 px-8 text-white border-2 border-white focus:scale-95 rounded-lg duration-300">
+                <a href="{{ route('register.page') }}"
+                    class="register flex space-x-1 items-center font-semibold py-2 px-8 text-white border-2 border-white focus:scale-95 rounded-lg duration-300">
                     <span>Daftar</span>
                 </a>
             </div>
@@ -85,10 +85,10 @@
                 <li><a href="#tentang" class="block py-4 px-6 border-b border-gray-50 hover:bg-slate-100">Tentang</a>
                 </li>
                 <li><a href="#produk" class="block py-4 px-6 border-b border-gray-50 hover:bg-slate-100">Produk</a>
-                {{-- </li>
+                    {{-- </li>
                 <li><a href="#kontak" class="block py-4 px-6 border-b border-gray-50 hover:bg-slate-100">Kontak</a>
                 </li> --}}
-                <hr class="w-1/2 bg-gray-600 mx-auto text-center">
+                    <hr class="w-1/2 bg-gray-600 mx-auto text-center">
             </ul>
             <div class="flex justify-center py-4 px-6">
                 <a href="/login"
@@ -100,15 +100,16 @@
     </div>
 
     {{-- Hero Section --}}
-    <section id="beranda" class="relative w-full h-screen bg-fixed bg-center" 
+    <section id="beranda" class="relative w-full h-screen bg-fixed bg-center"
         style="background-image: url('https://i.pinimg.com/736x/fc/43/90/fc4390ab742a1b9f148605e67b08ba36.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div data-aos="fade-up" data-aos-duration="1000"  class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
+        <div data-aos="fade-up" data-aos-duration="1000"
+            class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
             <h1 class="text-4xl md:text-6xl font-bold">Sewa Barang Mudah & Terpercaya</h1>
             <p class="mt-4 text-lg md:text-xl">Dapatkan barang sewaan berkualitas dengan harga terbaik</p>
-            <a href="/login" data-aos="fade-up" data-aos-duration="1500"
-                class="mt-6">
-                <button class=" bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-lg font-semibold text-sm focus:scale-95 duration-300">
+            <a href="/login" data-aos="fade-up" data-aos-duration="1500" class="mt-6">
+                <button
+                    class=" bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-lg font-semibold text-sm focus:scale-95 duration-300">
                     <span>Sewa Sekarang</span>
                 </button>
             </a>
@@ -118,39 +119,51 @@
     <!-- About Us Section -->
     <section id="tentang" class="relative bg-gradient-to-b from-emerald-100 to-slate-50 py-16 px-6 text-center">
         <div class="max-w-5xl mx-auto">
-            <div class="" data-aos="fade-up" data-aos-duration="1000" >
-                <h2 class="text-4xl font-extrabold text-emerald-700 mb-4">Tentang <span class="text-gray-800">GoodRent</span></h2>
+            <div class="" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-4xl font-extrabold text-emerald-700 mb-4">Tentang <span
+                        class="text-gray-800">GoodRent</span></h2>
                 <p class="text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
-                    GoodRent adalah platform rental PlayStation yang memudahkan kamu menyewa PS tanpa ribet!  
-                    Nikmati berbagai pilihan konsol <span class="font-semibold">PS4 & PS5</span> dengan harga terjangkau, tanpa perlu keluar rumah.
+                    GoodRent adalah platform rental PlayStation yang memudahkan kamu menyewa PS tanpa ribet!
+                    Nikmati berbagai pilihan konsol <span class="font-semibold">PS4 & PS5</span> dengan harga
+                    terjangkau, tanpa perlu keluar rumah.
                 </p>
-    
+
                 <!-- Decorative Line -->
                 <div class="w-20 h-1 bg-emerald-500 mx-auto my-6 rounded-full"></div>
             </div>
 
-            <h3 class="text-2xl font-bold text-gray-800 mb-8" data-aos="fade-up" data-aos-duration="1000" >Kenapa Pilih <span class="text-emerald-600">GoodRent?</span></h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8" data-aos="fade-up" data-aos-duration="1000">Kenapa Pilih
+                <span class="text-emerald-600">GoodRent?</span>
+            </h3>
 
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <!-- Card 1 -->
-                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="1200" >
-                    <i class="fa-solid fa-clock-rotate-left text-5xl text-emerald-600 mb-4 group-hover:-rotate-180 duration-500"></i>
+                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+                    data-aos="fade-up" data-aos-duration="1200">
+                    <i
+                        class="fa-solid fa-clock-rotate-left text-5xl text-emerald-600 mb-4 group-hover:-rotate-180 duration-500"></i>
                     <h3 class="text-xl font-semibold text-gray-800">Sewa Mudah & Cepat</h3>
                     <p class="text-gray-600 text-sm">Pilih, pesan, dan nikmati tanpa ribet.</p>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="1500" >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 text-emerald-600 mb-4 group-hover:scale-110 duration-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                    </svg>                  
+                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+                    data-aos="fade-up" data-aos-duration="1500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor"
+                        class="size-12 text-emerald-600 mb-4 group-hover:scale-110 duration-500">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
+                    </svg>
                     <h3 class="text-xl font-semibold text-gray-800">Kualitas Terbaik</h3>
                     <p class="text-gray-600 text-sm">Konsol selalu bersih & terawat.</p>
                 </div>
 
                 <!-- Card 3 -->
-                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="2000" >
-                    <i class="fa-solid fa-truck-fast text-5xl text-emerald-600 mb-4 group-hover:translate-x-2 duration-200"></i>
+                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+                    data-aos="fade-up" data-aos-duration="2000">
+                    <i
+                        class="fa-solid fa-truck-fast text-5xl text-emerald-600 mb-4 group-hover:translate-x-2 duration-200"></i>
                     <h3 class="text-xl font-semibold text-gray-800">Layanan Antar-Jemput</h3>
                     <p class="text-gray-600 text-sm">Praktis tanpa repot, langsung ke rumahmu!</p>
                 </div>
@@ -160,56 +173,114 @@
 
     <!-- How to Order Section -->
     <section class="relative bg-slate-50 py-16 px-6 text-center">
-        <div class="max-w-5xl mx-auto">
-            <div class="" data-aos="fade-up" data-aos-duration="1000" >
-                <h2 class="text-3xl font-extrabold text-gray-800 mb-4">Bagaimana Cara Menyewa di <span class="text-emerald-700">GoodRent ?</span></h2>
+        <div class="max-w-7xl mx-auto">
+            <div class="" data-aos="fade-up" data-aos-duration="1000">
+                <h2 class="text-3xl font-extrabold text-gray-800 mb-4">
+                    Bagaimana Cara Menyewa di <span class="text-emerald-700">GoodRent?</span>
+                </h2>
                 <p class="text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. At vero, 
-                    deleniti autem sed quos in aliquid odio atque quis totam?
+                    Proses sewa di GoodRent sangat mudah dan cepat. Cukup buat akun, pilih barang yang diinginkan,
+                    lengkapi data sewa, lalu lakukan pembayaran. Barang akan segera dikirim ke lokasi Anda.
                 </p>
-    
+
                 <!-- Decorative Line -->
                 <div class="w-20 h-1 bg-emerald-500 mx-auto my-6 rounded-full"></div>
             </div>
 
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                <!-- Card 1 -->
-                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="1200" >
-                    <i class="fa-solid fa-clock-rotate-left text-5xl text-emerald-600 mb-4 group-hover:-rotate-180 duration-500"></i>
-                    <h3 class="text-base font-semibold text-gray-800">Sewa Mudah & Cepat</h3>
-                    <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, natus.</p>
-                </div>
+            <div class="overflow-x-auto">
+                <div class="flex space-x-4 min-w-max p-4">
+                    <!-- Step 1 -->
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-address-card text-3xl text-emerald-600 mb-2"></i>
+                        <h3 class="font-semibold mb-1">1. Masuk/Buat Akun</h3>
+                        <p class="text-gray-600 text-xs">Daftar dan buat akun untuk mulai sewa.</p>
+                    </div>
 
-                <!-- Card 2 -->
-                <div class="bg-emerald-600 shadow-xl rounded-2xl p-6 flex flex-col items-center text-center text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="1500" >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12  mb-4 group-hover:scale-110 duration-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z" />
-                    </svg>                  
-                    <h3 class="text-base font-semibold ">Kualitas Terbaik</h3>
-                    <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, natus.</p>
-                </div>
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
 
-                <!-- Card 3 -->
-                <div class="bg-white shadow-xl rounded-2xl p-6 flex flex-col items-center text-center transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="2000" >
-                    <i class="fa-solid fa-truck-fast text-5xl text-emerald-600 mb-4 group-hover:translate-x-2 duration-200"></i>
-                    <h3 class="text-base font-semibold text-gray-800">Layanan Antar-Jemput</h3>
-                    <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, natus.</p>
-                </div>
+                    <!-- Step 2 -->
+                    <div
+                        class="bg-emerald-600 text-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-box-open text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">2. Pilih Barang</h3>
+                        <p class="text-xs">Pilih barang sewa dari daftar.</p>
+                    </div>
 
-                <!-- Card 4 -->
-                <div class="bg-emerald-600 shadow-xl rounded-2xl p-6 flex flex-col items-center text-center text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl group" data-aos="fade-up" data-aos-duration="2000" >
-                    <i class="fa-solid fa-truck-fast text-5xl  mb-4 group-hover:translate-x-2 duration-200"></i>
-                    <h3 class="text-base font-semibold ">Layanan Antar-Jemput</h3>
-                    <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae, natus.</p>
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-file-lines text-3xl text-emerald-600 mb-2"></i>
+                        <h3 class="font-semibold mb-1">3. Isi Data</h3>
+                        <p class="text-gray-600 text-xs">Lengkapi durasi dan tanggal sewa.</p>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div
+                        class="bg-emerald-600 text-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-cart-plus text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">4. Masuk Keranjang</h3>
+                        <p class="text-xs">Masukkan pesanan ke keranjang.</p>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-clipboard-check text-3xl text-emerald-600 mb-2"></i>
+                        <h3 class="font-semibold mb-1">5. Checkout</h3>
+                        <p class="text-gray-600 text-xs">Periksa & lanjut ke pembayaran.</p>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div
+                        class="bg-emerald-600 text-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-money-bill-wave text-3xl mb-2"></i>
+                        <h3 class="font-semibold mb-1">6. Bayar</h3>
+                        <p class="text-xs">Pilih dan lakukan pembayaran.</p>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-arrow-right text-2xl text-gray-400"></i>
+                    </div>
+
+                    <!-- Step 7 -->
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center text-center w-48 text-sm">
+                        <i class="fa-solid fa-truck-fast text-3xl text-emerald-600 mb-2"></i>
+                        <h3 class="font-semibold mb-1">Selesai</h3>
+                        <p class="text-xs">Proses selesai & barang dikirim.</p>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
     {{-- Product Section --}}
     <section id="produk" class="relative bg-gradient-to-t from-emerald-100 to-slate-50 py-16 px-6 text-center">
         <div class="max-w-5xl mx-auto">
-            <h3 data-aos="fade-up" data-aos-duration="1000"  class="text-3xl font-bold text-gray-800 mb-8 capitalize">cari barang <span class="text-emerald-600">kebutuhanmu Yuk!</span></h3>
+            <h3 data-aos="fade-up" data-aos-duration="1000" class="text-3xl font-bold text-gray-800 mb-8 capitalize">
+                cari barang <span class="text-emerald-600">kebutuhanmu Yuk!</span></h3>
             {{-- <div data-aos="fade-up" data-aos-duration="1200"  class="flex space-x-2 w-2/3 md:w-1/3 mx-auto mb-6">
                 <input type="search" placeholder="Cari produk..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 <button class="p-3 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
@@ -222,16 +293,21 @@
                         $isTersedia = $barang->status_barang !== 'Tidak Tersedia';
                     @endphp
                     {{-- Card Product --}}
-                    <div  data-aos="fade-up" data-aos-duration="1500" class="">
+                    <div data-aos="fade-up" data-aos-duration="1500" class="">
                         <div class="bg-white rounded-lg shadow-sm hover:shadow-2xl p-4 text-start duration-300">
-                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg" alt="PlayStation" class="w-full h-40 object-cover rounded-md">
+                            <img src="https://i.pinimg.com/736x/38/7a/74/387a74d7d7cc5f4c17b60b99453bf653.jpg"
+                                alt="PlayStation" class="w-full h-40 object-cover rounded-md">
                             <h3 class="mt-4 text-sm font-semibold">{{ $barang->nama_barang }}</h3>
                             @php
                                 $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first();
                             @endphp
-                            <p class="text-base text-orange-600 font-semibold">Rp{{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }} <span class="text-xs text-gray-700">/ 1 Hari</span></p>
+                            <p class="text-base text-orange-600 font-semibold">
+                                Rp{{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }} <span
+                                    class="text-xs text-gray-700">/ 1 Hari</span></p>
                             <a href="/login">
-                                <button class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa Sekarang</button>
+                                <button
+                                    class="mt-4 w-full bg-gradient-to-l from-emerald-600 to-emerald-800 text-white py-2 rounded-lg hover:bg-emerald-700 hover:scale-105 focus:scale-95 duration-300">Sewa
+                                    Sekarang</button>
                             </a>
                         </div>
                     </div>
@@ -241,16 +317,18 @@
     </section>
 
     {{-- Persuassive Section --}}
-    <section class="relative w-full h-full bg-fixed bg-center" 
+    <section class="relative w-full h-full bg-fixed bg-center"
         style="background-image: url('https://i.pinimg.com/736x/fc/43/90/fc4390ab742a1b9f148605e67b08ba36.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div data-aos="fade-up" data-aos-duration="1000"  class="relative container mx-auto flex flex-col text-center justify-center items-center md:py-12 py-12 px-6 text-white">
-            <h1 class="text-2xl font-bold">Lorem ipsum dolor sit amet.</h1>
-            <p class="mt-4 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, voluptatum?</p>
+        <div data-aos="fade-up" data-aos-duration="1000"
+            class="relative container mx-auto flex flex-col text-center justify-center items-center md:py-12 py-12 px-6 text-white">
+            <h1 class="text-2xl font-bold">Sewa PS? GoodRent Aja! .</h1>
+            <p class="mt-4 text-lg">Temukan barang sewa terbaikmu dengan mudah di GoodRent. Yuk, mulai sewa sekarang
+                dan nikmati kemudahannya!</p>
         </div>
     </section>
 
-    {{-- Copyright Footer--}}
+    {{-- Copyright Footer --}}
     @include('components.footer-user')
 
     <!-- Include AOS JS -->
@@ -267,7 +345,6 @@
 
 
 <script>
-
     // Toggle navbar membuka menu navbar mobile
     document.addEventListener('DOMContentLoaded', function() {
         const menuButton = document.getElementById('menu-button');
@@ -299,9 +376,9 @@
 
 
     // transparansi navbar saat discroll
-    window.addEventListener('scroll', function() { 
+    window.addEventListener('scroll', function() {
         const navbar = document.getElementById('navbar');
-        const daftarButton = document.querySelector('a[href="/register"]');
+        const daftarButton = document.querySelector('.register');
 
         // Daftar menu berdasarkan ID
         const menuItems = {
@@ -321,9 +398,9 @@
                 menuItems[key]?.classList.add('text-emerald-600');
             }
 
-            // Ubah border & teks button "Daftar" menjadi emerald
+            // Ubah border & teks button "Daftar" menjadi hijau
             daftarButton.classList.remove('border-white', 'text-white');
-            daftarButton.classList.add('border-emerald-600', 'text-emerald-600');
+            daftarButton.classList.add('border-green-700', 'text-green-700');
         } else {
             navbar.classList.remove('bg-white');
             navbar.classList.add('bg-transparent');
@@ -334,9 +411,8 @@
             }
 
             // Kembalikan border & teks button "Daftar" ke warna putih
-            daftarButton.classList.remove('border-emerald-600', 'text-emerald-600');
+            daftarButton.classList.remove('border-green-700', 'text-green-700');
             daftarButton.classList.add('border-white', 'text-white');
         }
     });
-
 </script>

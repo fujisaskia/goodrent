@@ -58,12 +58,55 @@
                                 {{-- <td class="p-3">{{ $pesanan->items->first()?->barang->jenis_ps ?? '-' }}</td> --}}
                                 {{-- <td class="p-3">{{ $pesanan->items->first()?->barang->nomor_ps ?? '-' }}</td> --}}
                                 <td class="p-3">{{ $pesanan->pembayaran->metode_pembayaran ?? '-' }}</td>
-                                <td class="p-3">{{ $pesanan->pembayaran->status_pembayaran ?? '-' }}</td>
-                                <td class="p-3">{{ $pesanan->status_pemesanan ?? '-' }}</td>
-                                <td class="p-3 flex items-center justify-center gap-2">
-                                    <a href="">
-                                        @include('components.crud.read')
-                                    </a>
+                                <td class="p-3">
+                                    @php
+                                        $statusPembayaran = $pesanan->pembayaran->status_pembayaran ?? '-';
+                                        $statusColor = '';
+                                        
+                                        if ($statusPembayaran == 'Berhasil') {
+                                            $statusColor = 'bg-green-600';
+                                        } elseif ($statusPembayaran == 'Menunggu') {
+                                            $statusColor = 'bg-orange-500';
+                                        } elseif ($statusPembayaran == 'Gagal') {
+                                            $statusColor = 'bg-red-500';
+                                        } else {
+                                            $statusColor = 'bg-gray-500'; // Default untuk status yang tidak teridentifikasi
+                                        }
+                                    @endphp
+                                    
+                                    <span class="py-1 px-3 {{ $statusColor }} text-white rounded-full">{{ $statusPembayaran }}</span>                                
+                                </td>
+                                <td class="p-3">
+                                    @php
+                                        $statusPemesanan = $pesanan->status_pemesanan ?? '-';
+                                        $statusColor = '';
+                                        
+                                        if ($statusPemesanan == 'Menunggu') {
+                                            $statusColor = 'bg-gray-500';
+                                        } elseif ($statusPemesanan == 'Dalam Penyewaan') {
+                                            $statusColor = 'bg-orange-500';
+                                        } elseif ($statusPemesanan == 'Selesai') {
+                                            $statusColor = 'bg-green-500';
+                                        } else {
+                                            $statusColor = 'bg-red-500'; // Default untuk status yang tidak teridentifikasi
+                                        }
+                                    @endphp
+                                    
+                                    <span class="py-1 px-3 {{ $statusColor }} text-white rounded-full">{{ $statusPemesanan }}</span>                                
+                                </td>
+                                <td class="p-3 flex items-center justify-center gap-6">
+                                    <button onclick="showDetail({{ $pesanan->id }})"
+                                            class="bg-blue-400 hover:bg-blue-500  shadow-md shadow-blue-300 hover:shadow-none focus:scale-95 duration-300
+                                            text-white py-2 px-2.5 rounded-full"
+                                            title="Lihat">
+                                            <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                    <button
+                                        class="bg-green-600 hover:bg-green-500  shadow-md shadow-green-600 hover:shadow-none focus:scale-95 duration-300
+                                        text-white py-2 px-2.5 rounded-full"
+                                        title="Selesai Sewa">
+                                        <i class="fa-solid fa-check"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -73,6 +116,8 @@
 
         </div>
     </div>
+    
+    @include('admin.data-sewa.show')
 
 
 @endsection

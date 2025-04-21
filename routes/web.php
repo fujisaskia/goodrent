@@ -79,7 +79,7 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
 
     // Data Sewa ===================================================== //
     Route::get('/admin/data-sewa', [DataSewaController::class, 'index'])->name('admin.data-sewa.index');
-
+    Route::get('/pesanan/{id}', [DataSewaController::class, 'show'])->name('pesanan.show');
 
 
     // kelola pelanggan ===================================================== //
@@ -114,6 +114,9 @@ Route::middleware(['role:superadmin|admin'])->group(function () {
     Route::get('/admin/laporan-goodrent', function () {
         return view('admin.laporan.index');
     })->name('admin.laporan.index');
+    Route::get('/admin/cetak-laporan-goodrent', function () {
+        return view('print.laporan');
+    })->name('cetak.laporan');
 });
 
 
