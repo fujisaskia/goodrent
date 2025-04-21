@@ -72,7 +72,7 @@ class PembayaranController extends Controller
         $pembayaran->update([
             'status_pembayaran' => 'Berhasil',
             'tanggal_bayar' => now(),
-        ]);
+        ]); 
 
         // Update status pemesanan dan kurangi stok barang
         if ($pembayaran->pesanan) {

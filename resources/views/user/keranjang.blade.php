@@ -37,138 +37,146 @@
 
 
     {{-- Konten di Sini --}}
-    <div class="max-w-3xl lg:max-w-6xl mx-auto py-8 mb-24">
-        <!-- Judul Halaman -->
-        <h2 class="text-center md:text-start text-gray-700 text-3xl font-semibold md:ml-4 mb-4">Keranjang</h2>
-
-        <div class="flex justify-between items-center w-full px-4 md:px-0 md:w-[69%] mb-2">
-            {{-- CheckBox --}}
-            <div class="flex space-x-3 md:ml-4 mb-4 ">
-                <input type="checkbox" name="" id="pilih_semua" class="pilih-semua-item items-center">
-                <p class="text-gray-700">Pilih Semua</p>
-            </div>
-
-            {{-- Tombol Hapus Semua --}}
-            <form action="" method="POST" id="bulk-delete-form">
-                @csrf
-                @method('DELETE')
-                <button type="button" id="bulk-delete-btn"
-                    class="bg-red-700 hover:bg-red-800 text-white p-2 text-xs rounded items-center focus:scale-95 hidden transition-all ease-in-out duration-300">
-                    <i class="fa-solid fa-trash"></i>
-                    <span>Hapus Semua</span>
-                </button>
-            </form>
-        </div>
-        <div class="flex flex-col lg:flex-row space-x-4">
-            <div class="flex-1 space-y-2 mx-4">
-                @if ($keranjang && $keranjang->items->count())
-                    @foreach ($keranjang->items as $item)
-                        <div
-                            class="flex items-center space-x-3 p-4 rounded-t-lg shadow-sm bg-white border-b border-gray-200 hover:bg-gray-50 duration-200">
-
-                            <!-- Gambar produk dan CheckBox-->
-                            <div class="flex space-x-4">
-                                <input type="checkbox" type="checkbox" name="ids[]" value="{{ $item->id }}">
-
-                                <img src="{{ asset('storage/barangs/' . $item->barang->image) }}"
-                                    alt="{{ $item->barang->nama_barang }}"
-                                    class="w-20 h-20 rounded border border-gray-300" />
-                            </div>
-
-                            <!-- Info produk -->
-                            <div class="flex-1">
-                                <div class="flex space-x-3 justify-center items-center">
-                                    <div class="flex-1">
-                                        <!-- Nama Produk -->
-                                        <div class="flex justify-between">
-                                            <h3 class="font-semibold">{{ $item->barang->nama_barang }}</h3>
-
-                                            <!-- Harga & Tombol Hapus -->
-                                            <div class="flex text-base">
-                                                <span class="text-gray-800 font-bold">
-                                                    Rp{{ number_format($item->barang->hargaSewas->where('durasi_jam', $item->durasi_sewa)->first()->harga ?? 0, 0, ',', '.') }}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <!-- Tanggal Sewa -->
-                                        <div class="flex justify-between">
-                                            <div class="flex flex-col">
-                                                <p class="text-xs text-gray-700">
-                                                    {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y') }} -
-                                                    {{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d M Y') }}
-                                                </p>
-
-                                                <!-- Durasi -->
-                                                <p class="text-xs text-gray-700">
-                                                    @if ($item->durasi_sewa >= 24)
-                                                        {{ floor($item->durasi_sewa / 24) }} Hari
-                                                    @else
-                                                        {{ $item->durasi_sewa }} Jam
-                                                    @endif
-                                                </p>
-                                            </div>
-                                            <div class="flex justify-end">
-                                                <form action="{{ route('keranjang.hapusItem', $item->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" id="delete-item"
-                                                        class="delete-button text-base p-2 mt-2 text-gray-600 hover:text-gray-800 hover:bg-gray-300 rounded-full">
-                                                        <!-- Icon delete -->
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                            class="size-4">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    @endforeach
-                @else
-                    <p class="text-gray-500">Keranjang kamu kosong.</p>
-                @endif
-            </div>
-
-
-
-            <div class="flex">
-                {{-- ringkasan harga --}}
-                <div
-                    class="md:sticky md:top-24 fixed bottom-0 left-0 w-full md:w-80 bg-white h-[120px] md:h-44 shadow-sm rounded-lg p-4">
-                    <h3 class="font-semibold text-gray-800 text-base">Ringkasan belanja</h3>
-
-                    <div class="flex flex-row md:flex-col justify-between">
-                        <div class="flex space-x-2 justify-between items-center mt-3 md:pb-3 border-b">
-                            <span class="text-gray-700">Total</span>
-                            <span
-                                class="text-black font-bold text-lg">Rp{{ number_format($totalHarga, 0, ',', '.') }}</span>
-                        </div>
-                        <div class="flex w-1/3 md:w-full">
-                            <form action="{{ route('checkout') }}" method="POST" class="w-full">
-                                @csrf
-                                <button type="submit"
-                                    class="bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-lg py-4 md:py-3 w-full mt-4 focus:scale-95 duration-300">
-                                    Checkout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
+    <a href="{{ route('lihat.produk') }}" class="hidden md:flex sticky top-24 left-10 space-x-2 items-center text-center justify-center mb-3 w-48 p-2 rounded-md bg-white shadow-lg hover:bg-gray-100 group">
+        <i class="fa-solid fa-arrow-left group-hover:-translate-x-2 duration-200"></i>
+        <p class="">kembali ke beranda</p>
+    </a>
+    
+    <div class="max-w-3xl lg:max-w-6xl mx-auto py-8">
+        <div class="bg-white/50 border p-6 rounded-lg shadow-lg mx-2 mb-24">
+            
+            <!-- Judul Halaman -->
+            <h2 class="text-center md:text-start text-gray-700 text-3xl font-semibold md:ml-4 mb-4">Keranjang</h2>
+    
+            <div class="flex justify-between items-center w-full px-4 md:px-0 md:w-[69%] mb-2">
+                {{-- CheckBox --}}
+                <div class="flex space-x-3 md:ml-4 mb-4 ">
+                    <input type="checkbox" name="" id="pilih_semua" class="pilih-semua-item items-center">
+                    <p class="text-gray-700">Pilih Semua</p>
                 </div>
-
-
+    
+                {{-- Tombol Hapus Semua --}}
+                <form action="" method="POST" id="bulk-delete-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" id="bulk-delete-btn"
+                        class="bg-red-700 hover:bg-red-800 text-white p-2 text-xs rounded items-center focus:scale-95 hidden transition-all ease-in-out duration-300">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Hapus Semua</span>
+                    </button>
+                </form>
+            </div>
+            <div class="flex flex-col lg:flex-row space-x-4">
+                <div class="flex-1 space-y-2 mx-4">
+                    @if ($keranjang && $keranjang->items->count())
+                        @foreach ($keranjang->items as $item)
+                            <div
+                                class="flex items-center space-x-3 p-4 rounded-t-lg shadow-sm bg-white border-b border-gray-200 hover:bg-gray-50 duration-200">
+    
+                                <!-- Gambar produk dan CheckBox-->
+                                <div class="flex space-x-4">
+                                    <input type="checkbox" type="checkbox" name="ids[]" value="{{ $item->id }}">
+    
+                                    <img src="{{ asset('storage/barangs/' . $item->barang->image) }}"
+                                        alt="{{ $item->barang->nama_barang }}"
+                                        class="w-20 h-20 rounded border border-gray-300" />
+                                </div>
+    
+                                <!-- Info produk -->
+                                <div class="flex-1">
+                                    <div class="flex space-x-3 justify-center items-center">
+                                        <div class="flex-1">
+                                            <!-- Nama Produk -->
+                                            <div class="flex justify-between">
+                                                <h3 class="font-semibold">{{ $item->barang->nama_barang }}</h3>
+    
+                                                <!-- Harga & Tombol Hapus -->
+                                                <div class="flex text-base">
+                                                    <span class="text-gray-800 font-bold">
+                                                        Rp{{ number_format($item->barang->hargaSewas->where('durasi_jam', $item->durasi_sewa)->first()->harga ?? 0, 0, ',', '.') }}
+                                                    </span>
+                                                </div>
+                                            </div>
+    
+                                            <!-- Tanggal Sewa -->
+                                            <div class="flex justify-between">
+                                                <div class="flex flex-col">
+                                                    <p class="text-xs text-gray-700">
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y') }} -
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d M Y') }}
+                                                    </p>
+    
+                                                    <!-- Durasi -->
+                                                    <p class="text-xs text-gray-700">
+                                                        @if ($item->durasi_sewa >= 24)
+                                                            {{ floor($item->durasi_sewa / 24) }} Hari
+                                                        @else
+                                                            {{ $item->durasi_sewa }} Jam
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <div class="flex justify-end">
+                                                    <form action="{{ route('keranjang.hapusItem', $item->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" id="delete-item"
+                                                            class="delete-button text-base p-2 mt-2 text-gray-600 hover:text-gray-800 hover:bg-gray-300 rounded-full">
+                                                            <!-- Icon delete -->
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                                class="size-4">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                            </svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+    
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-500">Keranjang kamu kosong.</p>
+                    @endif
+                </div>
+    
+    
+    
+                <div class="flex">
+                    {{-- ringkasan harga --}}
+                    <div
+                        class="md:sticky md:top-24 fixed bottom-0 left-0 w-full md:w-80 bg-white h-[120px] md:h-44 shadow-sm rounded-lg p-4">
+                        <h3 class="font-semibold text-gray-800 text-base">Ringkasan belanja</h3>
+    
+                        <div class="flex flex-row md:flex-col justify-between">
+                            <div class="flex space-x-2 justify-between items-center mt-3 md:pb-3 border-b">
+                                <span class="text-gray-700">Total</span>
+                                <span
+                                    class="text-black font-bold text-lg">Rp{{ number_format($totalHarga, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="flex w-1/3 md:w-full">
+                                <form action="{{ route('checkout') }}" method="POST" class="w-full">
+                                    @csrf
+                                    <button type="submit"
+                                        class="bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-lg py-4 md:py-3 w-full mt-4 focus:scale-95 duration-300">
+                                        Checkout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+    
+                </div>
             </div>
         </div>
     </div>
