@@ -98,7 +98,7 @@
 
                             <p class="font-bold text-base">Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }} <span class="text-xs text-gray-700">/1 hari</span></p>
                             <p class="text-xs text-gray-700">
-                                Tersedia : {{ $barang->stok == 0 ? 'habis' : $barang->stok }}
+                                Tersedia : {{ $barang->stok == 0 ? 'Habis' : $barang->stok }}
                             </p>                                                       
                             
                             <a href="{{ $isTersedia ? route('produk.detail', $barang->id) : '#' }}"

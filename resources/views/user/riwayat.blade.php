@@ -19,13 +19,28 @@
                             'Gagal' => 'bg-red-500',
                             default => 'bg-gray-400',
                         };
+
+                        $statusPemesanan = $pesanan->status_pemesanan;
+                        $warnaPemesanan = match ($statusPemesanan) {
+                            'Menunggu' => 'bg-gray-500',
+                            'Dalam Penyewaan' => 'bg-blue-600',
+                            'Selesai' => 'bg-green-600',
+                            'Dibatalkan' => 'bg-red-600',
+                        };
                     @endphp
 
-                    <p class="">Status |
-                        <span class="text-xs {{ $warna }} py-1 px-3 text-white rounded-sm">
-                            {{ $status }}
-                        </span>
-                    </p>
+                    <div class="flex flex-col items-end space-y-3">
+                        <p>Status Pembayaran |
+                            <span class="text-xs {{ $warna }} py-1 px-3 text-white rounded-sm">
+                                {{ $status }}
+                            </span>
+                        </p>
+                        <p>Status Pemesanan |
+                            <span class="text-xs {{ $warnaPemesanan }} py-1 px-3 text-white rounded-sm">
+                                {{ $statusPemesanan }}
+                            </span>
+                        </p>
+                    </div>
 
                 </div>
 
@@ -71,12 +86,50 @@
                     <p class="text-gray-700">TOTAL</p>
                     <p class="text-red-600 text-lg font-bold">Rp{{ number_format($pesanan->total_bayar, 0, ',', '.') }}</p>
                 </div>
+
+                @php
+                    $statusPemesanan = $pesanan->status_pemesanan;
+
+                    $disableButton =
+                        in_array($statusPemesanan, ['Selesai', 'Dibatalkan'])
+                @endphp
+
+                <form id="form-batalkan-{{ $pesanan->id }}" action="{{ route('user.riwayat.batalkan', $pesanan->id) }}"
+                    method="POST">
+                    @csrf
+                    <div class="flex justify-end mt-4">
+                        <button type="button" onclick="konfirmasiPembatalan({{ $pesanan->id }})"
+                            class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            @if ($disableButton) disabled @endif>
+                            Batalkan Penyewaan
+                        </button>
+                    </div>
+                </form>
+
             </div>
         @empty
             <p>Tidak ada Pemesanan yang anda lakukan ^^</p>
         @endforelse
-
-
     </div>
+
+    <script>
+        function konfirmasiPembatalan(id) {
+            Swal.fire({
+                title: 'Yakin ingin membatalkan?',
+                text: "Penyewaan ini akan dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e3342f',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, batalkan!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-batalkan-' + id).submit();
+                }
+            });
+        }
+    </script>
 
 @endsection

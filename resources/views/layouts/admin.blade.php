@@ -14,7 +14,7 @@
 
     <!-- jQuery (Pastikan ini dimuat lebih dulu) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+
     {{-- Data AOS Animate --}}
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -71,12 +71,13 @@
                 <div class="relative">
                     <div class="items-center">
                         <button type="button" id="notificationBtn"
-                            class="relative inline-flex items-center  text-sm font-medium text-center text-emerald-600 hover:scale-105 focus:scale-95 rounded-full duration-300 group">
+                            class="relative inline-flex items-center text-sm font-medium text-center text-emerald-600 hover:scale-105 focus:scale-95 rounded-full duration-300 group">
                             <i class="fa-solid fa-bell text-3xl group-hover:rotate-6 duration-200"></i>
                             <span class="sr-only">Notifications</span>
                             <div
                                 class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">
-                                10</div>
+                                {{ $jumlahNotifikasi }}
+                            </div>
                         </button>
                     </div>
                     <!-- Modal Notification -->
@@ -85,64 +86,76 @@
                         <!-- Header -->
                         <div class="flex justify-between items-center p-4 border-b">
                             <h3 class="text-base font-semibold">Notifikasi</h3>
-                            {{-- <button onclick="closeNotification()" class="text-gray-500 hover:text-gray-700">&times;</button> --}}
                         </div>
 
                         <!-- Notification List (Scrollable) -->
                         <div class="max-h-64 overflow-y-auto">
-                            <!-- Notification Item -->
-                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
-                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit. Recusandae, repudiandae.</p>
-                                    <span class="text-xs text-gray-400">10 menit yang lalu</span>
-                                </div>
-                            </div>
+                            @forelse ($notifikasi as $notif)
+                                <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
+                                    <img src="{{ asset('storage/users/' . (Auth::user()->image ?: 'Dummy.png')) }}"
+                                        alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover">
+                                    <div>
+                                        <p class="text-sm font-semibold">{{ $notif->user?->name ?? '-' }}</p>
+                                        <div>
+                                            @foreach ($notif->items as $item)
+                                                @php
+                                                    $barang = $item->barang;
+                                                @endphp
+                                                <p class="text-xs text-gray-600">
+                                                    Telah memesan
+                                                    <span class="font-semibold">
+                                                        {{ $barang?->nama_barang ?? '-' }}
+                                                    </span><br>
 
-                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
-                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="text-sm font-semibold">Sistem</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit.</p>
-                                    <span class="text-xs text-gray-400">2 jam yang lalu</span>
-                                </div>
-                            </div>
+                                                    Tanggal Sewa:
+                                                    @if ($item->tanggal_mulai && $item->tanggal_selesai)
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_mulai)->translatedFormat('d F, Y') }}
+                                                        -
+                                                        {{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('d F, Y') }}
+                                                    @else
+                                                        <span class="text-red-500">Tanggal tidak lengkap</span>
+                                                    @endif
+                                                </p>
 
-                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
-                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit.</p>
-                                    <span class="text-xs text-gray-400">1 hari yang lalu</span>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
-                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="text-sm font-semibold">Sistem</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet.</p>
-                                    <span class="text-xs text-gray-400">2 jam yang lalu</span>
-                                </div>
-                            </div>
+                                                <p class="font-semibold mt-1">
+                                                    Durasi:
+                                                    @if (isset($item->durasi_sewa))
+                                                        @if ($item->durasi_sewa >= 24)
+                                                            {{ floor($item->durasi_sewa / 24) }} Hari
+                                                        @else
+                                                            {{ $item->durasi_sewa }} Jam
+                                                        @endif
+                                                    @else
+                                                        <span class="text-gray-500">-</span>
+                                                    @endif
+                                                </p>
 
-                            <div class="flex items-start space-x-3 px-4 py-3 border-b hover:bg-gray-100">
-                                <img src="{{ asset('assets/profile.jpg') }}" alt="Profile Picture"
-                                    class="w-10 h-10 rounded-full">
-                                <div>
-                                    <p class="text-sm font-semibold">Admin</p>
-                                    <p class="text-xs text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit. Velit, reprehenderit?</p>
-                                    <span class="text-xs text-gray-400">1 hari yang lalu</span>
+                                                <p>Harga:
+                                                    Rp{{ number_format($item->harga_barang, 0, ',', '.') }}
+                                                </p>
+                                            @endforeach
+                                        </div>
+
+                                        Status Pembayaran:
+                                        <span
+                                            class="font-semibold 
+                                                @if ($notif->pembayaran?->status_pembayaran === 'Berhasil') text-green-600
+                                                @elseif($notif->pembayaran?->status_pembayaran === 'Gagal')
+                                                    text-red-600
+                                                @else
+                                                    text-yellow-600 @endif">
+                                            {{ $notif->pembayaran?->status_pembayaran ?? '-' }}
+                                        </span><br>
+
+                                        <span class="text-xs text-gray-400">
+                                            {{ $notif->created_at?->diffForHumans() ?? '-' }}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            @empty
+                                <div class="px-4 py-3 text-center text-sm text-gray-500">Tidak ada notifikasi baru.
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -168,7 +181,7 @@
                             </div>
                         </div>
 
-                        <a href="/admin/profile"
+                        <a href="{{ route('admin.profile') }}"
                             class="flex w-full items-center space-x-3 px-3 py-2 text-gray-600 hover:bg-gray-100 my-1 group">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-6 h-6 rounded-full text-gray-400 border-gray-300">

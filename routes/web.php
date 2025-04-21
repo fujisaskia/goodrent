@@ -150,6 +150,7 @@ Route::middleware(['role:pelanggan'])->group(function () {
     })->name('user.alamat.create');
 
     Route::get('/goodrent/riwayat/pemesanan-saya', [RiwayatPesananController::class, 'userRiwayat'])->name('user.riwayat.index');
+    Route::post('/riwayat/batalkan/{id}', [RiwayatPesananController::class, 'batalkanPenyewaan'])->name('user.riwayat.batalkan');
 
     Route::get('/goodrent/proses-pembayaran/{pesanan_id}', [PembayaranController::class, 'process'])->name('midtrans.process');
     Route::post('/goodrent/pembayaran/success', [PembayaranController::class, 'paymentSuccess'])->name('pembayaran.success');

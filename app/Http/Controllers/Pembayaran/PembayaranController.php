@@ -74,7 +74,24 @@ class PembayaranController extends Controller
             'tanggal_bayar' => now(),
         ]);
 
-        return response()->json(['redirect' => route('user.riwayat.index')]); // arahkan ke halaman pemesanan
+        // Update status pemesanan dan kurangi stok barang
+        if ($pembayaran->pesanan) {
+            $pesanan = $pembayaran->pesanan;
+
+            $pesanan->update([
+                'status_pemesanan' => 'Dalam Penyewaan',
+            ]);
+
+            foreach ($pesanan->items as $item) {
+                if ($item->barang) {
+                    $barang = $item->barang;
+                    $barang->stok -= 1;
+                    $barang->save();
+                }
+            }
+        }
+
+        return response()->json(['redirect' => route('user.riwayat.index')]);
     }
 
     public function processCash($pesanan_id)
@@ -93,7 +110,7 @@ class PembayaranController extends Controller
             'nomor_pembayaran' => $nomorPembayaran,
             'tanggal_bayar' => now(),
             'metode_pembayaran' => 'Tunai',
-            'status_pembayaran' => 'Berhasil',
+            'status_pembayaran' => 'Menunggu',
         ]);
 
         // Mengembalikan response JSON
