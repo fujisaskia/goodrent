@@ -85,7 +85,7 @@
                                 <td class="p-3">{{ $pesanan->pembayaran->metode_pembayaran ?? '-' }}</td>
                                 <td class="p-3 md:text-[10px]">
                                     @php
-                                        $statusPembayaran = $pesanan->pembayaran->status_pembayaran ?? '---';
+                                        $statusPembayaran = $pesanan->pembayaran->status_pembayaran ?? '-';
                                         $statusColor = '';
                                         
                                         if ($statusPembayaran == 'Berhasil') {
