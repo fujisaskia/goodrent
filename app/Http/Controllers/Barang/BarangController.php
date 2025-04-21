@@ -210,12 +210,19 @@ class BarangController extends Controller
         ]);
     }    
 
-
-    public function lihatBarang()
+    public function lihatBarang(Request $request)
     {
-        $barangs = Barang::latest()->take(10)->get(); // ambil max 12 barang
+        $query = Barang::query();
+    
+        if ($request->has('search')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%');
+        }
+    
+        $barangs = $query->latest()->take(10)->get();
+    
         return view('user.index', compact('barangs'));
     }
+    
 
     public function barangLandingPage()
     {

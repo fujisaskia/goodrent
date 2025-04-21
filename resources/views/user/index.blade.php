@@ -68,14 +68,18 @@
 
     <!-- Search Bar -->
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-center items-center space-x-3 my-8 mx-4">
-            <input type="search" placeholder="Cari Produk yang dibutuhkan..."
+        <form action="{{ route('lihat.produk') }}" method="GET"
+            class="flex justify-center items-center space-x-3 my-8 mx-4">
+            <input type="search" name="search" value="{{ request('search') }}"
+                placeholder="Cari Produk yang dibutuhkan..."
                 class="w-2/3 px-4 py-3 border md:border-gray-300 border-gray-400 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-200">
-            <button class="py-3 px-4 bg-emerald-600 rounded-full shadow-xl text-white focus:scale-95 duration-300">
+            <button type="submit"
+                class="py-3 px-4 bg-emerald-600 rounded-full shadow-xl text-white focus:scale-95 duration-300">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-        </div>
+        </form>
     </div>
+
 
     <!-- Produk -->
     <section class="pb-8">
@@ -83,10 +87,11 @@
             <h2 class="text-xl lg:text-2xl font-bold m-4 text-gray-700">Rekomendasi PS khusus buat kamu</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
                 @foreach ($barangs as $barang)
-                            @php
-                                $isTersedia = $barang->status_barang !== 'Tidak Tersedia';
-                            @endphp
-                    <div class="{{ $isTersedia ? 'bg-white shadow-md hover:shadow-2xl' : 'bg-gray-100 cursor-not-allowed shadow-sm' }} rounded  hover:shadow-emerald-200 duration-300">
+                    @php
+                        $isTersedia = $barang->status_barang !== 'Tidak Tersedia';
+                    @endphp
+                    <div
+                        class="{{ $isTersedia ? 'bg-white shadow-md hover:shadow-2xl' : 'bg-gray-100 cursor-not-allowed shadow-sm' }} rounded  hover:shadow-emerald-200 duration-300">
                         <img src="{{ asset('storage/barangs/' . $barang->image) }}" alt="{{ $barang->nama_barang }}"
                             class="w-full rounded-t h-32 object-cover">
                         <div class="p-3">
@@ -96,11 +101,12 @@
                             @endphp
 
 
-                            <p class="font-bold text-base">Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }} <span class="text-xs text-gray-700">/1 hari</span></p>
+                            <p class="font-bold text-base">Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }}
+                                <span class="text-xs text-gray-700">/1 hari</span></p>
                             <p class="text-xs text-gray-700">
                                 Tersedia : {{ $barang->stok == 0 ? 'Habis' : $barang->stok }}
-                            </p>                                                       
-                            
+                            </p>
+
                             <a href="{{ $isTersedia ? route('produk.detail', $barang->id) : '#' }}"
                                 class="{{ $isTersedia ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-gray-400 cursor-not-allowed' }} text-white py-1.5 rounded-md block mt-5">
                                 <button class="w-full font-semibold group-focus:scale-95 duration-300 text-xs"
@@ -108,7 +114,7 @@
                                     Pilih
                                 </button>
                             </a>
-                        
+
                         </div>
                     </div>
                 @endforeach

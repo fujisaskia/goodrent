@@ -38,6 +38,12 @@
     {{-- Navbar --}}
     @include('components.navbar-user')
 
+    <a id="back-btn" href="{{ route('lihat.produk') }}"
+        class="hidden md:flex fixed top-24 left-10 space-x-2 items-center text-center justify-center w-48 p-2 rounded-md bg-white shadow-lg hover:bg-gray-100 group transition-all duration-300 z-50">
+        <i class="fa-solid fa-arrow-left group-hover:-translate-x-2 duration-200"></i>
+        <p id="back-text" class="transition-all duration-200">kembali ke beranda</p>
+    </a>
+
 
     {{-- Konten di Sini --}}
     <div class="max-w-5xl mx-auto py-8">
@@ -265,4 +271,19 @@
     }
 
     durasiSelect.addEventListener('change', hitungTanggalSelesai);
+
+    window.addEventListener("scroll", function () {
+         const btn = document.getElementById("back-btn");
+         const text = document.getElementById("back-text");
+ 
+         if (window.scrollY > 50) {
+             btn.classList.remove("w-48");
+             btn.classList.add("w-20");
+             text.classList.add("hidden");
+         } else {
+             btn.classList.remove("w-20");
+             btn.classList.add("w-48");
+             text.classList.remove("hidden");
+         }
+     });
 </script>
