@@ -281,16 +281,17 @@
                     .then(data => {
                         if (data.redirect) {
                             Swal.fire({
-                                title: 'Pembayaran Berhasil!',
+                                title: 'Kamu pilih bayar tunai!',
                                 imageUrl: '/assets/cash.png',
                                 imageWidth: 250,
                                 imageHeight: 250,
-                                confirmButtonText: 'Lihat Pemesanan',
+                                confirmButtonText: 'Oke, Sip!',
                                 confirmButtonColor: '#047857',
                                 background: '#f8f9fa',
                                 customClass: {
                                     title: 'text-xl',
                                     confirmButton: 'px-8',
+                                    confirmButton: 'rounded-full',
                                 }
                             }).then(() => {
                                 window.location.href = data.redirect; // redirect setelah sukses
@@ -342,16 +343,17 @@
                                             imageUrl: '/assets/card-payment.png',
                                             imageWidth: 200,
                                             imageHeight: 200,
-                                            confirmButtonText: 'Lihat Pemesanan',
+                                            confirmButtonText: 'Oke, Sip!',
                                             confirmButtonColor: '#047857',
                                             background: '#f8f9fa',
                                             customClass: {
                                                 title: 'text-xl',
                                                 confirmButton: 'px-8',
+                                                confirmButton: 'rounded-full',
                                             }
                                         }).then(() => {
                                             window.location.href =
-                                                '/goodrent/riwayat/pemesanan-saya';
+                                                '/goodrent/pemesanan/berhasil-pesan';
                                         });
                                     });
                             },

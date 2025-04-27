@@ -88,37 +88,37 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 gap-3 mx-5 text-sm">
                 @foreach ($barangs as $barang)
                     @php
-                        $isTersedia = $barang->status_barang !== 'Tidak Tersedia';
+                        $isTersedia = $barang->status_barang !== 'Tidak Tersedia' && $barang->stok > 0;
+                        $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first();
                     @endphp
-                    <div
-                        class="{{ $isTersedia ? 'bg-white shadow-md hover:shadow-2xl' : 'bg-gray-100 cursor-not-allowed shadow-sm' }} rounded  hover:shadow-emerald-200 duration-300">
+            
+                    <div class="{{ $isTersedia ? 'bg-white shadow-md hover:shadow-2xl hover:shadow-emerald-200' : 'bg-gray-100 shadow-sm cursor-not-allowed' }} rounded duration-300">
                         <img src="{{ asset('storage/barangs/' . $barang->image) }}" alt="{{ $barang->nama_barang }}"
                             class="w-full rounded-t h-32 object-cover">
+            
                         <div class="p-3">
                             <h3 class="font-medium">{{ $barang->nama_barang }}</h3>
-                            @php
-                                $harga24jam = $barang->hargaSewas->where('durasi_jam', 24)->first();
-                            @endphp
-
-
-                            <p class="font-bold text-base">Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }}
-                                <span class="text-xs text-gray-700">/1 hari</span></p>
-                            <p class="text-xs text-gray-700">
-                                Tersedia : {{ $barang->stok == 0 ? 'Habis' : $barang->stok }}
+            
+                            <p class="font-bold text-base">
+                                Rp {{ number_format($harga24jam?->harga ?? 0, 0, ',', '.') }}
+                                <span class="text-xs text-gray-700">/1 hari</span>
                             </p>
-
+            
+                            <p class="text-xs text-gray-700">
+                                Tersedia: {{ $barang->stok == 0 ? 'Habis' : $barang->stok }}
+                            </p>
+            
                             <a href="{{ $isTersedia ? route('produk.detail', $barang->id) : '#' }}"
-                                class="{{ $isTersedia ? 'bg-emerald-500 hover:bg-emerald-600' : 'bg-gray-400 cursor-not-allowed' }} text-white py-1.5 rounded-md block mt-5">
-                                <button class="w-full font-semibold group-focus:scale-95 duration-300 text-xs"
-                                    {{ $isTersedia ? '' : 'disabled' }}>
-                                    Pilih
-                                </button>
+                                class="block mt-5 text-center rounded-md font-semibold py-1.5
+                                    {{ $isTersedia ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-gray-400 text-white pointer-events-none' }}">
+                                Pilih
                             </a>
-
+            
                         </div>
                     </div>
                 @endforeach
             </div>
+            
         </div>
     </section>
 

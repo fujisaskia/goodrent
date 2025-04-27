@@ -153,6 +153,10 @@ Route::middleware(['role:pelanggan'])->group(function () {
         return view('user.alamat.create');
     })->name('user.alamat.create');
 
+    Route::get('/goodrent/pemesanan/berhasil-pesan', function () {
+        return view('components.page.order-success');
+    })->name('berhasil.pesanan');
+
     Route::get('/goodrent/riwayat/pemesanan-saya', [RiwayatPesananController::class, 'userRiwayat'])->name('user.riwayat.index');
     Route::post('/riwayat/batalkan/{id}', [RiwayatPesananController::class, 'batalkanPenyewaan'])->name('user.riwayat.batalkan');
 

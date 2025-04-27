@@ -137,7 +137,7 @@ class PembayaranController extends Controller
         // Mengembalikan response JSON
         return response()->json([
             'message' => 'Pembayaran tunai berhasil diproses',
-            'redirect' => route('user.riwayat.index'), // Pastikan route sudah benar
+            'redirect' => route('berhasil.pesanan'), // Pastikan route sudah benar
         ]);
     }
 

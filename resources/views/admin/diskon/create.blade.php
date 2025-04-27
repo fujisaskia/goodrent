@@ -42,10 +42,10 @@
 
                     <div>
                         <label for="besar_diskon" class="block text-gray-700 mb-2 capitalize">Besar Diskon</label>
-                        <input type="number" name="besar_diskon" id="besar_diskon"
-                            placeholder="Silakan isi besar diskon"
+                        <input type="text" name="besar_diskon" id="besar_diskon" placeholder="cth: 5.000"
                             class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                             required>
+                        <span class="font-bold text-[11px] text-red-600">*Masukkan berupa Rupiah</span>
                     </div>
 
                     <div class="md:col-span-2">
@@ -129,4 +129,20 @@
 
         tglMulaiInput.addEventListener('change', hitungLamaBerlaku);
         tglSelesaiInput.addEventListener('change', hitungLamaBerlaku);
+
+        const inputDiskon = document.getElementById('besar_diskon');
+
+        // Format saat ketik
+        inputDiskon.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // ambil angka aja
+            e.target.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+        });
+
+        // Hapus format sebelum submit
+        const form = inputDiskon.closest('form');
+        if (form) {
+            form.addEventListener('submit', function() {
+                inputDiskon.value = inputDiskon.value.replace(/\D/g, ''); // bersihkan koma/titik sebelum kirim
+            });
+        }
     </script>

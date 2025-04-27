@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Reset Password GoodRent</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/logo-fixed.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

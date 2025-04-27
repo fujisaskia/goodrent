@@ -49,7 +49,7 @@
                         <!-- Harga -->
                         <div class="w-full">
                             <label for="harga" class="block text-gray-700 mb-2">Harga</label>
-                            <input type="number" name="harga" placeholder="Silahkan isi harga"
+                            <input type="number" name="harga" id="harga_barang" placeholder="Silahkan isi harga"
                                 class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-200"
                                 required>
                             <span class="text-[10px] text-blue-600 font-semibold">* Harga ini untuk 1 hari</span>
@@ -132,4 +132,20 @@
                 alert('Terjadi kesalahan saat mengambil kode: ' + err.message);
             });
     });
-</script>
+
+    const inputHarga = document.getElementById('harga_barang');
+
+    // Format saat ketik
+    inputHarga.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // ambil angka aja
+        e.target.value = new Intl.NumberFormat('id-ID').format(value); // format ribuan
+    });
+
+    // Hapus format sebelum submit
+    const form = inputHarga.closest('form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            inputHarga.value = inputHarga.value.replace(/\D/g, ''); // bersihkan koma/titik sebelum kirim
+        });
+    }
+    </script>
