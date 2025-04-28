@@ -12,22 +12,22 @@ class DiskonController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
+
         $diskons = Diskon::with('kategori')
             ->when($search, function ($query, $search) {
                 $query->where('nama_diskon', 'like', "%{$search}%")
-                      ->orWhereHas('kategori', function ($q) use ($search) {
-                          $q->where('nama', 'like', "%{$search}%");
-                      });
+                    ->orWhereHas('kategori', function ($q) use ($search) {
+                        $q->where('nama', 'like', "%{$search}%");
+                    });
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-    
+
         $kategoriDiskons = KategoriDiskon::all();
-    
+
         return view('admin.diskon.index', compact('diskons', 'kategoriDiskons'));
     }
-    
+
     public function create()
     {
         $kategoriDiskons = KategoriDiskon::all(); // Ambil semua kategori diskon untuk dropdown
@@ -73,11 +73,11 @@ class DiskonController extends Controller
     public function edit($id)
     {
         $diskon = Diskon::find($id);
-    
+
         if (!$diskon) {
             return response()->json(['error' => 'Diskon tidak ditemukan'], 404);
         }
-    
+
         return response()->json([
             'diskon' => [
                 'id' => $diskon->id,
@@ -90,7 +90,7 @@ class DiskonController extends Controller
             ]
         ]);
     }
-    
+
 
     public function update(Request $request, $id)
     {
