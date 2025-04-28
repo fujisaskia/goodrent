@@ -14,13 +14,15 @@
             <div class="flex flex-col md:flex-row justify-between mb-4">
                 <form method="GET" action="{{ route('kategori-barang.index') }}">
                     <div class="flex space-x-3 mb-2 md:mb-0">
-                        <input type="search" name="search" value="{{ request('search') }}" placeholder="Cari Kategori Barang"
+                        <input type="search" name="search" value="{{ request('search') }}"
+                            placeholder="Cari Kategori Barang"
                             class="border p-3 rounded-lg w-60 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                        <button type="submit" class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
+                        <button type="submit"
+                            class="py-3 px-4 bg-emerald-600 rounded-full text-white focus:scale-95 duration-300">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
-                </form>                
+                </form>
                 <div class="flex justify-end gap-3">
                     {{-- Tombol Hapus Semua (default: hidden) --}}
                     <form action="{{ route('kategori-barang.destroySelected') }}" method="POST" id="bulk-delete-form">
@@ -83,7 +85,7 @@
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
 
-                                    
+
                                     {{-- button hapus --}}
                                     <form action="{{ route('kategori-barang.destroy', $kategori->id) }}" method="POST"
                                         id="delete-form-{{ $kategori->id }}">
@@ -96,23 +98,23 @@
                                     </form>
                                 </td>
                             </tr>
-                            @empty
+                        @empty
                             <tr>
                                 <td colspan="5" class="text-center py-6 text-gray-500">
                                     Tidak ada data kategori barang.
                                 </td>
                             </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+        </div>
         {{-- Pagination --}}
         <div class="flex justify-center mt-5">
             {{ $kategoriBarangs->links('vendor.pagination.custom') }}
         </div>
     </div>
-    
+
     {{-- Modal Edit --}}
     @include('admin.kategori-barang.edit', ['kategori' => $kategori])
 

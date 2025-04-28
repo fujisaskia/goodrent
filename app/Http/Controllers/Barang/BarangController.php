@@ -26,7 +26,6 @@ class BarangController extends Controller
     
         return view('admin.data-barang.index', compact('barangs', 'kategoriBarangs'));
     }
-    
 
     public function create()
     {
