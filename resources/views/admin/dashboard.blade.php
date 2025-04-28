@@ -81,14 +81,14 @@
             </select>
         </div>
 
-        <div class="flex gap-6">
+        <div class="flex flex-col md:flex-row gap-6">
             <!-- Diagram 1 -->
-            <div class="bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
+            <div class="w-full bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
                 <canvas id="performanceChartPemesanan"></canvas>
             </div>
 
             <!-- Diagram 2 -->
-            <div class="bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
+            <div class="w-full bg-gray-50 p-6 rounded-lg shadow-md w-full h-96">
                 <canvas id="performanceChartPendapatan"></canvas>
             </div>
         </div>
