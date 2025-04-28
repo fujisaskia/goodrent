@@ -66,7 +66,7 @@
                     <input type="text" name="no_telp" value="{{ old('no_telp') }}"
                         class="mt-2 w-full p-3 border rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none 
                         @error('no_telp') border-red-500 ring-1 ring-red-500 @enderror"
-                        placeholder="Masukkan Nomor Telepon Anda">
+                        placeholder="Masukkan Nomor Telepon Anda" pattern="[0-9]+" maxlength="20" inputmode="numeric">
                     @error('no_telp')
                         <span class="text-sm text-red-700">*{{ $message }}</span>
                     @enderror

@@ -29,7 +29,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:50',
             'email' => 'required|string|max:50|unique:users',
             'password' => 'required|string|min:8|confirmed', // password_confirmation harus dikirim dari frontend
-            'no_telp' => 'required|integer|max:20|unique:users',
+            'no_telp' => 'required|numeric|digits_between:8,20|unique:users'
         ], [
             'name.required' => 'Nama wajib diisi',
             'name.max' => 'Nama tidak boleh lebih dari 50 karakter',
@@ -39,10 +39,10 @@ class AuthController extends Controller
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
             'password.confirmed' => 'Password dan konfirmasi password harus sama',
-            'no_telp.required' => 'No. telepon wajib diisi',
-            'no_telp.integer' => 'No. telepon harus berupa angka',
-            'no_telp.max' => 'No. telepon tidak boleh lebih dari 20 karakter',
-            'no_telp.unique' => 'No. telepon sudah terdaftar',
+            'no_telp.required' => 'Nomor telepon wajib diisi',
+            'no_telp.numeric' => 'Nomor telepon harus berupa angka',
+            'no_telp.digits_between' => 'Nomor telepon harus terdiri dari 8 hingga 20 digit',
+            'no_telp.unique' => 'Nomor telepon sudah terdaftar',
         ]);
 
         if ($validator->fails()) {
